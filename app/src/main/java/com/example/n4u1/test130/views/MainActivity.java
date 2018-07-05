@@ -15,6 +15,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+//20180706_0131
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
