@@ -1,5 +1,6 @@
 package com.example.n4u1.test130.views;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,23 +26,60 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final EditText editTextemail = findViewById(R.id.editText_email);
-        final EditText editTextpassword = findViewById(R.id.editText_password);
-        Button buttoncreateUser = findViewById(R.id.button_createUser);
-        Button buttonlogin = findViewById(R.id.button_login);
+        Button button_CreateUser = findViewById(R.id.button_createUser);
+        Button button_Login = findViewById(R.id.button_login);
 
         mAuth = FirebaseAuth.getInstance();
 
 
-        buttoncreateUser.setOnClickListener(new View.OnClickListener() {
+        button_CreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUser(editTextemail.getText().toString(), editTextpassword.getText().toString());
+
+                EditText editTextEmail = findViewById(R.id.editText_email);
+                EditText editTextPassword = findViewById(R.id.editText_password);
+                createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
 
             }
         });
 
+        button_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editTextEmail = findViewById(R.id.editText_email);
+                EditText editTextPassword = findViewById(R.id.editText_password);
+                loginUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                
+            }
+        });
+
     }
+
+    private void loginUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(getApplicationContext(), "User Login Success", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                            String uuser = mAuth.getCurrentUser().getUid();
+                            intent.putExtra("uid", uuser);
+                            startActivity(intent);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(getApplicationContext(), "User Login Fail", Toast.LENGTH_LONG).show();
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
 
     private void createUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -50,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+
+                            Toast.makeText(getApplicationContext(), "User Create Success", Toast.LENGTH_LONG).show();
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "User Create Fail", Toast.LENGTH_LONG).show();
 
                         }
 

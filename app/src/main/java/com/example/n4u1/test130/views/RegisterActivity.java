@@ -35,17 +35,13 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         TextView textView_uidTest = findViewById(R.id.textView_uidTest);
-        EditText editText_age = findViewById(R.id.editText_age);
-        EditText editText_job = findViewById(R.id.editText_job);
-        EditText editText_sex = findViewById(R.id.editText_sex);
+        final EditText editText_age = findViewById(R.id.editText_age);
+        final EditText editText_job = findViewById(R.id.editText_job);
+        final EditText editText_sex = findViewById(R.id.editText_sex);
         Button button_login = findViewById(R.id.button_login);
-        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-        String USER_DEVICE_ID = android.provider.Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
-
-
-
-
+        //device id 말고 다른거 써야할듯
+        final String USER_DEVICE_ID = android.provider.Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
 
@@ -57,7 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                writeNewUser();
+                writeNewUser(USER_DEVICE_ID, editText_sex.getText().toString(), editText_job.getText().toString(),
+                        mUser.getUid(), mUser.getEmail(), Integer.parseInt(editText_age.getText().toString()));
             }
         });
 
@@ -69,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void writeNewUser(String deviceName, String sex, String job, String uid, String email, int age) {
         User user = new User(deviceName, sex, job, uid, email, age);
-        mDatabase.child("users").child(email).setValue(user);
+        mDatabase.child("users").child(uid).setValue(user);
 
     }
 
