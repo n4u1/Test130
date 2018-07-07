@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -45,6 +48,32 @@ public class MainActivity extends AppCompatActivity {
 
                 EditText editTextEmail = findViewById(R.id.editText_email);
                 EditText editTextPassword = findViewById(R.id.editText_password);
+                final String inputUserEmail = editTextEmail.getText().toString();
+                final String inputUserPassword = editTextPassword.getText().toString();
+
+                if (inputUserEmail.isEmpty() || inputUserPassword.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "빈칸이 있어요!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (!checkEmail(inputUserEmail)) {
+                    Toast.makeText(getApplicationContext(), "이메일 형식으로 입력해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (inputUserPassword.length() < 6) {
+                    int test = inputUserPassword.length();
+                    Toast.makeText(getApplicationContext(), "비밀번호가 너무 짧아요ㅠ_ㅠ (6자 이상)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "d" + test, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+
+
+
+
+
+                //email 계정 생성
                 createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
 
             }
@@ -60,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //정규표현식으로 이메일 체킹
+    private boolean checkEmail(String inputUserEmail) {
+        String regex = "^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(inputUserEmail);
+        boolean isNormal = m.matches();
+        return isNormal;
     }
 
     private void loginUser(String email, String password) {
