@@ -29,7 +29,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mDatabase;
@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button button_CreateUser = findViewById(R.id.button_createUser);
         Button button_Login = findViewById(R.id.button_login);
+        Button button_aLogin = findViewById(R.id.button_aLogin);
+        Button button_bLogin = findViewById(R.id.button_bLogin);
+        Button button_cLogin = findViewById(R.id.button_cLogin);
+        Button button_dLogin = findViewById(R.id.button_dLogin);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -93,6 +97,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        button_aLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("a@a.com", "aaaaaa");
+            }
+        });
+
+        button_bLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("b@b.com", "bbbbbb");
+            }
+        });
+
+        button_cLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("c@c.com", "cccccc");
+            }
+        });
+
+        button_dLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("d@d.com", "dddddd");
+            }
+        });
+
     }
 
 
@@ -121,17 +153,25 @@ public class MainActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Iterable<DataSnapshot> emailIterable = dataSnapshot.getChildren();
                                     Iterator<DataSnapshot> emailIterator = emailIterable.iterator();
+
+
+                                    int userCount = (int)dataSnapshot.getChildrenCount();
+                                    int loopCount = 0;
+
                                     while (emailIterator.hasNext()) {
                                         User user = emailIterator.next().getValue(User.class);
-                                        if (user.getEmail().equals(email)) {
-                                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                        if (!user.getEmail().equals(email)) {
+                                            loopCount++;
                                         }
-                                        else {
-                                            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                                            startActivity(intent);
-                                        }
+                                    }
+                                    if ( loopCount == userCount) {
+                                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                        finish();
+                                        startActivity(intent);
+                                    } else {
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        finish();
+                                        startActivity(intent);
                                     }
 
                                 }
