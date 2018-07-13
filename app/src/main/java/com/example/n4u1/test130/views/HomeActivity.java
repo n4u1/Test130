@@ -43,35 +43,10 @@ public class HomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-//        Button test_button = findViewById(R.id.button_test);
         mFirebaseUser = mAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance();
         mEmailDatabaseReference = mDatabaseReference.getReference("users").child(mFirebaseUser.getUid());
 
-//        textView_uidTest.setText(mUser.getUid());
-//
-//        test_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                mEmailDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        User user = dataSnapshot.getValue(User.class);
-//                        String testUserEmail = user.getEmail();
-//                        Toast.makeText(getApplicationContext(), " email ?? : " + testUserEmail, Toast.LENGTH_LONG).show();
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-//            }
-//        });
 
 
         ArrayList<PostItem> listItem = new ArrayList<>();

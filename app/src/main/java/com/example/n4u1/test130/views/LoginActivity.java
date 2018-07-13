@@ -1,7 +1,14 @@
 package com.example.n4u1.test130.views;
 
+import android.Manifest;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 //
+
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,25 +33,35 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class LoginActivity extends AppCompatActivity {
+    private static final int GALLEY_CODE = 10;
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mEmailDatabaseReference;
     private ValueEventListener mEmailListener;
     private ChildEventListener mChildEventListener;
+    private FirebaseStorage storage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
+        }
 
         Button button_CreateUser = findViewById(R.id.button_createUser);
         Button button_Login = findViewById(R.id.button_login);
@@ -49,11 +69,15 @@ public class LoginActivity extends AppCompatActivity {
         Button button_bLogin = findViewById(R.id.button_bLogin);
         Button button_cLogin = findViewById(R.id.button_cLogin);
         Button button_dLogin = findViewById(R.id.button_dLogin);
+        Button button_uploadTest = findViewById(R.id.button_uploadTest);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance();
         mEmailDatabaseReference = mDatabase.getReference("users");
+        storage = FirebaseStorage.getInstance();
+
+
 
         button_CreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +149,64 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        button_uploadTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+
+                startActivityForResult(intent, GALLEY_CODE);
+
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == GALLEY_CODE) {
 
+            System.out.println(data.getData());
+            System.out.println(getPath(data.getData()));
+
+
+//            StorageReference storageRef = storage.getReference();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+
+
+            Uri file = Uri.fromFile(new File(getPath(data.getData())));
+            StorageReference riversRef = storageRef.child("imagessss/"+file.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file);
+
+// Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+
+        }
+    }
+
+    private String getPath(Uri uri) {
+        String [] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this,uri,proj,null,null,null);
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+
+        return cursor.getString(index);
+    }
 
     //정규표현식으로 이메일 체킹
     private boolean checkEmail(String inputUserEmail) {
