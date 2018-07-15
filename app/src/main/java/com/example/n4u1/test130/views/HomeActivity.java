@@ -1,5 +1,6 @@
 package com.example.n4u1.test130.views;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,11 +42,25 @@ public class HomeActivity extends AppCompatActivity {
 
         TextView textView_uidTest = findViewById(R.id.textView_uidTest);
 
+        Button button_goTestActivity = findViewById(R.id.button_goTestActivity);
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mFirebaseUser = mAuth.getCurrentUser();
         mDatabaseReference = FirebaseDatabase.getInstance();
         mEmailDatabaseReference = mDatabaseReference.getReference("users").child(mFirebaseUser.getUid());
+
+
+
+        button_goTestActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, UploadTestActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
 
 
