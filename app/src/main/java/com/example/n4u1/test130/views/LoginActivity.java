@@ -171,7 +171,6 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(getPath(data.getData()));
 
 
-//            StorageReference storageRef = storage.getReference();
             StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
 
 
@@ -179,7 +178,6 @@ public class LoginActivity extends AppCompatActivity {
             StorageReference riversRef = storageRef.child("imagessss/"+file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
-// Register observers to listen for when the download is done or if it fails
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {

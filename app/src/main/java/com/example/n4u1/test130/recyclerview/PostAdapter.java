@@ -23,7 +23,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     }
 
     @NonNull
-    @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View baseView = View.inflate(mContext, R.layout.home_post_item, null);
         PostViewHolder postViewHolder = new PostViewHolder(baseView);
@@ -36,6 +35,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.textView_userName.setText(item.getUserName());
         holder.textView_postText.setText(item.getPostText());
         holder.textView_likeCount.setText(String.valueOf(item.getPostLikeCount()));
+
     }
 
     @Override
