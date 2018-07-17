@@ -96,11 +96,8 @@ public class UploadTestActivity extends AppCompatActivity {
         list = new ArrayList<String>();
 
         list.add("01");
-
         list.add("02");
-
         list.add("03");
-
         list.add("04");
         list.add("05");
         list.add("06");
@@ -122,26 +119,15 @@ public class UploadTestActivity extends AppCompatActivity {
         findViewById(R.id.button_addItem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (editText_addItem.getText().length() != 0) {
-
                     list.add(editText_addItem.getText().toString());
-
                     editText_addItem.setText("");
-
                     // 갱신되었음을 어댑터에 통보한다.
-
                     adapter.notifyDataSetChanged();
-
                     imm.hideSoftInputFromWindow(editText_addItem.getWindowToken(), 0);
-
-
                 }
-
-
             }
         });
-
 
 
         //RecyclerView 에 아이템 붙이기
