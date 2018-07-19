@@ -1,5 +1,6 @@
 package com.example.n4u1.test130.views;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,9 +25,9 @@ public class UserContentsUploadActivity extends AppCompatActivity {
         findViewById(R.id.button_addCategory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AddCategoryDialog addCategoryDialog = new AddCategoryDialog();
+                addCategoryDialog.show(getSupportFragmentManager(),"sdf");
 
-                mAddCategoryDialog = new AddCategoryDialog(UserContentsUploadActivity.this, "ad", "ddddd", mLeftButton, mRightButton);
-                mAddCategoryDialog.show();
 
             }
         });
