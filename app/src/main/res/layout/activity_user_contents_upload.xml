@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -27,16 +27,16 @@
 
             <Button
                 android:id="@+id/button_addCategory"
-                android:text="카테고리 선택"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="카테고리 선택" />
 
             <TextView
-                android:id="@+id/textView_addCategory"
-                android:layout_centerVertical="true"
-                android:layout_alignRight="@+id/button_addCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_below="@+id/button_addCategory"
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="TextView" />
 
         </RelativeLayout>
 
