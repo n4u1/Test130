@@ -21,16 +21,36 @@ import com.example.n4u1.test130.R;
 
 public class AddCategoryDialog extends DialogFragment {
 
+
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater mLayoutInflater = getActivity().getLayoutInflater();
+        View view = mLayoutInflater.inflate(R.layout.activity_add_category_dialog, null);
         mBuilder.setView(mLayoutInflater.inflate(R.layout.activity_add_category_dialog, null));
         mBuilder.setTitle("카테고리 선택");
 
+        mBuilder.setView(view)
+                .setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        }).setNegativeButton("취소", null);
+
+
+
+
         return mBuilder.create();
     }
+
+
+
+
 }
 
 

@@ -176,8 +176,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == GALLEY_CODE) {
 
-            System.out.println(data.getData());
-            System.out.println(getPath(data.getData()));
 
 
             StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");

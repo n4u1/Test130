@@ -4,104 +4,94 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
+    <CheckBox
+        android:text="아침"
+        android:id="@+id/checkBox_0"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox0"
+        android:layout_toRightOf="@id/checkBox_0"
         android:text="점심"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_1"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox1"
-        android:layout_toRightOf="@+id/checkbox0"
+        android:layout_toRightOf="@id/checkBox_1"
         android:text="저녁"
-        android:layout_alignRight="@+id/checkbox7"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_2"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox2"
-        android:layout_toRightOf="@+id/checkbox1"
+        android:layout_below="@id/checkBox_0"
         android:text="소개팅"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_3"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox3"
-        android:layout_below="@+id/checkbox0"
+        android:layout_below="@id/checkBox_1"
+        android:layout_toRightOf="@id/checkBox_3"
         android:text="정치"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_4"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
-
     <CheckBox
-        android:id="@+id/checkbox4"
-        android:layout_below="@+id/checkbox1"
-
-        android:layout_alignRight="@+id/checkbox7"
-        android:layout_toRightOf="@+id/checkbox3"
+        android:layout_below="@id/checkBox_1"
+        android:layout_toRightOf="@id/checkBox_4"
         android:text="사회"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_5"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox5"
-        android:layout_below="@+id/checkbox2"
-        android:layout_toRightOf="@+id/checkbox4"
+        android:layout_below="@id/checkBox_3"
         android:text="경제"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
-    <CheckBox
-        android:id="@+id/checkbox6"
-        android:layout_below="@+id/checkbox3"
-        android:text="그림"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_6"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/checkbox7"
-        android:layout_below="@+id/checkbox3"
-        android:layout_toRightOf="@id/checkbox6"
-        android:text="아무거나 "
-        android:layout_width="wrap_content"
+        android:layout_below="@id/checkBox_3"
+        android:layout_toRightOf="@id/checkBox_6"
+        android:text="아무거나"
+        android:id="@+id/checkBox_7"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
-
     <CheckBox
-        android:id="@+id/checkbox8"
-        android:layout_below="@+id/checkbox3"
-        android:layout_toRightOf="@id/checkbox7"
+
+        android:layout_below="@id/checkBox_3"
+        android:layout_toRightOf="@id/checkBox_7"
         android:text="패션"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_8"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
-
     <CheckBox
-        android:id="@+id/checkbox9"
-        android:layout_below="@+id/checkbox6"
+        android:layout_below="@id/checkBox_6"
         android:text="축구"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_9"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
-
     <CheckBox
-        android:id="@+id/checkbox10"
-        android:layout_below="@+id/checkbox6"
-        android:layout_toRightOf="@id/checkbox9"
+        android:layout_below="@id/checkBox_6"
+        android:layout_toRightOf="@id/checkBox_9"
         android:text="농구"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_10"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
-
     <CheckBox
-        android:id="@+id/checkbox11"
-        android:layout_alignLeft="@id/checkbox2"
-        android:layout_below="@+id/checkbox6"
-        android:layout_toRightOf="@id/checkbox10"
+        android:layout_below="@id/checkBox_6"
+        android:layout_toRightOf="@id/checkBox_10"
         android:text="야구"
-        android:layout_width="wrap_content"
+        android:id="@+id/checkBox_11"
+        android:layout_width="100dp"
         android:layout_height="wrap_content" />
 
 
