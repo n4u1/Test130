@@ -33,7 +33,7 @@
 
             <TextView
                 android:layout_below="@+id/button_addCategory"
-                android:id="@+id/textView2"
+                android:id="@+id/textView_choiceCategory"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:text="TextView" />

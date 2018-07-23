@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-
                 startActivityForResult(intent, GALLEY_CODE);
 
             }
@@ -176,10 +175,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == GALLEY_CODE) {
 
-
-
             StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-
 
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
             StorageReference riversRef = storageRef.child("imagessss/"+file.getLastPathSegment());

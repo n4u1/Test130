@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Test130</string>
+
+
+    <string-array name="contents">
+        <item>아침</item>
+        <item>점심</item>
+        <item>저녁</item>
+        <item>소개팅</item>
+        <item>정치</item>
+        <item>사회</item>
+        <item>경제</item>
+        <item>아무거나</item>
+        <item>패션</item>
+        <item>축구</item>
+        <item>농구</item>
+        <item>야구</item>
+    </string-array>
+
+
+
+
+
+
+
 </resources>
