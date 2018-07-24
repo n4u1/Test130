@@ -11,13 +11,13 @@
         android:id="@+id/textInputLayout"
         android:layout_width="305dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="476dp"
+        android:layout_marginBottom="480dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:gravity="center"
-        android:padding="8dp"
+
         android:theme="@style/TextLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         <android.support.design.widget.TextInputEditText
 
             android:id="@+id/editText_email"
-            android:layout_width="240dp"
+            android:layout_width="232dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -59,17 +59,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:padding="8dp"
         android:theme="@style/TextLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:layout_constraintVertical_bias="0.902">
+        app:layout_constraintVertical_bias="0.125">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/editText_password"
-            android:layout_width="wrap_content"
+            android:layout_width="231dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
