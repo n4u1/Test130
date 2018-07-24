@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeMyLight" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#0091ea</item>
+        <item name="android:textColorPrimaryDisableOnly">#f44336</item>
+    </style>
+
+
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">#8e9397</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">#2467ae</item>
+        <item name="colorControlNormal">#2467ae</item>
+        <item name="colorControlActivated">#2467ae</item>
+    </style>
+
+
+
 </resources>

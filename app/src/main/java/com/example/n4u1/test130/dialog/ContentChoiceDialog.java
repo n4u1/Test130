@@ -45,8 +45,6 @@ public class ContentChoiceDialog extends DialogFragment {
 
         final ArrayList mSelectedItems = new ArrayList();  // Where we track the selected items
 
-
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("※ 5개 선택 가능")
                 .setMultiChoiceItems(R.array.contents, null, new DialogInterface.OnMultiChoiceClickListener() {
