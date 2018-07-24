@@ -14,8 +14,10 @@ import com.example.n4u1.test130.R;
 import java.util.ArrayList;
 
 public class ContentChoiceDialog extends DialogFragment {
+
     final public ArrayList mSelectedItemsResult = new ArrayList();
     public ContentChoiceDialog() {}
+    boolean[] itemsChecked = new boolean[12];
 
     public interface ContentChoiceDialogListener {
         public void onDialogPositiveClick(ArrayList arrayList);
@@ -43,17 +45,16 @@ public class ContentChoiceDialog extends DialogFragment {
 
         final ArrayList mSelectedItems = new ArrayList();  // Where we track the selected items
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("※ 5개 선택 가능")
                 .setMultiChoiceItems(R.array.contents, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        int checkCount = 0;
                         if (b) {
                             mSelectedItems.add(i);
-
-
-                            //Toast.makeText(getContext(), "?? : " + mSelectedItems, Toast.LENGTH_SHORT).show();
-
                         } else if (mSelectedItems.contains(i)) {
                             mSelectedItems.remove(Integer.valueOf(i));
 
@@ -65,7 +66,7 @@ public class ContentChoiceDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
-
+                        ArrayList mSelectedItemsResult = new ArrayList();
                         for (int i = 0; i < 12; i++) {
                             if (mSelectedItems.contains(i)) {
                                 switch (i) {
@@ -84,7 +85,6 @@ public class ContentChoiceDialog extends DialogFragment {
                                 }
                             }
                         }
-//                        Toast.makeText(getContext(), "?? : " + mSelectedItemsResult, Toast.LENGTH_SHORT).show();
                         mListener.onDialogPositiveClick(mSelectedItemsResult);
 
                     }

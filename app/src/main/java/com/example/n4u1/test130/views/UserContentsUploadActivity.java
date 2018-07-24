@@ -59,9 +59,16 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     public void onDialogPositiveClick(ArrayList arrayList) {
         TextView textView = findViewById(R.id.editText_addCategory);
         String string = arrayList.toString();
-        String resultString = string.replace("[", "").replace("]","");
+        if (arrayList.size() < 5) {
+            String resultString = string.replace("[", "").replace("]","");
+            textView.setText(resultString);
+        } else {
+            textView.setText("");
+            Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요." , Toast.LENGTH_SHORT).show();
 
-        textView.setText(resultString);
+
+        }
+
 
 
     }

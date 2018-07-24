@@ -93,27 +93,6 @@ public class UploadTestActivity extends AppCompatActivity {
         });
 
 
-        list = new ArrayList<String>();
-
-        list.add("01");
-        list.add("02");
-        list.add("03");
-        list.add("04");
-        list.add("05");
-        list.add("06");
-        list.add("07");
-        list.add("08");
-        list.add("09");
-        list.add("10");
-        list.add("11");
-
-//
-//
-//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, list);
-//        lv = findViewById(R.id.lv);
-//        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//        lv.setAdapter(adapter);
-//        setListViewHeightBasedOnChildren(lv);
 
 
         findViewById(R.id.button_addItem).setOnClickListener(new View.OnClickListener() {
