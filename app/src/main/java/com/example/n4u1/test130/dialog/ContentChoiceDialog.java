@@ -15,9 +15,8 @@ import java.util.ArrayList;
 
 public class ContentChoiceDialog extends DialogFragment {
 
-    final public ArrayList mSelectedItemsResult = new ArrayList();
     public ContentChoiceDialog() {}
-    boolean[] itemsChecked = new boolean[12];
+
 
     public interface ContentChoiceDialogListener {
         public void onDialogPositiveClick(ArrayList arrayList);

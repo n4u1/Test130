@@ -12,6 +12,40 @@
         android:orientation="vertical">
 
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:theme="@style/AppThemeMyLight"
+                    android:textColor="#4e4848"
+                    android:id="@+id/radioButton_multi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:text="순위투표" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:theme="@style/AppThemeMyLight"
+                    android:textColor="#4e4848"
+                    android:id="@+id/radioButton_single"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="단일투표" />
+            </RadioGroup>
+        </LinearLayout>
+
+
         <android.support.design.widget.TextInputLayout
             android:theme="@style/TextLabel"
             android:layout_width="match_parent"
@@ -42,38 +76,6 @@
 
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:theme="@style/AppThemeMyLight"
-                    android:textColor="#4e4848"
-                    android:id="@+id/radioButton_multi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
-                    android:text="중복선택" />
-
-                <android.support.v7.widget.AppCompatRadioButton
-                    android:theme="@style/AppThemeMyLight"
-                    android:textColor="#4e4848"
-                    android:id="@+id/radioButton_single"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="단일선택" />
-            </RadioGroup>
-        </LinearLayout>
-
 
 
         <android.support.design.widget.TextInputLayout
@@ -86,6 +88,14 @@
                 android:layout_height="wrap_content"
                 android:hint="내용을 입력해주세요." />
         </android.support.design.widget.TextInputLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout_addContent"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </FrameLayout>
 
 
     </LinearLayout>

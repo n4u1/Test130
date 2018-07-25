@@ -19,31 +19,27 @@ import java.util.ArrayList;
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener {
 
 
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_contents_upload);
 
-//
-//        findViewById(R.id.button_addCategory).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
-//                contentChoiceDialog.show(getSupportFragmentManager(), "Category Choice");
-//
-//            }
-//        });
-
+        //카테고리 선택
         EditText editText = findViewById(R.id.editText_addCategory);
-            editText.setFocusable(false);
-            editText.setClickable(false);
-            editText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
-                    contentChoiceDialog.show(getSupportFragmentManager(), "Category Choice");
-                }
-            });
+        editText.setFocusable(false);
+        editText.setClickable(false);
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
+                contentChoiceDialog.show(getSupportFragmentManager(), "contentChoiceDialog");
+            }
+        });
+
+        //사진 or 동영상 추가
+        AddContentFragment addContentFragment = new AddContentFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
+
 
 
     }
@@ -51,6 +47,12 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1234) {
+            Intent intent = getIntent();
+            String string = intent.getStringExtra("ContentKindsChoice");
+            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "string : " + string, Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -60,15 +62,14 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         TextView textView = findViewById(R.id.editText_addCategory);
         String string = arrayList.toString();
         if (arrayList.size() < 5) {
-            String resultString = string.replace("[", "").replace("]","");
+            String resultString = string.replace("[", "").replace("]", "");
             textView.setText(resultString);
         } else {
             textView.setText("");
-            Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요." , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요.", Toast.LENGTH_SHORT).show();
 
 
         }
-
 
 
     }
