@@ -24,23 +24,26 @@ import java.util.ArrayList;
  */
 public class AddContentFragment extends Fragment implements ContentKindsChoiceDialog.ContentKindsChoiceDialogListener{
 
+    private AddContentFragmentListener mListener;
 
-    public AddContentFragment() {
-        // Required empty public constructor
-    }
-
-
+    public AddContentFragment() {}
 
     public interface AddContentFragmentListener {
-
+        void callbackMethod(String string);
     }
-
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mListener = (AddContentFragmentListener) context;
     }
+
+    private void sendValue(String string) {
+        if (mListener != null) {
+            mListener.callbackMethod(string);
+        }
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container,
@@ -55,7 +58,8 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
                 contentKindsChoiceDialog.setDialogResult(new ContentKindsChoiceDialog.OnMyDialogResult() {
                     @Override
                     public void finish(String result) {
-                        Toast.makeText(getContext(), "result : " + result, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "result : " + result, Toast.LENGTH_SHORT).show();
+                        sendValue(result);
 
                     }
                 });

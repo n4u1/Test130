@@ -101,6 +101,34 @@
 
 
 
+        <!--추가된 사진(이미지뷰)-->
+        <android.support.v7.widget.AppCompatImageView
+            android:visibility="gone"
+            android:id="@+id/imageView_userAddContent_1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:visibility="gone"
+            android:id="@+id/imageView_userAddContent_2"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:visibility="gone"
+            android:id="@+id/imageView_userAddContent_3"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+
+
+
 
     </LinearLayout>
 
