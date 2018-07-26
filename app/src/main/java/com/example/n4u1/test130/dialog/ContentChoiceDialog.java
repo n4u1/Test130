@@ -49,7 +49,6 @@ public class ContentChoiceDialog extends DialogFragment {
                 .setMultiChoiceItems(R.array.contents, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                        int checkCount = 0;
                         if (b) {
                             mSelectedItems.add(i);
                         } else if (mSelectedItems.contains(i)) {

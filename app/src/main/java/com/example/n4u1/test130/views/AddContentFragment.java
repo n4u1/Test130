@@ -1,6 +1,7 @@
 package com.example.n4u1.test130.views;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +30,18 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
     }
 
 
+
+    public interface AddContentFragmentListener {
+
+    }
+
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +52,13 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
             public void onClick(View view) {
                 ContentKindsChoiceDialog contentKindsChoiceDialog = new ContentKindsChoiceDialog();
                 contentKindsChoiceDialog.show(getFragmentManager(), "contentKindsChoiceDialog");
+                contentKindsChoiceDialog.setDialogResult(new ContentKindsChoiceDialog.OnMyDialogResult() {
+                    @Override
+                    public void finish(String result) {
+                        Toast.makeText(getContext(), "result : " + result, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
 
@@ -48,13 +68,20 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
 
 
     @Override
-    public void onDialogPositiveClickd(String string) {
-        Toast.makeText(getContext(), "???????????" + string, Toast.LENGTH_SHORT).show();
-
+    public void onDialogPositiveClick(ArrayList arrayList) {
+        Toast.makeText(getContext(), "???????????" + arrayList, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
+    }
+
+
+    @Override
+    public void myCallback(Bundle bundle) {
+        String string = bundle.toString();
+        Toast.makeText(getContext(), "bundle string?" + string, Toast.LENGTH_SHORT).show();
 
     }
+
 }

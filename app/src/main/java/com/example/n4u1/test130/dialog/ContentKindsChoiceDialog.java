@@ -6,8 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
@@ -17,16 +21,20 @@ import java.util.ArrayList;
 
 public class ContentKindsChoiceDialog extends DialogFragment {
 
+    OnMyDialogResult mDialogResult;
+
 
     public ContentKindsChoiceDialog() {}
 
 
     public interface ContentKindsChoiceDialogListener {
-        public void onDialogPositiveClickd(String string);
+        public void onDialogPositiveClick(ArrayList arrayList);
         public void onDialogNegativeClick(DialogFragment dialog);
+        public void myCallback(Bundle bundle);
     }
 
     ContentKindsChoiceDialogListener mListener;
+    ContentKindsChoiceDialogListener myListener;
 
     @Override
     public void onAttach(Context context) {
@@ -41,6 +49,17 @@ public class ContentKindsChoiceDialog extends DialogFragment {
         }
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            myListener = (ContentKindsChoiceDialogListener) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException();
+        }
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
@@ -48,34 +67,67 @@ public class ContentKindsChoiceDialog extends DialogFragment {
           // Where we track the selected items
 
           // Where we track the selected items
+        final ArrayList mSelectedItem = new ArrayList();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("추가할 자료의 종류를 선택해주세요.")
                 .setSingleChoiceItems(R.array.contentskinds, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String mSelectedItem;
-//                        mSelectedItems[0] = String.valueOf(i);
                         if (i == 0) {
-                            mSelectedItem = "사진";
+                            mSelectedItem.clear();
+                            mSelectedItem.add(i);
                         } else if (i == 1) {
-                            mSelectedItem = "동영상";
-                        } else {
-                            return;
+                            mSelectedItem.clear();
+                            mSelectedItem.add(i);
                         }
-//                        Toast.makeText(getContext(), "mSelectedItem : " + mSelectedItem, Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(getDialog().getContext(), UserContentsUploadActivity.class);
-//                        intent.putExtra("ContentKindsChoice", mSelectedItem);
-//                        startActivityForResult(intent, 1234);
-                        Intent intent = new Intent(getDialog().getContext(), UserContentsUploadActivity.class);
-                        intent.putExtra("ContentKindsChoice", mSelectedItem);
-                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                            if (mSelectedItem.contains(0)) {
+                                mSelectedItem.clear();
+                                mSelectedItem.add("사진");
+                                } else {
+                                mSelectedItem.clear();
+                                mSelectedItem.add("동영상");
+                            }
+                        mDialogResult.finish(mSelectedItem.toString());
+//                            Bundle args = new Bundle();
+//                            args.putString("test", String.valueOf(mSelectedItem));
+//                            myListener.myCallback(args);
+
+
+//                        Toast.makeText(getContext(), "arrayList : " + arrayList, Toast.LENGTH_SHORT).show();
+
+//                        myListener.myCallback(savedInstanceState);
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
 
-
-
         return builder.create();
     }
+
+    //다이얼로그 프래그먼트에서 프래그먼트로 데이터를 보내려면 이거 써야함
+    public void setDialogResult(OnMyDialogResult dialogResult){
+        mDialogResult = dialogResult;
+    }
+
+
+
+    //다이얼로그 프래그먼트에서 프래그먼트로 데이터를 보내려면 이거 써야함
+    public interface OnMyDialogResult{
+        void finish(String result);
+    }
+
+
+
+
 }

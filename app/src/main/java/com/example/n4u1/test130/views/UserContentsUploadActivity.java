@@ -13,10 +13,12 @@ import android.widget.Toast;
 import com.example.n4u1.test130.R;
 
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
+import com.example.n4u1.test130.dialog.ContentKindsChoiceDialog;
 
 import java.util.ArrayList;
 
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener {
+
 
 
     @Override
@@ -39,21 +41,12 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         //사진 or 동영상 추가
         AddContentFragment addContentFragment = new AddContentFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
-
-
-
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-            Intent intent = getIntent();
-            String string = intent.getStringExtra("ContentKindsChoice");
-            Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getApplicationContext(), "string : " + string, Toast.LENGTH_SHORT).show();
-
-
     }
 
 
@@ -79,8 +72,14 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     }
 
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    public void callContentChoice(String string) {
+        Toast.makeText(getApplicationContext(), "string ???????? : " + string, Toast.LENGTH_SHORT).show();
 
     }
 }
