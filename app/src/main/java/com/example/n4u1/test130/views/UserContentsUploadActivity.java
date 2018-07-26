@@ -46,13 +46,13 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 1234) {
+        super.onActivityResult(requestCode, resultCode, data);
+
             Intent intent = getIntent();
             String string = intent.getStringExtra("ContentKindsChoice");
             Toast.makeText(getApplicationContext(), "??", Toast.LENGTH_SHORT).show();
             Toast.makeText(getApplicationContext(), "string : " + string, Toast.LENGTH_SHORT).show();
-        }
+
 
     }
 

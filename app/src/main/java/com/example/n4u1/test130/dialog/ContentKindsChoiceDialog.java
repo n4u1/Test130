@@ -49,8 +49,8 @@ public class ContentKindsChoiceDialog extends DialogFragment {
 
           // Where we track the selected items
 
-        final AlertDialog.Builder[] builder = {new AlertDialog.Builder(getActivity())};
-        builder[0].setTitle("추가할 자료의 종류를 선택해주세요.")
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("추가할 자료의 종류를 선택해주세요.")
                 .setSingleChoiceItems(R.array.contentskinds, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -63,14 +63,19 @@ public class ContentKindsChoiceDialog extends DialogFragment {
                         } else {
                             return;
                         }
+//                        Toast.makeText(getContext(), "mSelectedItem : " + mSelectedItem, Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(getDialog().getContext(), UserContentsUploadActivity.class);
+//                        intent.putExtra("ContentKindsChoice", mSelectedItem);
+//                        startActivityForResult(intent, 1234);
                         Intent intent = new Intent(getDialog().getContext(), UserContentsUploadActivity.class);
                         intent.putExtra("ContentKindsChoice", mSelectedItem);
-                        startActivityForResult(intent, 1234);
+                        startActivity(intent);
+
                     }
                 });
 
 
 
-        return builder[0].create();
+        return builder.create();
     }
 }
