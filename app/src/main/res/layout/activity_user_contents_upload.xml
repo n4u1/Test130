@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
+            android:layout_marginTop="16dp"
             >
 
             <RadioGroup
@@ -47,9 +48,11 @@
 
 
         <android.support.design.widget.TextInputLayout
+
             android:theme="@style/TextLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
             android:padding="8dp">
 
             <android.support.design.widget.TextInputEditText
@@ -95,15 +98,17 @@
         <FrameLayout
             android:id="@+id/frameLayout_addContent"
             android:padding="10dp"
+            android:layout_marginBottom="6dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
         </FrameLayout>
 
 
 
-        <!--추가된 사진(이미지뷰)-->
+        <!--         추가된 사진(이미지뷰), 사용자 업로드 사진      -->
         <android.support.v7.widget.AppCompatImageView
             android:visibility="gone"
+            android:scaleType="centerCrop"
             android:id="@+id/imageView_userAddContent_1"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -112,6 +117,7 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:visibility="gone"
+            android:scaleType="centerCrop"
             android:id="@+id/imageView_userAddContent_2"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
@@ -120,10 +126,19 @@
 
         <android.support.v7.widget.AppCompatImageView
             android:visibility="gone"
+            android:scaleType="centerCrop"
             android:id="@+id/imageView_userAddContent_3"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
+        <!--         추가된 사진(이미지뷰), 사용자 업로드 사진      -->
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_uploadContent"
+            android:text="업로드"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
 

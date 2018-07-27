@@ -11,9 +11,11 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     ImageView imageView_userAddContent_1;
     ImageView imageView_userAddContent_2;
     ImageView imageView_userAddContent_3;
-    ImageView imageView_userAddContent_4;
+
 
 
 
@@ -52,9 +54,67 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
 
 
+        imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_1);
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popup.show();
+                return false;
+            }
+        });
+
+        imageView_userAddContent_2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_2);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popup.show();//showing popup menu
+                return false;
+            }
+        });
+
+        imageView_userAddContent_3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popup.show();//showing popup menu
+                return false;
+            }
+        });
+
+
         //카테고리 선택
         EditText editText = findViewById(R.id.editText_addCategory);
-
         //텍스트입력 안되게하고, 다이얼로그만 띄움
         editText.setFocusable(false);
         editText.setClickable(false);
@@ -63,25 +123,12 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             public void onClick(View view) {
                 ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
                 contentChoiceDialog.show(getSupportFragmentManager(), "contentChoiceDialog");
-
             }
         });
-
-        //현재 업로드된 사진 체크
-
-
-
-
-
-
         //사진 or 동영상 추가
         AddContentFragment addContentFragment = new AddContentFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
-
-
-
     }
-
 
 
     public void addUserContentImage() {
@@ -95,6 +142,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     private void addUserContentVideo() {
     }
 
+    //현재 업로드된 사진 count체크
     private int imageViewCheck () {
         int count = 0;
 
@@ -127,10 +175,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         int checkCount = imageViewCheck();
-
         if(requestCode == GALLEY_CODE){
-//            imageView_userAddContent_1.setVisibility(imageView_userAddContent_1.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-
             if (checkCount == 0) {
                 imageView_userAddContent_1.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
@@ -158,10 +203,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 File f = new File(imgPath);
                 imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
             }
-
-
         } else {return;}
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
