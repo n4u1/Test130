@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
+
 public class HomeActivity extends AppCompatActivity {
 
     private FirebaseUser mUser;
@@ -40,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
 
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
@@ -71,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 
         for (int i = 0; i < 5; i++) {
 
-            PostItem item = new PostItem(true, 122, "irene", "http://image.hankookilbo.com/i.aspx?Guid=2017\\11\\18\\02dcbfbf70ec42f0bf812ebb337949a2&Month=Entertainment&size=640", "wowffffffffff");
+            PostItem item = new PostItem(true, 1222, "경준이", "http://image.hankookilbo.com/i.aspx?Guid=2017\\11\\18\\02dcbfbf70ec42f0bf812ebb337949a2&Month=Entertainment&size=640", "누가 제일 이뻐요??");
             listItem.add(i, item);
         }
 

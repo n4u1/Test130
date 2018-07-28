@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/imageView_postImg"
-        android:background="#5a9f5a"
+        android:background="#aed1fc"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="300dp" />
 
     <RelativeLayout
         android:paddingTop="8dp"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:background="#d50000"
+            android:src="@drawable/ic_thumb_up_black_24dp"
             android:id="@+id/imageView_like"
             android:layout_width="24dp"
             android:layout_height="24dp" />
@@ -36,7 +36,7 @@
 
         <ImageView
             android:layout_alignParentRight="true"
-            android:background="#151414"
+            android:src="@drawable/ic_share_black_24dp"
             android:id="@+id/imageView_share"
             android:layout_width="24dp"
             android:layout_height="24dp" />
@@ -55,8 +55,8 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="#6200ea"
-            android:text="anstar"
+            android:textColor="#4485c9"
+            android:text="kjlee"
             android:id="@+id/textView_userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -64,7 +64,7 @@
 
         <TextView
             android:layout_marginLeft="8dp"
-            android:text="불꽃놀이 했어용~!"
+            android:text="제일 이쁜옷 추천좀"
             android:id="@+id/textView_postText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

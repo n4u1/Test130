@@ -29,7 +29,7 @@
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:theme="@style/AppThemeMyLight"
-                    android:textColor="#4e4848"
+                    android:textColor="#4485c9"
                     android:id="@+id/radioButton_multi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:theme="@style/AppThemeMyLight"
-                    android:textColor="#4e4848"
+                    android:textColor="#4485c9"
                     android:id="@+id/radioButton_single"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,17 +134,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp" />
         <!--         추가된 사진(이미지뷰), 사용자 업로드 사진      -->
-
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/button_uploadContent"
-            android:text="업로드"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-
-
 
 
     </LinearLayout>

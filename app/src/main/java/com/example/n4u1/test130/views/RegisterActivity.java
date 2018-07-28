@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
+
 public class RegisterActivity extends AppCompatActivity {
 
 
@@ -29,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();

@@ -3,9 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
     <item
-        android:title="Item"
-        android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="Setting"
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_settings_black_24dp"
         app:showAsAction="always"/>
+
+
+    <item
+        android:title="Mine"
+        android:id="@+id/menu_mine"
+        android:icon="@drawable/ic_perm_identity_black_24dp"
+        app:showAsAction="always"/>
+
+
+    <item
+        android:title="List"
+        android:id="@+id/menu_list"
+        android:icon="@drawable/ic_grain_black_24dp"
+        app:showAsAction="always"/>
+
 </menu>

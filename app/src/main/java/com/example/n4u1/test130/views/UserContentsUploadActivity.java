@@ -1,5 +1,6 @@
 package com.example.n4u1.test130.views;
 
+import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
+
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener
                 , AddContentFragment.AddContentFragmentListener{
 
@@ -53,13 +57,13 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     EditText editText_title;
     EditText editText_description;
-    Button button_uploadContent;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_user_contents_upload);
 
         storage = FirebaseStorage.getInstance();
@@ -73,15 +77,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_description);
-        button_uploadContent = findViewById(R.id.button_uploadContent);
 
-
-        button_uploadContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                upload(imgPath);
-            }
-        });
 
 
 
@@ -89,7 +85,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             @Override
             public boolean onLongClick(View v) {
                 PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_1);
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
@@ -108,7 +104,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_2);
                 //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -129,7 +125,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
                 //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -173,7 +169,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     private void addUserContentVideo() {
     }
 
-    //현재 업로드된 사진 count체크
+    //현재 업로드된 사진 count체크 > n개올라가있으면 n+1번째뷰에 올리기위함
     private int imageViewCheck () {
         int count = 0;
 
@@ -193,7 +189,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
 
         Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child("imagessss/"+file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -205,6 +201,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG).show();
                 ContentDTO contentDTO = new ContentDTO();
                 contentDTO.title = editText_title.getText().toString();
                 contentDTO.description = editText_description.getText().toString();
@@ -233,6 +230,32 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         return cursor.getString(index);
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.usercontentupload_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_upload : upload(imgPath); break;
+        }
+
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         int checkCount = imageViewCheck();
@@ -242,7 +265,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
                 System.out.println(getPath(data.getData()));
-                Log.d("LKJ", "check count 0000000 ");
                 File f = new File(imgPath);
                 imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
 
@@ -251,7 +273,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
                 System.out.println(getPath(data.getData()));
-                Log.d("LKJ", "check count 111111111 ");
                 File f = new File(imgPath);
                 imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
 
@@ -260,7 +281,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
                 System.out.println(getPath(data.getData()));
-                Log.d("LKJ", "check count 222222222 ");
                 File f = new File(imgPath);
                 imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
             }
@@ -279,12 +299,9 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         } else {
             textView.setText("");
             Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요.", Toast.LENGTH_SHORT).show();
-
-
         }
-
-
     }
+
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
