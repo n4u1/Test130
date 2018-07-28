@@ -1,18 +1,18 @@
 package com.example.n4u1.test130.views;
 
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -22,7 +22,14 @@ import android.widget.Toast;
 import com.example.n4u1.test130.R;
 
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
-import com.example.n4u1.test130.dialog.ContentKindsChoiceDialog;
+import com.example.n4u1.test130.models.ContentDTO;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +47,13 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     ImageView imageView_userAddContent_2;
     ImageView imageView_userAddContent_3;
 
+    private FirebaseStorage storage;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
+
+    EditText editText_title;
+    EditText editText_description;
+    Button button_uploadContent;
 
 
 
@@ -48,10 +62,27 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_contents_upload);
 
+        storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
 
         imageView_userAddContent_1 = findViewById(R.id.imageView_userAddContent_1);
         imageView_userAddContent_2 = findViewById(R.id.imageView_userAddContent_2);
         imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
+
+        editText_title = findViewById(R.id.editText_title);
+        editText_description = findViewById(R.id.editText_description);
+        button_uploadContent = findViewById(R.id.button_uploadContent);
+
+
+        button_uploadContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upload(imgPath);
+            }
+        });
+
 
 
         imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
@@ -156,6 +187,36 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             return count;
     }
 
+    //fireBase에 업로드
+    public void upload(String uri) {
+
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+
+        Uri file = Uri.fromFile(new File(uri));
+        StorageReference riversRef = storageRef.child("imagessss/"+file.getLastPathSegment());
+        UploadTask uploadTask = riversRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                ContentDTO contentDTO = new ContentDTO();
+                contentDTO.title = editText_title.getText().toString();
+                contentDTO.description = editText_description.getText().toString();
+                contentDTO.uid = auth.getCurrentUser().getUid();
+                contentDTO.userID = auth.getCurrentUser().getEmail();
+                database.getReference().child("user_contents").push().setValue(contentDTO);
+
+            }
+        });
+
+
+    }
 
 
 

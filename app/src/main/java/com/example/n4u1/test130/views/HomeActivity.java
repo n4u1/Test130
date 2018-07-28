@@ -2,10 +2,12 @@ package com.example.n4u1.test130.views;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -40,9 +42,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        TextView textView_uidTest = findViewById(R.id.textView_uidTest);
+        FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
 
-        Button button_goTestActivity = findViewById(R.id.button_goTestActivity);
+
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -52,10 +54,10 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        button_goTestActivity.setOnClickListener(new View.OnClickListener() {
+        fab_addContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, UploadTestActivity.class);
+                Intent intent = new Intent(HomeActivity.this, UserContentsUploadActivity.class);
                 startActivity(intent);
 
             }
@@ -78,4 +80,12 @@ public class HomeActivity extends AppCompatActivity {
         recyclerViewList.setAdapter(postAdapter);
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
 }
