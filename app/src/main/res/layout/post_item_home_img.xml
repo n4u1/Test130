@@ -1,77 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/imageView_postImg"
-        android:background="#aed1fc"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
-
-    <RelativeLayout
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@drawable/ic_thumb_up_black_24dp"
-            android:id="@+id/imageView_like"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:id="@+id/textView_likeCount"
-            android:layout_marginLeft="8dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView_like"
-            android:text="12345"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_share_black_24dp"
-            android:id="@+id/imageView_share"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-    </RelativeLayout>
-
-    <View
-        android:background="#efefef"
-        android:layout_width="match_parent"
-        android:layout_height="1dp">
-    </View>
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:padding="16dp"
-        android:orientation="horizontal"
+        android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="#4485c9"
-            android:text="kjlee"
-            android:id="@+id/textView_userName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp">
 
 
-        <TextView
-            android:layout_marginLeft="8dp"
-            android:text="제일 이쁜옷 추천좀"
-            android:id="@+id/textView_postText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <FrameLayout
+            android:id="@+id/frameLayout_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/imageView_postImg"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="#aed1fc" />
+
+            <ImageView
+                android:id="@+id/imageView_contentType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:background="#ffffff"
+                android:minHeight="30dp"
+                android:minWidth="30dp"
+                android:src="@drawable/ic_access_alarm_black_24dp" />
 
 
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp">
+
+
+            <TextView
+                android:id="@+id/textView_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="kjlee"
+                android:textColor="#4485c9" />
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/textView_userName"
+                android:text="제일 이쁜옷 추천좀" />
+
+
+            <ImageView
+                android:id="@+id/imageView_like"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toLeftOf="@+id/textView_likeCount"
+                android:src="@drawable/ic_thumb_up_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView_likeCount"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/imageView_hitCount"
+                android:text="2291" />
+
+            <ImageView
+                android:id="@+id/imageView_hitCount"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toLeftOf="@+id/textView_hitCount"
+                android:src="@drawable/ic_poll_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView_hitCount"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@+id/imageView_share"
+                android:text="3374" />
+
+            <ImageView
+                android:id="@+id/imageView_share"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_share_black_24dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#efefef">
+
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+
+        </LinearLayout>
 
 
     </LinearLayout>
+
 
 </LinearLayout>

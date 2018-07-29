@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.example.n4u1.test130.R;
 
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
 import com.example.n4u1.test130.models.ContentDTO;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,12 +54,18 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     ImageView imageView_userAddContent_2;
     ImageView imageView_userAddContent_3;
 
+    EditText editText_title;
+    EditText editText_description;
+
+    RadioButton radioButton_multi;
+    RadioButton radioButton_single;
+    RadioGroup radioGroup_rs;
+    String userContentType;
+
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
 
-    EditText editText_title;
-    EditText editText_description;
 
 
 
@@ -74,6 +83,10 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         imageView_userAddContent_1 = findViewById(R.id.imageView_userAddContent_1);
         imageView_userAddContent_2 = findViewById(R.id.imageView_userAddContent_2);
         imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
+
+        radioGroup_rs = findViewById(R.id.radioGroup_rs);
+        userContentType = "1";
+
 
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_description);
@@ -140,6 +153,16 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         });
 
 
+        radioGroup_rs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.radioButton_ranking : userContentType = "ranking"; break;
+                    case R.id.radioButton_single : userContentType = "single"; break;
+                }
+            }
+        });
+
         //카테고리 선택
         EditText editText = findViewById(R.id.editText_addCategory);
         //텍스트입력 안되게하고, 다이얼로그만 띄움
@@ -186,10 +209,11 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     //fireBase에 업로드
     public void upload(String uri) {
 
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+        final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+
 
         Uri file = Uri.fromFile(new File(uri));
-        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
+        final StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -200,9 +224,15 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                Uri downloadUrl = taskSnapshot.getUploadSessionUri();
+//                Uri down = storageRef.getDownloadUrl(taskSnapshot);
 
-                Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!" , Toast.LENGTH_LONG).show();
+
                 ContentDTO contentDTO = new ContentDTO();
+                contentDTO.contentType = userContentType;
+                contentDTO.imageUrl = riversRef.getDownloadUrl().toString();
                 contentDTO.title = editText_title.getText().toString();
                 contentDTO.description = editText_description.getText().toString();
                 contentDTO.uid = auth.getCurrentUser().getUid();

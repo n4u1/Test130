@@ -9,4 +9,11 @@ public class ContentDTO {
     public String uid;
     public String userID;
     public String pollMode;
+    public String contentType;
+    public String contentId;
+    boolean isUserLike;
+    int postLikeCount;
+    int contentHit;
+
+
 }

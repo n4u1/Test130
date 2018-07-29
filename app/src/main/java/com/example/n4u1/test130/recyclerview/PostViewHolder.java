@@ -12,7 +12,7 @@ import com.example.n4u1.test130.R;
 public class PostViewHolder extends RecyclerView.ViewHolder{
 
     public ImageView imageView_postImg, imageView_like, imageView_share;
-    public TextView textView_likeCount, textView_userName, textView_postText;
+    public TextView textView_likeCount, textView_userName, textView_title;
 
 
     public PostViewHolder(View itemView) {
@@ -22,7 +22,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder{
         imageView_share = itemView.findViewById(R.id.imageView_share);
         textView_likeCount = itemView.findViewById(R.id.textView_likeCount);
         textView_userName = itemView.findViewById(R.id.textView_userName);
-        textView_postText = itemView.findViewById(R.id.textView_postText);
+        textView_title = itemView.findViewById(R.id.textView_title);
 
     }
 }

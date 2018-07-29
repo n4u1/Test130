@@ -3,43 +3,61 @@ package com.example.n4u1.test130.recyclerview;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
+import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.PostItem;
 import com.example.n4u1.test130.views.HomeActivity;
 
 import java.util.ArrayList;
 
-public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private ArrayList<PostItem> postItems;
+    private ArrayList<ContentDTO> contentDTOS;
 
 
-    public PostAdapter(Context context, ArrayList<PostItem> listItem) {
+    public PostAdapter(Context context, ArrayList<ContentDTO> listItem) {
         mContext = context;
-        postItems = listItem;
+        contentDTOS = listItem;
     }
+
 
     @NonNull
-    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View baseView = View.inflate(mContext, R.layout.post_item_home_img, null);
-        PostViewHolder postViewHolder = new PostViewHolder(baseView);
-        return postViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_home_img, parent, false);
+        return new PostViewHolder(view);
     }
+
+
+
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-        PostItem item = postItems.get(position);
-        holder.textView_userName.setText(item.getUserName());
-        holder.textView_postText.setText(item.getPostText());
-        holder.textView_likeCount.setText(String.valueOf(item.getPostLikeCount()));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        ((PostViewHolder)holder).textView_title.setText(contentDTOS.get(position).title);
+        ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
+        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl).into(((PostViewHolder)holder).imageView_postImg);
 
     }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+//        //ContentDTO item = contentDTOS.get(position);
+//        holder.textView_userName.setText(contentDTOS.get(position).userID);
+//
+//        holder.textView_title.setText(contentDTOS.get(position).title);
+////        holder.textView_title.setText(item.getPostText());
+////        holder.textView_likeCount.setText(String.valueOf(item.getPostLikeCount()));
+//
+//    }
 
     @Override
     public int getItemCount() {
-        return postItems.size();
+        return contentDTOS.size();
     }
 }

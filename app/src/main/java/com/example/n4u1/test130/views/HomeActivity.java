@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
+import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.PostItem;
 import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.recyclerview.PostAdapter;
@@ -34,8 +35,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
-    private FirebaseUser mFirebaseUser;
-    private FirebaseDatabase mDatabaseReference;
+    private FirebaseUser mFireBaseUser;
+    private FirebaseDatabase mDatabase;
     private DatabaseReference mEmailDatabaseReference;
 
 
@@ -51,9 +52,9 @@ public class HomeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        mFirebaseUser = mAuth.getCurrentUser();
-        mDatabaseReference = FirebaseDatabase.getInstance();
-        mEmailDatabaseReference = mDatabaseReference.getReference("users").child(mFirebaseUser.getUid());
+        mFireBaseUser = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance();
+//        mEmailDatabaseReference = mDatabase.getReference("users").child(mFireBaseUser.getUid());
 
 
 
@@ -67,20 +68,33 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-
-
-        ArrayList<PostItem> listItem = new ArrayList<>();
+        final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
         RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
 
-        for (int i = 0; i < 5; i++) {
-
-            PostItem item = new PostItem(true, 1222, "경준이", "http://image.hankookilbo.com/i.aspx?Guid=2017\\11\\18\\02dcbfbf70ec42f0bf812ebb337949a2&Month=Entertainment&size=640", "누가 제일 이뻐요??");
-            listItem.add(i, item);
-        }
-
-        PostAdapter postAdapter = new PostAdapter(this, listItem);
-        recyclerViewList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        recyclerViewList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
         recyclerViewList.setAdapter(postAdapter);
+
+        mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                contentDTOS.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                    contentDTOS.add(contentDTO);
+                }
+                postAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
     }
 
