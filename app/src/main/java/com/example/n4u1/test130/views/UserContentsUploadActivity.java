@@ -7,10 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -167,11 +169,11 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         });
 
         //카테고리 선택
-        EditText editText = findViewById(R.id.editText_addCategory);
+        EditText editText_addCategory = findViewById(R.id.editText_addCategory);
         //텍스트입력 안되게하고, 다이얼로그만 띄움
-        editText.setFocusable(false);
-        editText.setClickable(false);
-        editText.setOnClickListener(new View.OnClickListener() {
+        editText_addCategory.setFocusable(false);
+        editText_addCategory.setClickable(false);
+        editText_addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
@@ -215,8 +217,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     //fireBase에 업로드
     public void upload(final String uri) {
-
-//        final StorageReference storageRef = storage.getReference();
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
 
         Uri file = Uri.fromFile(new File(uri));
@@ -236,20 +236,22 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("★★★★★★★★2", uri.toString());
                         ContentDTO contentDTO = new ContentDTO();
-                        contentDTO.contentType = textView.getText().toString();
                         contentDTO.imageUrl = uri.toString();
                         contentDTO.title = editText_title.getText().toString();
                         contentDTO.description = editText_description.getText().toString();
                         contentDTO.uid = auth.getCurrentUser().getUid();
                         contentDTO.userID = auth.getCurrentUser().getEmail();
                         contentDTO.pollMode = userContentType;
+                        contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
                         database.getReference().child("user_contents").push().setValue(contentDTO);
                     }
                 });
 
-                Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!" , Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+
+                toast.show();
             }
 
         });
@@ -285,6 +287,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         return true;
     }
 
+    // 상단V버튼 클릭시 업로드 실행
+    //분기처리 해줘야할듯
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
