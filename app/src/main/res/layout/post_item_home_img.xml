@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="5dp"
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -18,21 +21,22 @@
             android:layout_height="400dp"
             android:layout_gravity="center">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageView_postImg"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:background="#aed1fc" />
+                android:background="#aed1fc"
+                android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/imageView_contentType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="#ffffff"
-                android:minHeight="30dp"
-                android:minWidth="30dp"
-                android:src="@drawable/ic_access_alarm_black_24dp" />
+            <!--<ImageView-->
+            <!--android:id="@+id/imageView_contentType"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="15dp"-->
+            <!--android:background="#ffffff"-->
+            <!--android:minHeight="30dp"-->
+            <!--android:minWidth="30dp"-->
+            <!--android:src="@drawable/ic_access_alarm_black_24dp" />-->
 
 
         </FrameLayout>
@@ -46,22 +50,6 @@
             android:paddingTop="8dp">
 
 
-            <TextView
-                android:id="@+id/textView_userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="kjlee"
-                android:textColor="#4485c9" />
-
-            <TextView
-                android:id="@+id/textView_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/textView_userName"
-                android:text="제일 이쁜옷 추천좀" />
 
 
             <ImageView
@@ -112,14 +100,36 @@
 
         </View>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="20dp">
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp">
 
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="kjlee"
+                android:textColor="#4485c9" />
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/textView_userName"
+                android:textColor="#000000" />
+
+        </RelativeLayout>
 
 
     </LinearLayout>
 
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

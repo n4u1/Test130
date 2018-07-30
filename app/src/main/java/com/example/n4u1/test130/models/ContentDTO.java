@@ -14,6 +14,4 @@ public class ContentDTO {
     boolean isUserLike;
     int postLikeCount;
     int contentHit;
-
-
 }

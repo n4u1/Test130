@@ -70,8 +70,14 @@ public class HomeActivity extends AppCompatActivity {
 
         final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
         RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager.isSmoothScrollbarEnabled();
+        mLayoutManager.setStackFromEnd(true);
+        mLayoutManager.setReverseLayout(true);
 
-        recyclerViewList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerViewList.setLayoutManager(mLayoutManager);
+
         final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
         recyclerViewList.setAdapter(postAdapter);
 

@@ -30,6 +30,7 @@ import com.example.n4u1.test130.models.ContentDTO;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
 
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener
-                , AddContentFragment.AddContentFragmentListener{
+        , AddContentFragment.AddContentFragmentListener {
 
 
     private static final int GALLEY_CODE = 100;
@@ -53,6 +54,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     ImageView imageView_userAddContent_1;
     ImageView imageView_userAddContent_2;
     ImageView imageView_userAddContent_3;
+
+    TextView textView;
 
     EditText editText_title;
     EditText editText_description;
@@ -65,8 +68,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
-
 
 
     @Override
@@ -90,8 +91,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_description);
-
-
 
 
         imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
@@ -157,8 +156,12 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
-                    case R.id.radioButton_ranking : userContentType = "ranking"; break;
-                    case R.id.radioButton_single : userContentType = "single"; break;
+                    case R.id.radioButton_ranking:
+                        userContentType = "ranking";
+                        break;
+                    case R.id.radioButton_single:
+                        userContentType = "single";
+                        break;
                 }
             }
         });
@@ -181,6 +184,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     }
 
 
+    // + 버튼클릭 > 사진 or 동영상 추가 팝업 > 사진 선택
     public void addUserContentImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -188,32 +192,35 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         startActivityForResult(intent, GALLEY_CODE);
     }
 
-
+    // + 버튼클릭 > 사진 or 동영상 추가 팝업 > 동영상 선택
     private void addUserContentVideo() {
     }
 
     //현재 업로드된 사진 count체크 > n개올라가있으면 n+1번째뷰에 올리기위함
-    private int imageViewCheck () {
+    private int imageViewCheck() {
         int count = 0;
 
-            if (imageView_userAddContent_1.getVisibility() == View.VISIBLE) {
-                count ++;
-            } if (imageView_userAddContent_2.getVisibility() == View.VISIBLE) {
-                count ++;
-            } if (imageView_userAddContent_3.getVisibility() == View.VISIBLE) {
-                count ++;
-            }
-            return count;
+        if (imageView_userAddContent_1.getVisibility() == View.VISIBLE) {
+            count++;
+        }
+        if (imageView_userAddContent_2.getVisibility() == View.VISIBLE) {
+            count++;
+        }
+        if (imageView_userAddContent_3.getVisibility() == View.VISIBLE) {
+            count++;
+        }
+        return count;
     }
 
-    //fireBase에 업로드
-    public void upload(String uri) {
 
+    //fireBase에 업로드
+    public void upload(final String uri) {
+
+//        final StorageReference storageRef = storage.getReference();
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
 
-
         Uri file = Uri.fromFile(new File(uri));
-        final StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
+        final StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -222,35 +229,46 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 // Handle unsuccessful uploads
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                Uri downloadUrl = taskSnapshot.getUploadSessionUri();
-//                Uri down = storageRef.getDownloadUrl(taskSnapshot);
+
+                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d("★★★★★★★★2", uri.toString());
+                        ContentDTO contentDTO = new ContentDTO();
+                        contentDTO.contentType = textView.getText().toString();
+                        contentDTO.imageUrl = uri.toString();
+                        contentDTO.title = editText_title.getText().toString();
+                        contentDTO.description = editText_description.getText().toString();
+                        contentDTO.uid = auth.getCurrentUser().getUid();
+                        contentDTO.userID = auth.getCurrentUser().getEmail();
+                        contentDTO.pollMode = userContentType;
+                        database.getReference().child("user_contents").push().setValue(contentDTO);
+                    }
+                });
 
                 Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!" , Toast.LENGTH_LONG).show();
-
-                ContentDTO contentDTO = new ContentDTO();
-                contentDTO.contentType = userContentType;
-                contentDTO.imageUrl = riversRef.getDownloadUrl().toString();
-                contentDTO.title = editText_title.getText().toString();
-                contentDTO.description = editText_description.getText().toString();
-                contentDTO.uid = auth.getCurrentUser().getUid();
-                contentDTO.userID = auth.getCurrentUser().getEmail();
-                database.getReference().child("user_contents").push().setValue(contentDTO);
-
             }
+
         });
+
+
+//        Log.d("★★★★★★★★3", storageRef.getStorage().getReferenceFromUrl("gs://test130-1068f.appspot.com").toString());
+//        Log.d("★★★★★★★★4", storageRef.getStorage().getReference("gs://test130-1068f.appspot.com").toString());
+//        Log.d("★★★★★★★★5", riversRef.getStorage().getReference("gs://test130-1068f.appspot.com").toString());
+//        Log.d("★★★★★★★★5", riversRef.getStorage().getReferenceFromUrl("gs://test130-1068f.appspot.com").toString());
+//        Log.d("★★★★★★★★6", riversRef.getDownloadUrl().toString());
 
 
     }
 
 
-
     //디바이스 이미지 경로 가져오기
     private String getPath(Uri uri) {
-        String [] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader cursorLoader = new CursorLoader(this, uri, proj,null, null, null);
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
 
         Cursor cursor = cursorLoader.loadInBackground();
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -259,7 +277,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
         return cursor.getString(index);
     }
-
 
 
     @Override
@@ -272,7 +289,9 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.menu_upload : upload(imgPath); break;
+            case R.id.menu_upload:
+                upload(imgPath);
+                break;
         }
 
         onBackPressed();
@@ -289,7 +308,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         int checkCount = imageViewCheck();
-        if(requestCode == GALLEY_CODE){
+        if (requestCode == GALLEY_CODE) {
             if (checkCount == 0) {
                 imageView_userAddContent_1.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
@@ -298,7 +317,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 File f = new File(imgPath);
                 imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
 
-            } if (checkCount == 1) {
+            }
+            if (checkCount == 1) {
                 imageView_userAddContent_2.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -306,7 +326,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 File f = new File(imgPath);
                 imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
 
-            } if (checkCount == 2) {
+            }
+            if (checkCount == 2) {
                 imageView_userAddContent_3.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -314,14 +335,16 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 File f = new File(imgPath);
                 imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
             }
-        } else {return;}
+        } else {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
 
     @Override
     public void onDialogPositiveClick(ArrayList arrayList) {
-        TextView textView = findViewById(R.id.editText_addCategory);
+        textView = findViewById(R.id.editText_addCategory);
         String string = arrayList.toString();
         if (arrayList.size() < 5) {
             String resultString = string.replace("[", "").replace("]", "");
@@ -349,7 +372,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         if (string.equals("[사진]")) {
             addUserContentImage();
 
-        } else if(string.equals("[동영상]")) {
+        } else if (string.equals("[동영상]")) {
             addUserContentVideo();
 
         } else {
