@@ -28,6 +28,7 @@
                 android:background="#aed1fc"
                 android:scaleType="centerCrop" />
 
+
             <!--<ImageView-->
             <!--android:id="@+id/imageView_contentType"-->
             <!--android:layout_width="wrap_content"-->

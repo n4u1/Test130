@@ -9,6 +9,7 @@ import com.example.n4u1.test130.R;
 
 import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
 
+
 public class ContentTypeListActivity extends AppCompatActivity {
 
     @Override

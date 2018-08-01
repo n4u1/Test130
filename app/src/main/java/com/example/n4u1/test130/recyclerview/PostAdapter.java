@@ -34,7 +34,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 
     //contentDTO 내용을 한개의 아이템셋에 배치
     @Override

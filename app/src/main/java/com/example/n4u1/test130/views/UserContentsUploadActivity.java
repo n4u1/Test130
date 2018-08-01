@@ -30,6 +30,7 @@ import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -62,8 +63,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     EditText editText_title;
     EditText editText_description;
 
-    RadioButton radioButton_multi;
-    RadioButton radioButton_single;
     RadioGroup radioGroup_rs;
     String userContentType;
 
@@ -88,7 +87,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
 
         radioGroup_rs = findViewById(R.id.radioGroup_rs);
-        userContentType = "1";
+        userContentType = "";
 
 
         editText_title = findViewById(R.id.editText_title);
@@ -135,7 +134,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         imageView_userAddContent_3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
                 //Inflating the Popup using xml file
@@ -153,7 +151,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             }
         });
 
-
+        //싱글튜표 or 순위투표 선택
         radioGroup_rs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -214,12 +212,10 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         return count;
     }
 
-
-    //fireBase에 업로드
+    //FireBase 에 업로드
     public void upload(final String uri) {
-        final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-
         Uri file = Uri.fromFile(new File(uri));
+        final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
         final StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
 
@@ -229,7 +225,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 // Handle unsuccessful uploads
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -245,25 +240,23 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                         contentDTO.pollMode = userContentType;
                         contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
                         database.getReference().child("user_contents").push().setValue(contentDTO);
+                        //contentDTO에 담아서 setValue로 디비에 저장
                     }
                 });
+//
+//                String result =
+//                riversRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                    }
+//                }).getResult().toString();
+//                Log.d("★★★★★★", result);
 
                 Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
-
                 toast.show();
             }
-
         });
-
-
-//        Log.d("★★★★★★★★3", storageRef.getStorage().getReferenceFromUrl("gs://test130-1068f.appspot.com").toString());
-//        Log.d("★★★★★★★★4", storageRef.getStorage().getReference("gs://test130-1068f.appspot.com").toString());
-//        Log.d("★★★★★★★★5", riversRef.getStorage().getReference("gs://test130-1068f.appspot.com").toString());
-//        Log.d("★★★★★★★★5", riversRef.getStorage().getReferenceFromUrl("gs://test130-1068f.appspot.com").toString());
-//        Log.d("★★★★★★★★6", riversRef.getDownloadUrl().toString());
-
-
     }
 
 
@@ -296,6 +289,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             case R.id.menu_upload:
                 upload(imgPath);
                 break;
+
         }
 
         onBackPressed();
@@ -358,6 +352,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
 
     @Override

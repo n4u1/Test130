@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -45,7 +46,9 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
+
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -62,8 +65,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SetActionBarTitle(getSupportActionBar(), "AQA");
+//        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_login);
+//
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle("  AQA");
+        }
+        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);

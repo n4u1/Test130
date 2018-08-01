@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+
 import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
 
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -32,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SetActionBarTitle(getSupportActionBar(), "AQA");
+
         setContentView(R.layout.activity_home);
 
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
@@ -102,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 

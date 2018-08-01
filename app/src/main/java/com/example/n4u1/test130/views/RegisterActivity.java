@@ -17,7 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
