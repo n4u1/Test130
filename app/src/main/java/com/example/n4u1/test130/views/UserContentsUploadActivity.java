@@ -11,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -43,8 +44,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
-
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener
         , AddContentFragment.AddContentFragmentListener {
 
@@ -74,8 +73,17 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_user_contents_upload);
+
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle("  AQA");
+        }
+        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();

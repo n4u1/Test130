@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
 
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -32,9 +32,18 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SetActionBarTitle(getSupportActionBar(), "AQA");
-
+//        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
+
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle("  AQA");
+        }
+        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);

@@ -2,12 +2,11 @@ package com.example.n4u1.test130.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.n4u1.test130.R;
-
-import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
 
 
 public class ContentTypeListActivity extends AppCompatActivity {
@@ -15,8 +14,19 @@ public class ContentTypeListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SetActionBarTitle(getSupportActionBar(), "AQA");
+//        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_content_type_list);
+
+
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle("  AQA");
+        }
+        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
     }
 
     @Override

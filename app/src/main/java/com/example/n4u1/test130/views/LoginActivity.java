@@ -47,8 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-import static com.example.n4u1.test130.setting.SetActionBarTitle.SetActionBarTitle;
-
 
 
 public class LoginActivity extends AppCompatActivity {

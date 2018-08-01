@@ -66,6 +66,7 @@
                 android:id="@+id/textView_contentType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#737373"
                 android:text="exec" />
 
 
@@ -81,6 +82,7 @@
                 android:id="@+id/textView_likeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#737373"
                 android:text="2291" />
 
             <ImageView
@@ -95,6 +97,7 @@
                 android:id="@+id/textView_hitCount"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
+                android:textColor="#737373"
                 android:text="3374" />
 
             <ImageView
@@ -127,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="kjlee"
-                android:textColor="#4485c9" />
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView_title"
@@ -136,7 +139,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:layout_toRightOf="@+id/textView_userName"
-                android:textColor="#000000" />
+                android:textColor="#737373" />
 
         </RelativeLayout>
 

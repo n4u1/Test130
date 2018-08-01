@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".views.RegisterActivity">
 
+
+
+    <android.support.v7.widget.Toolbar
+        app:titleTextColor="#000000"
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="8dp"
+        android:theme="@style/AppTheme"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    </android.support.v7.widget.Toolbar>
+
+
+
     <TextView
         android:id="@+id/textView_uidTest"
         android:layout_width="wrap_content"
