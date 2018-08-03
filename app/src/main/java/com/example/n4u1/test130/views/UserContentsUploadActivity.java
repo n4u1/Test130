@@ -268,7 +268,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     }
 
 
-    //디바이스 이미지 경로 가져오기
+    //디바이스 경로 가져오기
     private String getPath(Uri uri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);

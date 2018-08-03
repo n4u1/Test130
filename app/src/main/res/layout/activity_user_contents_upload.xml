@@ -136,7 +136,7 @@
         <FrameLayout
             android:id="@+id/frameLayout_addContent"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="250dp"
             android:layout_marginBottom="6dp"
             android:padding="10dp">
         </FrameLayout>
@@ -149,7 +149,7 @@
             android:layout_height="200dp"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
 
         <android.support.v7.widget.AppCompatImageView
