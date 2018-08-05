@@ -22,6 +22,7 @@
         android:layout_below="@id/my_toolbar"
         android:theme="@style/TabLayout"
         android:id="@+id/tabLayout"
+        app:tabIndicatorColor="@android:color/darker_gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
