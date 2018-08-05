@@ -50,7 +50,7 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_content, container, false);
-        view.findViewById(R.id.imageView_addContent).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.imageView_addContent_).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ContentKindsChoiceDialog contentKindsChoiceDialog = new ContentKindsChoiceDialog();
