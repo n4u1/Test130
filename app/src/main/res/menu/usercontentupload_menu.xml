@@ -5,8 +5,8 @@
 
     <item
         android:title="Item"
-        android:id="@+id/menu_upload"
-        android:icon="@drawable/ic_check_black_24dp"
+        android:id="@+id/menu_next"
+        android:icon="@drawable/ic_navigate_next_black_24dp"
         app:showAsAction="always"/>
 
 

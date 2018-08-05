@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.n4u1.test130.R;
 
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
+import com.example.n4u1.test130.dialog.ContentTypeDialog;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,7 +46,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class UserContentsUploadActivity extends AppCompatActivity implements ContentChoiceDialog.ContentChoiceDialogListener
-        , AddContentFragment.AddContentFragmentListener {
+        , ContentTypeDialog.ContentTypeDialogListener, AddContentFragment.AddContentFragmentListener {
 
 
     private static final int GALLEY_CODE = 100;
@@ -64,6 +65,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     RadioGroup radioGroup_rs;
     String userContentType;
+
 
     private FirebaseStorage storage;
     private FirebaseAuth auth;
@@ -88,91 +90,91 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+//
+//
+//        imageView_userAddContent_1 = findViewById(R.id.imageView_userAddContent_1);
+//        imageView_userAddContent_2 = findViewById(R.id.imageView_userAddContent_2);
+//        imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
 
-
-        imageView_userAddContent_1 = findViewById(R.id.imageView_userAddContent_1);
-        imageView_userAddContent_2 = findViewById(R.id.imageView_userAddContent_2);
-        imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
-
-        radioGroup_rs = findViewById(R.id.radioGroup_rs);
+//        radioGroup_rs = findViewById(R.id.radioGroup_rs);
         userContentType = "";
 
 
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_description);
 
-
-        imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_1);
-                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popup.show();
-                return false;
-            }
-        });
-
-        imageView_userAddContent_2.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_2);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popup.show();//showing popup menu
-                return false;
-            }
-        });
-
-        imageView_userAddContent_3.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popup.show();//showing popup menu
-                return false;
-            }
-        });
+//
+//        imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_1);
+//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    }
+//                });
+//                popup.show();
+//                return false;
+//            }
+//        });
+//
+//        imageView_userAddContent_2.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//
+//                //Creating the instance of PopupMenu
+//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_2);
+//                //Inflating the Popup using xml file
+//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
+//
+//                //registering popup with OnMenuItemClickListener
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    }
+//                });
+//                popup.show();//showing popup menu
+//                return false;
+//            }
+//        });
+//
+//        imageView_userAddContent_3.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                //Creating the instance of PopupMenu
+//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
+//                //Inflating the Popup using xml file
+//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
+//
+//                //registering popup with OnMenuItemClickListener
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    }
+//                });
+//                popup.show();//showing popup menu
+//                return false;
+//            }
+//        });
 
         //싱글튜표 or 순위투표 선택
-        radioGroup_rs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i) {
-                    case R.id.radioButton_ranking:
-                        userContentType = "ranking";
-                        break;
-                    case R.id.radioButton_single:
-                        userContentType = "single";
-                        break;
-                }
-            }
-        });
+//        radioGroup_rs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                switch (i) {
+//                    case R.id.radioButton_ranking:
+//                        userContentType = "ranking";
+//                        break;
+//                    case R.id.radioButton_single:
+//                        userContentType = "single";
+//                        break;
+//                }
+//            }
+//        });
 
         //카테고리 선택
         EditText editText_addCategory = findViewById(R.id.editText_addCategory);
@@ -186,9 +188,25 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 contentChoiceDialog.show(getSupportFragmentManager(), "contentChoiceDialog");
             }
         });
+
+        EditText editText_contentType = findViewById(R.id.editText_contentType);
+        editText_contentType.setFocusable(false);
+        editText_contentType.setClickable(false);
+        editText_contentType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentTypeDialog contentTypeDialog = new ContentTypeDialog();
+                contentTypeDialog.show(getSupportFragmentManager(), "contentTypeDialog");
+            }
+        });
+
+
+
+
+
         //사진 or 동영상 추가
-        AddContentFragment addContentFragment = new AddContentFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
+//        AddContentFragment addContentFragment = new AddContentFragment();
+//        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
     }
 
 
@@ -294,8 +312,10 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.menu_upload:
-                upload(imgPath);
+            case R.id.menu_next:
+//                upload(imgPath);
+                Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
+                startActivity(intent);
                 break;
 
         }
@@ -348,6 +368,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     }
 
 
+    //ContentChoiceDialog 확인
     @Override
     public void onDialogPositiveClick(ArrayList arrayList) {
         textView = findViewById(R.id.editText_addCategory);
@@ -360,13 +381,16 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             Toast.makeText(getApplicationContext(), "5개 이하로 선택해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
+    //ContentChoiceDialog 취소
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
 
+    }
+
+    //ContentTypeDialog choiceItemCallback
+    @Override
+    public void choiceItemCallback(String string) {
+        userContentType = string;
     }
 
     @Override

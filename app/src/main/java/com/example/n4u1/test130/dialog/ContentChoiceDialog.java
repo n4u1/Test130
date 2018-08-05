@@ -53,11 +53,10 @@ public class ContentChoiceDialog extends DialogFragment {
                             mSelectedItems.add(i);
                         } else if (mSelectedItems.contains(i)) {
                             mSelectedItems.remove(Integer.valueOf(i));
-
                         }
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK, so save the mSelectedItems results somewhere
@@ -86,7 +85,7 @@ public class ContentChoiceDialog extends DialogFragment {
                     }
 
                 })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 

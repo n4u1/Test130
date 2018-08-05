@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.FileChoiceActivity">
+
+    <android.support.v7.widget.Toolbar
+        app:titleTextColor="#000000"
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"/>
+
+
+    <android.support.design.widget.TabLayout
+        android:layout_below="@id/my_toolbar"
+        android:theme="@style/TabLayout"
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+        android:layout_below="@id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef" />
+
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tabLayout"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="ggggggggggggggggg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</RelativeLayout>
