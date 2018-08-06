@@ -1,7 +1,12 @@
 package com.example.n4u1.test130.views;
 
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,22 +16,42 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.fragments.CameraFragment;
 import com.example.n4u1.test130.fragments.ImageFragment;
 import com.example.n4u1.test130.fragments.VideoFragment;
+import com.example.n4u1.test130.models.ContentDTO;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 public class FileChoiceActivity extends AppCompatActivity
         implements ImageFragment.OnFragmentInteractionListener,
         VideoFragment.OnFragmentInteractionListener,
         CameraFragment.OnFragmentInteractionListener{
 
+    private String imgPath;
+
+    private FirebaseStorage storage;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_choice);
-
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -50,6 +75,34 @@ public class FileChoiceActivity extends AppCompatActivity
 
 
 
+        storage = FirebaseStorage.getInstance();
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.filechoice_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_confirm:
+                Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+//                upload(imgPath);
+                break;
+        }
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -92,6 +145,69 @@ public class FileChoiceActivity extends AppCompatActivity
                 default: return "";
             }
         }
+    }
+
+    //FireBase 에 업로드
+    public void upload(final String uri) {
+        Uri file = Uri.fromFile(new File(uri));
+        final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+        final StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
+        UploadTask uploadTask = riversRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                /*
+                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        ContentDTO contentDTO = new ContentDTO();
+                        contentDTO.imageUrl = uri.toString();
+                        contentDTO.title = editText_title.getText().toString();
+                        contentDTO.description = editText_description.getText().toString();
+                        contentDTO.uid = auth.getCurrentUser().getUid();
+                        contentDTO.userID = auth.getCurrentUser().getEmail();
+                        contentDTO.pollMode = userContentType;
+                        contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
+                        database.getReference().child("user_contents").push().setValue(contentDTO);
+                        //contentDTO에 담아서 setValue로 디비에 저장
+                    }
+                });
+//
+//                String result =
+//                riversRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                    }
+//                }).getResult().toString();
+//                Log.d("★★★★★★", result);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                toast.show();
+                */
+            }
+        });
+    }
+
+
+    //디바이스 경로 가져오기
+    private String getPath(Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
+
+        Cursor cursor = cursorLoader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+
+        return cursor.getString(index);
     }
 
 }

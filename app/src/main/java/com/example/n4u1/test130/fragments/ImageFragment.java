@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
+import com.example.n4u1.test130.views.FileChoiceActivity;
+import com.example.n4u1.test130.views.UserContentsUploadActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,9 +55,14 @@ public class ImageFragment extends Fragment {
             imageView_userAddContent_4, imageView_userAddContent_5, imageView_userAddContent_6,
             imageView_userAddContent_7, imageView_userAddContent_8, imageView_userAddContent_9,
             imageView_userAddContent_10;
-    LinearLayout linearLayout_userAddContent_1;
-
-    TextView textView_userAddContent_1;
+    LinearLayout linearLayout_userAddContent_1, linearLayout_userAddContent_2, linearLayout_userAddContent_3,
+            linearLayout_userAddContent_4, linearLayout_userAddContent_5, linearLayout_userAddContent_6,
+            linearLayout_userAddContent_7, linearLayout_userAddContent_8, linearLayout_userAddContent_9,
+            linearLayout_userAddContent_10;
+    TextView textView_userAddContent_1, textView_userAddContent_2, textView_userAddContent_3,
+            textView_userAddContent_4, textView_userAddContent_5, textView_userAddContent_6,
+            textView_userAddContent_7, textView_userAddContent_8, textView_userAddContent_9,
+            textView_userAddContent_10;
 
 
     private OnFragmentInteractionListener mListener;
@@ -72,14 +80,25 @@ public class ImageFragment extends Fragment {
 
 
         linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
-        linearLayout_userAddContent_1 = view.findViewById(R.id.linearLayout_userAddContent_1);
+        linearLayout_userAddContent_2 = view.findViewById(R.id.linearLayout_userAddContent_2);
+        linearLayout_userAddContent_3 = view.findViewById(R.id.linearLayout_userAddContent_3);
+        linearLayout_userAddContent_4 = view.findViewById(R.id.linearLayout_userAddContent_4);
+        linearLayout_userAddContent_5 = view.findViewById(R.id.linearLayout_userAddContent_5);
+        linearLayout_userAddContent_6 = view.findViewById(R.id.linearLayout_userAddContent_6);
+        linearLayout_userAddContent_7 = view.findViewById(R.id.linearLayout_userAddContent_7);
+        linearLayout_userAddContent_8 = view.findViewById(R.id.linearLayout_userAddContent_8);
+        linearLayout_userAddContent_9 = view.findViewById(R.id.linearLayout_userAddContent_9);
+        linearLayout_userAddContent_10 = view.findViewById(R.id.linearLayout_userAddContent_10);
         textView_userAddContent_1 = view.findViewById(R.id.textView_userAddContent_1);
+        textView_userAddContent_2 = view.findViewById(R.id.textView_userAddContent_2);
+        textView_userAddContent_3 = view.findViewById(R.id.textView_userAddContent_3);
+        textView_userAddContent_4 = view.findViewById(R.id.textView_userAddContent_4);
+        textView_userAddContent_5 = view.findViewById(R.id.textView_userAddContent_5);
+        textView_userAddContent_6 = view.findViewById(R.id.textView_userAddContent_6);
+        textView_userAddContent_7 = view.findViewById(R.id.textView_userAddContent_7);
+        textView_userAddContent_8 = view.findViewById(R.id.textView_userAddContent_8);
+        textView_userAddContent_9 = view.findViewById(R.id.textView_userAddContent_9);
+        textView_userAddContent_10 = view.findViewById(R.id.textView_userAddContent_10);
         imageView_userAddContent_1 = view.findViewById(R.id.imageView_userAddContent_1);
         imageView_userAddContent_2 = view.findViewById(R.id.imageView_userAddContent_2);
         imageView_userAddContent_3 = view.findViewById(R.id.imageView_userAddContent_3);
@@ -145,6 +164,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 1) {
+                linearLayout_userAddContent_2.setVisibility(View.VISIBLE);
+                textView_userAddContent_2.setVisibility(View.VISIBLE);
                 imageView_userAddContent_2.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -154,6 +175,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 2) {
+                linearLayout_userAddContent_3.setVisibility(View.VISIBLE);
+                textView_userAddContent_3.setVisibility(View.VISIBLE);
                 imageView_userAddContent_3.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -162,6 +185,8 @@ public class ImageFragment extends Fragment {
                 imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
             }
             if (checkCount == 3) {
+                linearLayout_userAddContent_4.setVisibility(View.VISIBLE);
+                textView_userAddContent_4.setVisibility(View.VISIBLE);
                 imageView_userAddContent_4.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -171,6 +196,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 4) {
+                linearLayout_userAddContent_5.setVisibility(View.VISIBLE);
+                textView_userAddContent_5.setVisibility(View.VISIBLE);
                 imageView_userAddContent_5.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -180,6 +207,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 5) {
+                linearLayout_userAddContent_6.setVisibility(View.VISIBLE);
+                textView_userAddContent_6.setVisibility(View.VISIBLE);
                 imageView_userAddContent_6.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -188,6 +217,8 @@ public class ImageFragment extends Fragment {
                 imageView_userAddContent_6.setImageURI(Uri.fromFile(f));
             }
             if (checkCount == 6) {
+                linearLayout_userAddContent_7.setVisibility(View.VISIBLE);
+                textView_userAddContent_7.setVisibility(View.VISIBLE);
                 imageView_userAddContent_7.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -197,6 +228,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 7) {
+                linearLayout_userAddContent_8.setVisibility(View.VISIBLE);
+                textView_userAddContent_8.setVisibility(View.VISIBLE);
                 imageView_userAddContent_8.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -206,6 +239,8 @@ public class ImageFragment extends Fragment {
 
             }
             if (checkCount == 8) {
+                linearLayout_userAddContent_9.setVisibility(View.VISIBLE);
+                textView_userAddContent_9.setVisibility(View.VISIBLE);
                 imageView_userAddContent_9.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -214,6 +249,8 @@ public class ImageFragment extends Fragment {
                 imageView_userAddContent_9.setImageURI(Uri.fromFile(f));
             }
             if (checkCount == 9) {
+                linearLayout_userAddContent_10.setVisibility(View.VISIBLE);
+                textView_userAddContent_10.setVisibility(View.VISIBLE);
                 imageView_userAddContent_10.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 System.out.println(data.getData());
@@ -246,7 +283,6 @@ public class ImageFragment extends Fragment {
 
     private int imageViewCheck() {
         int count = 0;
-
         if (imageView_userAddContent_1.getVisibility() == View.VISIBLE) {
             count++;
         }
@@ -292,4 +328,21 @@ public class ImageFragment extends Fragment {
 
         return cursor.getString(index);
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_next:
+//                upload(imgPath);
+                Intent intent = new Intent(getContext(), FileChoiceActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+//        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -53,7 +53,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     private static final int VIDEO_CODE = 200;
     private String imgPath;
 
-
     ImageView imageView_userAddContent_1;
     ImageView imageView_userAddContent_2;
     ImageView imageView_userAddContent_3;
@@ -306,8 +305,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         return true;
     }
 
-    // 상단V버튼 클릭시 업로드 실행
-    //분기처리 해줘야할듯
+    // 상단>버튼 클릭시 이미지or동영상 선택
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
@@ -317,12 +315,9 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
                 startActivity(intent);
                 break;
-
         }
-
         onBackPressed();
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -333,37 +328,35 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        int checkCount = imageViewCheck();
-        if (requestCode == GALLEY_CODE) {
-            if (checkCount == 0) {
-                imageView_userAddContent_1.setVisibility(View.VISIBLE);
-                imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
-
-            }
-            if (checkCount == 1) {
-                imageView_userAddContent_2.setVisibility(View.VISIBLE);
-                imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
-
-            }
-            if (checkCount == 2) {
-                imageView_userAddContent_3.setVisibility(View.VISIBLE);
-                imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
-            }
-        } else {
-            return;
-        }
+//        int checkCount = imageViewCheck();
+//        if (requestCode == GALLEY_CODE) {
+//            if (checkCount == 0) {
+//                imageView_userAddContent_1.setVisibility(View.VISIBLE);
+//                imgPath = getPath(data.getData());
+//                System.out.println(data.getData());
+//                System.out.println(getPath(data.getData()));
+//                File f = new File(imgPath);
+//                imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
+//            }
+//            if (checkCount == 1) {
+//                imageView_userAddContent_2.setVisibility(View.VISIBLE);
+//                imgPath = getPath(data.getData());
+//                System.out.println(data.getData());
+//                System.out.println(getPath(data.getData()));
+//                File f = new File(imgPath);
+//                imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
+//            }
+//            if (checkCount == 2) {
+//                imageView_userAddContent_3.setVisibility(View.VISIBLE);
+//                imgPath = getPath(data.getData());
+//                System.out.println(data.getData());
+//                System.out.println(getPath(data.getData()));
+//                File f = new File(imgPath);
+//                imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
+//            }
+//        } else {
+//            return;
+//        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

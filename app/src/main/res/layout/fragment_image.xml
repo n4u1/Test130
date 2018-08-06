@@ -29,7 +29,6 @@
             <!--추가된 사진(이미지뷰), 사용자 업로드 사진      -->
 
 
-
             <LinearLayout
                 android:paddingLeft="4dp"
                 android:id="@+id/linearLayout_userAddContent_1"
@@ -55,91 +54,233 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-
-
-
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_2"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_2"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_2"
+                    android:layout_weight="10"
+                    android:text="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_3"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_3"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_3"
+                    android:layout_weight="10"
+                    android:text="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_4"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_4"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_4"
+                    android:layout_weight="10"
+                    android:text="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_5"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_5"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_5"
+                    android:layout_weight="10"
+                    android:text="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_6"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_6"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_6"
+                    android:layout_weight="10"
+                    android:text="6"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_7"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_7"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_7"
+                    android:layout_weight="10"
+                    android:text="7"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_8"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_8"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_8"
+                    android:layout_weight="10"
+                    android:text="8"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_9"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_9"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_9"
+                    android:layout_weight="10"
+                    android:text="9"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_userAddContent_10"
+            <LinearLayout
+                android:paddingLeft="4dp"
+                android:id="@+id/linearLayout_userAddContent_10"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:visibility="gone">
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView_userAddContent_10"
+                    android:layout_weight="10"
+                    android:text="10"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_weight="1"
+                    android:id="@+id/imageView_userAddContent_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="8dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+
             <!--추가된 사진(이미지뷰), 사용자 업로드 사진      -->
         </LinearLayout>
 
