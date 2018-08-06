@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -127,9 +129,9 @@ public class ImageFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(ArrayList<Uri> uriArrayList) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(uriArrayList);
         }
     }
 
@@ -153,6 +155,7 @@ public class ImageFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         int checkCount = imageViewCheck();
+        ArrayList<Uri> uriArrayList_ = new ArrayList<>();
         if (requestCode == GALLEY_CODE) {
             if (checkCount == 0) {
                 linearLayout_userAddContent_1.setVisibility(View.VISIBLE);
@@ -163,7 +166,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
-
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
             }
             if (checkCount == 1) {
                 linearLayout_userAddContent_2.setVisibility(View.VISIBLE);
@@ -174,6 +178,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
 
             }
             if (checkCount == 2) {
@@ -185,6 +191,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
             }
             if (checkCount == 3) {
                 linearLayout_userAddContent_4.setVisibility(View.VISIBLE);
@@ -195,6 +203,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_4.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
 
             }
             if (checkCount == 4) {
@@ -206,6 +216,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_5.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
 
             }
             if (checkCount == 5) {
@@ -217,6 +229,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_6.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
             }
             if (checkCount == 6) {
                 linearLayout_userAddContent_7.setVisibility(View.VISIBLE);
@@ -227,6 +241,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_7.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
 
             }
             if (checkCount == 7) {
@@ -238,6 +254,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_8.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
 
             }
             if (checkCount == 8) {
@@ -249,6 +267,8 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_9.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
             }
             if (checkCount == 9) {
                 linearLayout_userAddContent_10.setVisibility(View.VISIBLE);
@@ -259,11 +279,14 @@ public class ImageFragment extends Fragment {
                 System.out.println(getPath(data.getData()));
                 File f = new File(imgPath);
                 imageView_userAddContent_10.setImageURI(Uri.fromFile(f));
+                uriArrayList_.add(Uri.fromFile(f));
+                mListener.onFragmentInteraction(uriArrayList_);
             }
         } else {
             return;
         }
         contentCount = checkCount;
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -279,7 +302,7 @@ public class ImageFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(ArrayList<Uri> uriArrayList);
     }
 
 

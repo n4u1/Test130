@@ -39,6 +39,12 @@ public class ContentTypeDialog extends DialogFragment {
     }
 
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

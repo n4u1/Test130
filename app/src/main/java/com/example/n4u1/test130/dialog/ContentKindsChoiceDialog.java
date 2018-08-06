@@ -60,6 +60,13 @@ public class ContentKindsChoiceDialog extends DialogFragment {
         }
     }
 
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        myListener = null;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {

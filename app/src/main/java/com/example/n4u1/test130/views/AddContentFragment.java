@@ -72,6 +72,12 @@ public class AddContentFragment extends Fragment implements ContentKindsChoiceDi
 
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
     public void onDialogPositiveClick(ArrayList arrayList) {
         Toast.makeText(getContext(), "???????????" + arrayList, Toast.LENGTH_SHORT).show();
     }

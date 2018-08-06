@@ -286,6 +286,7 @@
 
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_alignBottom="@id/imageView_userAddContent_10"
             android:id="@+id/frameLayout_addContent"
             android:layout_width="match_parent"
@@ -299,6 +300,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_add_image" />
+
         </LinearLayout>
 
 

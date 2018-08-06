@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
@@ -83,6 +85,8 @@ public class FileChoiceActivity extends AppCompatActivity
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
+        final int[] i = new int[1];
+        i[0] = 0;
 
         //현재page를 position으로 확인
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -93,12 +97,25 @@ public class FileChoiceActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 Log.d("onPage_position", String.valueOf(position));
+                i[0] = position;
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+        Button button = findViewById(R.id.bttest);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "????", Toast.LENGTH_SHORT).show();
+                Log.d("onPage_position???", String.valueOf(i[0]));
+
+            }
+        });
+
+
+
 
     }//super.onCreate(savedInstanceState);
 
@@ -135,6 +152,14 @@ public class FileChoiceActivity extends AppCompatActivity
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public void onFragmentInteraction(ArrayList<Uri> uriArrayList) {
+        if (uriArrayList.get(0) != null) {
+            Log.d("uriArrayList_0", uriArrayList.get(0).toString());
+
+        }
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
