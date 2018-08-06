@@ -133,7 +133,6 @@ public class FileChoiceActivity extends AppCompatActivity
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_confirm:
-
                 Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
                 toast.show();
@@ -155,11 +154,10 @@ public class FileChoiceActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(ArrayList<Uri> uriArrayList) {
-        if (uriArrayList.get(0) != null) {
-            Log.d("uriArrayList_0", uriArrayList.get(0).toString());
-
-        }
+    public void onFragmentInteraction(String[] strings) {
+        Log.d("uriArrayList_0", strings[0]);
+        Log.d("uriArrayList_1", strings[1]);
+        Log.d("uriArrayList_2", strings[2]);
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
@@ -209,24 +207,21 @@ public class FileChoiceActivity extends AppCompatActivity
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                /*
                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         ContentDTO contentDTO = new ContentDTO();
                         contentDTO.imageUrl = uri.toString();
-                        contentDTO.title = editText_title.getText().toString();
-                        contentDTO.description = editText_description.getText().toString();
-                        contentDTO.uid = auth.getCurrentUser().getUid();
-                        contentDTO.userID = auth.getCurrentUser().getEmail();
-                        contentDTO.pollMode = userContentType;
-                        contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
+//                        contentDTO.title = editText_title.getText().toString();
+//                        contentDTO.description = editText_description.getText().toString();
+//                        contentDTO.uid = auth.getCurrentUser().getUid();
+//                        contentDTO.userID = auth.getCurrentUser().getEmail();
+//                        contentDTO.pollMode = userContentType;
+//                        contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
                         database.getReference().child("user_contents").push().setValue(contentDTO);
                         //contentDTO에 담아서 setValue로 디비에 저장
                     }
                 });
-//
 //                String result =
 //                riversRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
 //                    @Override
@@ -238,7 +233,7 @@ public class FileChoiceActivity extends AppCompatActivity
                 Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
                 toast.show();
-                */
+
             }
         });
     }
