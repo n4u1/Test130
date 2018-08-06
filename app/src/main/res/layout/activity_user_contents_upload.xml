@@ -76,7 +76,7 @@
             android:padding="8dp"
             android:theme="@style/TextLabel">
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/editText_contentType"
+                android:id="@+id/editText_pollMode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="투표방식" />

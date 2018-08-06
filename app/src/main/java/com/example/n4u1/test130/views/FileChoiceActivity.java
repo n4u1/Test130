@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class FileChoiceActivity extends AppCompatActivity
         implements ImageFragment.OnFragmentInteractionListener,
@@ -46,6 +48,9 @@ public class FileChoiceActivity extends AppCompatActivity
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
+    private ArrayList<String> stringArrayList;
+
+
 
 
     @Override
@@ -70,16 +75,32 @@ public class FileChoiceActivity extends AppCompatActivity
         arrFragments[2] = new CameraFragment();
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), arrFragments);
         viewPager.setAdapter(pagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
 
-
+        Intent intent = new Intent();
+        stringArrayList = getIntent().getStringArrayListExtra("stringArrayList");
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 
-    }
+        //현재page를 position으로 확인
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("onPage_position", String.valueOf(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+    }//super.onCreate(savedInstanceState);
 
 
 
@@ -95,6 +116,7 @@ public class FileChoiceActivity extends AppCompatActivity
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_confirm:
+
                 Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
                 toast.show();

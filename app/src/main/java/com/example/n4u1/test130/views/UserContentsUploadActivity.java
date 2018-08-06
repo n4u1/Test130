@@ -61,9 +61,13 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     EditText editText_title;
     EditText editText_description;
+    EditText editText_pollMode;
+    EditText editText_addCategory;
 
     RadioGroup radioGroup_rs;
-    String userContentType;
+    String pollMode;
+
+
 
 
     private FirebaseStorage storage;
@@ -96,7 +100,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 //        imageView_userAddContent_3 = findViewById(R.id.imageView_userAddContent_3);
 
 //        radioGroup_rs = findViewById(R.id.radioGroup_rs);
-        userContentType = "";
+        pollMode = "";
 
 
         editText_title = findViewById(R.id.editText_title);
@@ -176,8 +180,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 //        });
 
         //카테고리 선택
-        EditText editText_addCategory = findViewById(R.id.editText_addCategory);
-        //텍스트입력 안되게하고, 다이얼로그만 띄움
+        editText_addCategory = findViewById(R.id.editText_addCategory);
         editText_addCategory.setFocusable(false);
         editText_addCategory.setClickable(false);
         editText_addCategory.setOnClickListener(new View.OnClickListener() {
@@ -188,24 +191,17 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             }
         });
 
-        EditText editText_contentType = findViewById(R.id.editText_contentType);
-        editText_contentType.setFocusable(false);
-        editText_contentType.setClickable(false);
-        editText_contentType.setOnClickListener(new View.OnClickListener() {
+        //투표모드 선택
+        editText_pollMode = findViewById(R.id.editText_pollMode);
+        editText_pollMode.setFocusable(false);
+        editText_pollMode.setClickable(false);
+        editText_pollMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentTypeDialog contentTypeDialog = new ContentTypeDialog();
-                contentTypeDialog.show(getSupportFragmentManager(), "contentTypeDialog");
+                contentTypeDialog.show(getSupportFragmentManager(), "pollModeDialog");
             }
         });
-
-
-
-
-
-        //사진 or 동영상 추가
-//        AddContentFragment addContentFragment = new AddContentFragment();
-//        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout_addContent, addContentFragment).commit();
     }
 
 
@@ -252,7 +248,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                 riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -262,7 +257,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                         contentDTO.description = editText_description.getText().toString();
                         contentDTO.uid = auth.getCurrentUser().getUid();
                         contentDTO.userID = auth.getCurrentUser().getEmail();
-                        contentDTO.pollMode = userContentType;
+                        contentDTO.pollMode = pollMode;
                         contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
                         database.getReference().child("user_contents").push().setValue(contentDTO);
                         //contentDTO에 담아서 setValue로 디비에 저장
@@ -311,8 +306,13 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_next:
-//                upload(imgPath);
+                ArrayList<String> userInputContents = new ArrayList<>();
+                userInputContents.add(editText_title.getText().toString());
+                userInputContents.add(editText_addCategory.getText().toString());
+                userInputContents.add(editText_pollMode.getText().toString());
+                userInputContents.add(editText_description.getText().toString());
                 Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
+                intent.putStringArrayListExtra("stringArrayList", userInputContents);
                 startActivity(intent);
                 break;
         }
@@ -383,7 +383,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     //ContentTypeDialog choiceItemCallback
     @Override
     public void choiceItemCallback(String string) {
-        userContentType = string;
+        pollMode = string;
+        editText_pollMode.setText(pollMode);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -50,6 +51,7 @@ public class ImageFragment extends Fragment {
     private FirebaseDatabase database;
 
     private String imgPath;
+    private int contentCount;
 
     ImageView imageView_userAddContent_1, imageView_userAddContent_2, imageView_userAddContent_3,
             imageView_userAddContent_4, imageView_userAddContent_5, imageView_userAddContent_6,
@@ -261,6 +263,7 @@ public class ImageFragment extends Fragment {
         } else {
             return;
         }
+        contentCount = checkCount;
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -330,8 +333,10 @@ public class ImageFragment extends Fragment {
     }
 
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("lkj4", String.valueOf(contentCount));
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_next:
