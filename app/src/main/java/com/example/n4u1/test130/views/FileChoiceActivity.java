@@ -43,16 +43,15 @@ import java.util.ArrayList;
 public class FileChoiceActivity extends AppCompatActivity
         implements ImageFragment.OnFragmentInteractionListener,
         VideoFragment.OnFragmentInteractionListener,
-        CameraFragment.OnFragmentInteractionListener{
+        CameraFragment.OnFragmentInteractionListener {
 
     private String imgPath;
+    private String[] imgStrings;
 
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-    private ArrayList<String> stringArrayList;
-
-
+    private ArrayList<String> userInputContents;
 
 
     @Override
@@ -62,7 +61,7 @@ public class FileChoiceActivity extends AppCompatActivity
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("  AQA");
         }
         getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
@@ -79,14 +78,22 @@ public class FileChoiceActivity extends AppCompatActivity
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        Intent intent = new Intent();
-        stringArrayList = getIntent().getStringArrayListExtra("stringArrayList");
+        userInputContents = new ArrayList<>();
+        userInputContents = getIntent().getStringArrayListExtra("userInputContents");
+
+        imgStrings = new String[10];
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         final int[] i = new int[1];
         i[0] = 0;
+
+        Log.d("userInputContents 0", userInputContents.get(0));
+        Log.d("userInputContents 1", userInputContents.get(1));
+        Log.d("userInputContents 2", userInputContents.get(2));
+        Log.d("userInputContents 3", userInputContents.get(3));
+
 
         //현재page를 position으로 확인
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,66 +111,12 @@ public class FileChoiceActivity extends AppCompatActivity
             public void onPageScrollStateChanged(int state) {
             }
         });
-        Button button = findViewById(R.id.bttest);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "????", Toast.LENGTH_SHORT).show();
-                Log.d("onPage_position???", String.valueOf(i[0]));
-
-            }
-        });
-
-
 
 
     }//super.onCreate(savedInstanceState);
 
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.filechoice_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int curId = item.getItemId();
-        switch (curId) {
-            case R.id.menu_confirm:
-                Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
-                toast.show();
-//                upload(imgPath);
-                break;
-        }
-        onBackPressed();
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    @Override
-    public void onFragmentInteraction(String[] strings) {
-        Log.d("uriArrayList_0", strings[0]);
-        Log.d("uriArrayList_1", strings[1]);
-        Log.d("uriArrayList_2", strings[2]);
-    }
-
     private class PagerAdapter extends FragmentPagerAdapter {
-
         private Fragment[] arrFragments;
-
 
         public PagerAdapter(FragmentManager fm, Fragment[] arrFragments) {
             super(fm);
@@ -184,58 +137,323 @@ public class FileChoiceActivity extends AppCompatActivity
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0 : return "사진";
-                case 1 : return "동영상";
-                case 2 : return "카메라";
-                default: return "";
+                case 0:
+                    return "사진";
+                case 1:
+                    return "동영상";
+                case 2:
+                    return "카메라";
+                default:
+                    return "";
             }
         }
     }
 
-    //FireBase 에 업로드
-    public void upload(final String uri) {
-        Uri file = Uri.fromFile(new File(uri));
-        final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-        final StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
-        UploadTask uploadTask = riversRef.putFile(file);
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        ContentDTO contentDTO = new ContentDTO();
-                        contentDTO.imageUrl = uri.toString();
-//                        contentDTO.title = editText_title.getText().toString();
-//                        contentDTO.description = editText_description.getText().toString();
-//                        contentDTO.uid = auth.getCurrentUser().getUid();
-//                        contentDTO.userID = auth.getCurrentUser().getEmail();
-//                        contentDTO.pollMode = userContentType;
-//                        contentDTO.contentType = textView.getText().toString(); //아침, 패션, 정치 등..
-                        database.getReference().child("user_contents").push().setValue(contentDTO);
-                        //contentDTO에 담아서 setValue로 디비에 저장
-                    }
-                });
-//                String result =
-//                riversRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Uri> task) {
-//                    }
-//                }).getResult().toString();
-//                Log.d("★★★★★★", result);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.filechoice_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_confirm:
                 Toast toast = Toast.makeText(getApplicationContext(), "투표가 시작 되었습니다!", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
                 toast.show();
+                upload(imgStrings);
+                break;
+        }
+        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
+    //upload할 파일의 경로를 리스너로 받음
+    @Override
+    public void onFragmentInteraction(String[] strings) {
+        for (int i = 0; i < 10; i++) {
+            if (strings[i] == null) {
+                return;
+            } else {
+                imgStrings[i] = strings[i];
             }
-        });
+
+        }
+
+    }
+
+    //upload할 파일의 경로를 리스너로 받음 → 받아서 FireBase 에 업로드
+    public void upload(final String[] uri) {
+
+        Log.d("uri=0 ", uri[0] + "\n");
+        Log.d("uri=1 ", uri[1] + "\n");
+        Log.d("uri=2 ", uri[2] + "\n");
+
+        final ContentDTO contentDTO = new ContentDTO();
+        if (uri[0].length() != 0) {
+            Uri file_0 = Uri.fromFile(new File(uri[0]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_0.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_0);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+                            contentDTO.imageUrl_0 = uri.toString();
+                            contentDTO.uid = auth.getCurrentUser().getUid();
+                            contentDTO.userID = auth.getCurrentUser().getEmail();
+                            contentDTO.title = userInputContents.get(0);
+                            contentDTO.description = userInputContents.get(1);
+                            contentDTO.pollMode = userInputContents.get(2); // 단일투표 or 순위투표
+                            contentDTO.contentType = userInputContents.get(3); //아침, 패션, 정치 등..
+                            database.getReference().child("user_contents").push().setValue(contentDTO); //contentDTO에 담아서 setValue로 디비에 저장
+                        }
+                    });
+                }
+            });
+        }
+        if (uri[1].length() != 0) {
+            Uri file_1 = Uri.fromFile(new File(uri[1]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_1.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_1);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+//                            contentDTO.imageUrl_1 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+//                            String contentKey = database.getReference().child("user_contents").get();
+//                            database.getReference().child("user_contents").child(contentKey).updateChildren()
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[2].length() != 0) {
+            Uri file_2 = Uri.fromFile(new File(uri[2]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_2.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_2);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_2 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[3].length() != 0) {
+            Uri file_3 = Uri.fromFile(new File(uri[3]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_3.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_3);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_3 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[4].length() != 0) {
+            Uri file_4 = Uri.fromFile(new File(uri[4]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_4.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_4);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_4 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[5].length() != 0) {
+            Uri file_5 = Uri.fromFile(new File(uri[5]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_5.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_5);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_5 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[6].length() != 0) {
+            Uri file_6 = Uri.fromFile(new File(uri[6]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_6.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_6);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_6 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[7].length() != 0) {
+            Uri file_7 = Uri.fromFile(new File(uri[7]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_7.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_7);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_7 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[8].length() != 0) {
+            Uri file_8 = Uri.fromFile(new File(uri[8]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_8.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_8);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_8 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+
+        if (uri[9].length() != 0) {
+            Uri file_9 = Uri.fromFile(new File(uri[9]));
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+            final StorageReference riversRef = storageRef.child("images/" + file_9.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file_9);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {//
+//                            contentDTO.imageUrl_9 = uri.toString();
+//                            database.getReference().child("user_contents").setValue(contentDTO);
+                        }
+                    });
+                }
+            });
+        }
+        if (userInputContents.get(0) == null | userInputContents.get(1) == null | userInputContents.get(2) == null | userInputContents.get(3) == null) {
+            Toast.makeText(getApplicationContext(), "빈 칸이 있어요!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

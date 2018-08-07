@@ -19,10 +19,11 @@ import com.example.n4u1.test130.recyclerview.PostAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {

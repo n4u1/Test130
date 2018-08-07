@@ -34,13 +34,6 @@
         android:layout_height="1dp"
         android:background="#efefef" />
 
-    <Button
-        android:id="@+id/bttest"
-        android:layout_below="@+id/tabLayout"
-        android:text="test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
 
     <android.support.v4.view.ViewPager

@@ -239,7 +239,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
         final StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
-
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
@@ -252,7 +251,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                     @Override
                     public void onSuccess(Uri uri) {
                         ContentDTO contentDTO = new ContentDTO();
-                        contentDTO.imageUrl = uri.toString();
+//                        contentDTO.imageUrl = uri.toString();
                         contentDTO.title = editText_title.getText().toString();
                         contentDTO.description = editText_description.getText().toString();
                         contentDTO.uid = auth.getCurrentUser().getUid();
@@ -312,7 +311,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                 userInputContents.add(editText_pollMode.getText().toString());
                 userInputContents.add(editText_description.getText().toString());
                 Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
-                intent.putStringArrayListExtra("stringArrayList", userInputContents);
+                intent.putStringArrayListExtra("userInputContents", userInputContents);
                 startActivity(intent);
                 break;
         }

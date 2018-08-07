@@ -55,6 +55,8 @@ public class ImageFragment extends Fragment {
     private String imgPath;
     private int contentCount;
 
+    String[] fileString = {"","","","","","","","","",""};
+
     ImageView imageView_userAddContent_1, imageView_userAddContent_2, imageView_userAddContent_3,
             imageView_userAddContent_4, imageView_userAddContent_5, imageView_userAddContent_6,
             imageView_userAddContent_7, imageView_userAddContent_8, imageView_userAddContent_9,
@@ -118,7 +120,6 @@ public class ImageFragment extends Fragment {
         imageView_addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Click Add Image", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -155,74 +156,46 @@ public class ImageFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         int checkCount = imageViewCheck();
-        ArrayList<Uri> uriArrayList_ = new ArrayList<>();
-        String[] fileString = {"","","","","","","","","",""};
-        ArrayList<File> fileArrayList = new ArrayList<>();
         if (requestCode == GALLEY_CODE) {
             if (checkCount == 0) {
                 linearLayout_userAddContent_1.setVisibility(View.VISIBLE);
                 textView_userAddContent_1.setVisibility(View.VISIBLE);
                 imageView_userAddContent_1.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[0] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_1.setImageURI(Uri.parse(imgPath));
+                fileString[0] = imgPath;
             }
             if (checkCount == 1) {
                 linearLayout_userAddContent_2.setVisibility(View.VISIBLE);
                 textView_userAddContent_2.setVisibility(View.VISIBLE);
                 imageView_userAddContent_2.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[1] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_2.setImageURI(Uri.parse(imgPath));
+                fileString[1] = imgPath;
             }
             if (checkCount == 2) {
                 linearLayout_userAddContent_3.setVisibility(View.VISIBLE);
                 textView_userAddContent_3.setVisibility(View.VISIBLE);
                 imageView_userAddContent_3.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[2] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_3.setImageURI(Uri.parse(imgPath));
+                fileString[2] = imgPath;
             }
             if (checkCount == 3) {
                 linearLayout_userAddContent_4.setVisibility(View.VISIBLE);
                 textView_userAddContent_4.setVisibility(View.VISIBLE);
                 imageView_userAddContent_4.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_4.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[3] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_4.setImageURI(Uri.parse(imgPath));
+                fileString[4] = imgPath;
             }
             if (checkCount == 4) {
                 linearLayout_userAddContent_5.setVisibility(View.VISIBLE);
                 textView_userAddContent_5.setVisibility(View.VISIBLE);
                 imageView_userAddContent_5.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_5.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[4] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_5.setImageURI(Uri.parse(imgPath));
+                fileString[4] = imgPath;
 
             }
             if (checkCount == 5) {
@@ -230,40 +203,24 @@ public class ImageFragment extends Fragment {
                 textView_userAddContent_6.setVisibility(View.VISIBLE);
                 imageView_userAddContent_6.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_6.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[5] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_6.setImageURI(Uri.parse(imgPath));
+                fileString[5] = imgPath;
             }
             if (checkCount == 6) {
                 linearLayout_userAddContent_7.setVisibility(View.VISIBLE);
                 textView_userAddContent_7.setVisibility(View.VISIBLE);
                 imageView_userAddContent_7.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_7.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[6] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
-
+                imageView_userAddContent_7.setImageURI(Uri.parse(imgPath));
+                fileString[6] = imgPath;
             }
             if (checkCount == 7) {
                 linearLayout_userAddContent_8.setVisibility(View.VISIBLE);
                 textView_userAddContent_8.setVisibility(View.VISIBLE);
                 imageView_userAddContent_8.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_8.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[7] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_8.setImageURI(Uri.parse(imgPath));
+                fileString[7] = imgPath;
 
             }
             if (checkCount == 8) {
@@ -271,32 +228,23 @@ public class ImageFragment extends Fragment {
                 textView_userAddContent_9.setVisibility(View.VISIBLE);
                 imageView_userAddContent_9.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_9.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[8] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_9.setImageURI(Uri.parse(imgPath));
+                fileString[8] = imgPath;
             }
             if (checkCount == 9) {
                 linearLayout_userAddContent_10.setVisibility(View.VISIBLE);
                 textView_userAddContent_10.setVisibility(View.VISIBLE);
                 imageView_userAddContent_10.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
-                System.out.println(data.getData());
-                System.out.println(getPath(data.getData()));
-                File f = new File(imgPath);
-                imageView_userAddContent_10.setImageURI(Uri.fromFile(f));
-//                uriArrayList_.add(Uri.fromFile(f));
-                fileString[9] = Uri.fromFile(f).toString();
-                mListener.onFragmentInteraction(fileString);
+                imageView_userAddContent_10.setImageURI(Uri.parse(imgPath));
+                fileString[9] = imgPath;
+
             }
         } else {
             return;
         }
+        mListener.onFragmentInteraction(fileString);
         contentCount = checkCount;
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 

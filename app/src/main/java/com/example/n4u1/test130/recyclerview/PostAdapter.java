@@ -45,7 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((PostViewHolder)holder).textView_title.setText(contentDTOS.get(position).title);
         ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
         ((PostViewHolder)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
-        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl).into(((PostViewHolder)holder).imageView_postImg);
+        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg);
 
     }
 //
