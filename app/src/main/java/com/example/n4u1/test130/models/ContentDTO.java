@@ -1,6 +1,10 @@
 package com.example.n4u1.test130.models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContentDTO {
 //    public String[] imageUrl = null;
@@ -18,4 +22,19 @@ public class ContentDTO {
     boolean isUserLike;
     int postLikeCount;
     int contentHit;
+
+    public ContentDTO(){}
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("contentType", contentType);
+        result.put("title", title);
+        result.put("description", description);
+        result.put("postLikeCount", postLikeCount);
+        result.put("isUserLike", isUserLike);
+
+        return result;
+    }
 }
