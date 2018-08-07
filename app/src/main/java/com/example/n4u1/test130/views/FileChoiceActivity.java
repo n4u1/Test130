@@ -31,6 +31,7 @@ import com.example.n4u1.test130.fragments.VideoFragment;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -47,7 +48,7 @@ public class FileChoiceActivity extends AppCompatActivity
 
     private String imgPath;
     private String[] imgStrings;
-
+    private String uriString;
     private FirebaseStorage storage;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
@@ -199,11 +200,8 @@ public class FileChoiceActivity extends AppCompatActivity
     //upload할 파일의 경로를 리스너로 받음 → 받아서 FireBase 에 업로드
     public void upload(final String[] uri) {
 
-        Log.d("uri=0 ", uri[0] + "\n");
-        Log.d("uri=1 ", uri[1] + "\n");
-        Log.d("uri=2 ", uri[2] + "\n");
-
         final ContentDTO contentDTO = new ContentDTO();
+
         if (uri[0].length() != 0) {
             Uri file_0 = Uri.fromFile(new File(uri[0]));
             StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
@@ -217,9 +215,11 @@ public class FileChoiceActivity extends AppCompatActivity
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                     riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(Uri uri) {//
+                        public void onSuccess(Uri uri) {
+                            uriString = uri.toString();
                             contentDTO.imageUrl_0 = uri.toString();
                             contentDTO.uid = auth.getCurrentUser().getUid();
                             contentDTO.userID = auth.getCurrentUser().getEmail();

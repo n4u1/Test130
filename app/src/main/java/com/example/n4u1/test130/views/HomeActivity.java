@@ -1,6 +1,7 @@
 package com.example.n4u1.test130.views;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
@@ -35,6 +37,15 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
 //        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
+
+        Button button = findViewById(R.id.button_test);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
@@ -60,6 +71,8 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         recyclerViewList.setLayoutManager(mLayoutManager);
         final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
         recyclerViewList.setAdapter(postAdapter);
+
+
 
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

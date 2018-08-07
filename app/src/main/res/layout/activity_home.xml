@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         tools:context=".views.HomeActivity">
 
-
         <android.support.v7.widget.Toolbar
             app:titleTextColor="#000000"
             android:id="@+id/my_toolbar"
@@ -42,6 +41,13 @@
             android:layout_marginRight="24dp"
             android:src="@drawable/ic_create_black_24dp"
             app:backgroundTint="#ffffff" />
+
+        <Button
+            android:id="@+id/button_test"
+            android:layout_below="@+id/my_toolbar"
+            android:text="go_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
         <android.support.v7.widget.RecyclerView
