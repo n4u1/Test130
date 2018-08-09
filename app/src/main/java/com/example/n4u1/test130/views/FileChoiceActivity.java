@@ -214,7 +214,7 @@ public class FileChoiceActivity extends AppCompatActivity
 
 
             mdatabaseRef = FirebaseDatabase.getInstance().getReference();
-            key = mdatabaseRef.child("user_contents_tests").push().getKey();
+            key = mdatabaseRef.child("user_contents").push().getKey();
 
             //content input start into fireBase "user_contents"
             ContentDTO contentDTO = new ContentDTO();
@@ -225,7 +225,7 @@ public class FileChoiceActivity extends AppCompatActivity
             contentDTO.uid = auth.getCurrentUser().getUid();
             contentDTO.userID = auth.getCurrentUser().getEmail();
 
-            mdatabaseRef.child("user_contents_tests").child(key).setValue(contentDTO);
+            mdatabaseRef.child("user_contents").child(key).setValue(contentDTO);
 //
             if (uri[0].length() != 0) {
                 Uri file_0 = Uri.fromFile(new File(uri[0]));
@@ -244,7 +244,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_0").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_0").setValue(uri.toString());
                             }
                         });
                     }
@@ -267,7 +267,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_1").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_1").setValue(uri.toString());
                             }
                         });
                     }
@@ -290,7 +290,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_2").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_2").setValue(uri.toString());
                             }
                         });
                     }
@@ -313,7 +313,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {//
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_3").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_3").setValue(uri.toString());
                             }
                         });
                     }
@@ -336,7 +336,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_4").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_4").setValue(uri.toString());
                             }
                         });
                     }
@@ -359,7 +359,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_5").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_5").setValue(uri.toString());
                             }
                         });
                     }
@@ -382,7 +382,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_6").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_6").setValue(uri.toString());
                             }
                         });
                     }
@@ -405,7 +405,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_7").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_7").setValue(uri.toString());
                             }
                         });
                     }
@@ -428,7 +428,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_8").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_8").setValue(uri.toString());
                             }
                         });
                     }
@@ -451,7 +451,7 @@ public class FileChoiceActivity extends AppCompatActivity
                         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_9").setValue(uri.toString());
+                                mdatabaseRef.child("user_contents").child(key).child("imageUrl_9").setValue(uri.toString());
                             }
                         });
                     }
