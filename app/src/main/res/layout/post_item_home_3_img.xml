@@ -16,47 +16,40 @@
 
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_gravity="center">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
+
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_weight="1"
                     android:id="@+id/imageView_postImg_0"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="400dp"
                     android:background="#aed1fc"
                     android:scaleType="centerCrop" />
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_weight="1"
                     android:id="@+id/imageView_postImg_1"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="400dp"
                     android:background="#aed1fc"
                     android:scaleType="centerCrop" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_weight="1"
                     android:id="@+id/imageView_postImg_2"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="400dp"
                     android:background="#aed1fc"
                     android:scaleType="centerCrop" />
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_weight="1"
                     android:id="@+id/imageView_postImg_3"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="400dp"
                     android:background="#aed1fc"
                     android:scaleType="centerCrop" />
-            </LinearLayout>
+
 
 
 
