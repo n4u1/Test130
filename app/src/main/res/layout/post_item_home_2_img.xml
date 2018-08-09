@@ -15,14 +15,31 @@
         android:padding="4dp">
 
 
-        <FrameLayout
-            android:id="@+id/frameLayout_imageView"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_gravity="center">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageView_postImg_0"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="#aed1fc"
+                android:scaleType="centerCrop" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_postImg_1"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="#aed1fc"
+                android:scaleType="centerCrop" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_postImg_2"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:background="#aed1fc"
@@ -40,7 +57,7 @@
             <!--android:src="@drawable/ic_access_alarm_black_24dp" />-->
 
 
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_gravity="center"

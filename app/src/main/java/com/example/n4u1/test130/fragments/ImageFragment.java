@@ -187,7 +187,7 @@ public class ImageFragment extends Fragment {
                 imageView_userAddContent_4.setVisibility(View.VISIBLE);
                 imgPath = getPath(data.getData());
                 imageView_userAddContent_4.setImageURI(Uri.parse(imgPath));
-                fileString[4] = imgPath;
+                fileString[3] = imgPath;
             }
             if (checkCount == 4) {
                 linearLayout_userAddContent_5.setVisibility(View.VISIBLE);

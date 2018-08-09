@@ -9,15 +9,18 @@ import com.example.n4u1.test130.R;
 
 
 //adapter에 viewHolder가 들어갈것임
-public class PostViewHolder extends RecyclerView.ViewHolder{
+public class PostViewHolder3 extends RecyclerView.ViewHolder{
 
-    public ImageView imageView_postImg_0, imageView_like, imageView_share;
+    public ImageView imageView_postImg_0, imageView_postImg_1, imageView_postImg_2, imageView_postImg_3, imageView_like, imageView_share;
     public TextView textView_likeCount, textView_userName, textView_title, textView_contentType;
 
 
-    public PostViewHolder(View itemView) {
+    public PostViewHolder3(View itemView) {
         super(itemView);
         imageView_postImg_0 = itemView.findViewById(R.id.imageView_postImg_0);
+        imageView_postImg_1 = itemView.findViewById(R.id.imageView_postImg_1);
+        imageView_postImg_2 = itemView.findViewById(R.id.imageView_postImg_2);
+        imageView_postImg_3 = itemView.findViewById(R.id.imageView_postImg_3);
         imageView_like = itemView.findViewById(R.id.imageView_like);
         imageView_share = itemView.findViewById(R.id.imageView_share);
         textView_likeCount = itemView.findViewById(R.id.textView_likeCount);

@@ -23,6 +23,7 @@ public class ContentDTO {
     int postLikeCount;
     int contentHit;
     public String contentKey;
+    public int itemViewType;
 
     public ContentDTO(String imageUrl_0, String imageUrl_1, String imageUrl_2, String imageUrl_3, String imageUrl_4, String imageUrl_5, String imageUrl_6, String imageUrl_7, String imageUrl_8, String imageUrl_9, String title, String description, String descriptionVideo_1, String descriptionVideo_2, String descriptionVideo_3, String descriptionImage_1, String descriptionImage_2, String descriptionImage_3, String uid, String userID, String pollMode, String contentType, String contentId, boolean isUserLike, int postLikeCount, int contentHit, String contentKey) {
         this.imageUrl_0 = imageUrl_0;
@@ -56,6 +57,14 @@ public class ContentDTO {
 
     public ContentDTO(){}
 
+    public int getItemViewType() {
+        return itemViewType;
+    }
+
+    public void setItemViewType(int itemViewType) {
+        this.itemViewType = itemViewType;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -64,7 +73,7 @@ public class ContentDTO {
         result.put("title", title);
         result.put("description", description);
         result.put("postLikeCount", postLikeCount);
-        result.put("imageUrl_0", imageUrl_0);
+
 
 
         return result;
