@@ -305,17 +305,21 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_next:
-                ArrayList<String> userInputContents = new ArrayList<>();
-                userInputContents.add(editText_title.getText().toString());
-                userInputContents.add(editText_addCategory.getText().toString());
-                userInputContents.add(editText_pollMode.getText().toString());
-                userInputContents.add(editText_description.getText().toString());
-                Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
-                intent.putStringArrayListExtra("userInputContents", userInputContents);
-                startActivity(intent);
+                if (editText_title.getText().toString().equals("") | editText_addCategory.getText().toString().equals("") | editText_pollMode.getText().toString().equals("") | editText_description.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "빈 칸이 있어요!", Toast.LENGTH_SHORT).show();
+                } else {
+                    ArrayList<String> userInputContents = new ArrayList<>();
+                    userInputContents.add(editText_title.getText().toString());
+                    userInputContents.add(editText_addCategory.getText().toString());
+                    userInputContents.add(editText_pollMode.getText().toString());
+                    userInputContents.add(editText_description.getText().toString());
+                    Intent intent = new Intent(UserContentsUploadActivity.this, FileChoiceActivity.class);
+                    intent.putStringArrayListExtra("userInputContents", userInputContents);
+                    startActivity(intent);
+                }
                 break;
         }
-        onBackPressed();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -327,35 +331,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        int checkCount = imageViewCheck();
-//        if (requestCode == GALLEY_CODE) {
-//            if (checkCount == 0) {
-//                imageView_userAddContent_1.setVisibility(View.VISIBLE);
-//                imgPath = getPath(data.getData());
-//                System.out.println(data.getData());
-//                System.out.println(getPath(data.getData()));
-//                File f = new File(imgPath);
-//                imageView_userAddContent_1.setImageURI(Uri.fromFile(f));
-//            }
-//            if (checkCount == 1) {
-//                imageView_userAddContent_2.setVisibility(View.VISIBLE);
-//                imgPath = getPath(data.getData());
-//                System.out.println(data.getData());
-//                System.out.println(getPath(data.getData()));
-//                File f = new File(imgPath);
-//                imageView_userAddContent_2.setImageURI(Uri.fromFile(f));
-//            }
-//            if (checkCount == 2) {
-//                imageView_userAddContent_3.setVisibility(View.VISIBLE);
-//                imgPath = getPath(data.getData());
-//                System.out.println(data.getData());
-//                System.out.println(getPath(data.getData()));
-//                File f = new File(imgPath);
-//                imageView_userAddContent_3.setImageURI(Uri.fromFile(f));
-//            }
-//        } else {
-//            return;
-//        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

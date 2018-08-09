@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,11 +30,16 @@ import com.example.n4u1.test130.fragments.CameraFragment;
 import com.example.n4u1.test130.fragments.ImageFragment;
 import com.example.n4u1.test130.fragments.VideoFragment;
 import com.example.n4u1.test130.models.ContentDTO;
+import com.example.n4u1.test130.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,14 +52,16 @@ public class FileChoiceActivity extends AppCompatActivity
         VideoFragment.OnFragmentInteractionListener,
         CameraFragment.OnFragmentInteractionListener {
 
-    private String imgPath;
     private String[] imgStrings;
-    private String uriString;
+    private ArrayList<String> userInputContents;
+    private UploadTask uploadTask;
     private FirebaseStorage storage;
     private FirebaseAuth auth;
-    private FirebaseDatabase database;
-    private ArrayList<String> userInputContents;
-
+    private FirebaseDatabase mdatabase;
+    private StorageReference riversRef;
+    private StorageReference storageRef;
+    private DatabaseReference mdatabaseRef;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +92,9 @@ public class FileChoiceActivity extends AppCompatActivity
 
         imgStrings = new String[10];
 
+        mdatabaseRef = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
-        database = FirebaseDatabase.getInstance();
+        mdatabase = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         final int[] i = new int[1];
         i[0] = 0;
@@ -168,7 +177,10 @@ public class FileChoiceActivity extends AppCompatActivity
                 upload(imgStrings);
                 break;
         }
-        onBackPressed();
+
+        Intent intent = new Intent(FileChoiceActivity.this, HomeActivity.class);
+        startActivity(intent);
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -200,259 +212,253 @@ public class FileChoiceActivity extends AppCompatActivity
     //upload할 파일의 경로를 리스너로 받음 → 받아서 FireBase 에 업로드
     public void upload(final String[] uri) {
 
-        final ContentDTO contentDTO = new ContentDTO();
 
-        if (uri[0].length() != 0) {
-            Uri file_0 = Uri.fromFile(new File(uri[0]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_0.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_0);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+            mdatabaseRef = FirebaseDatabase.getInstance().getReference();
+            key = mdatabaseRef.child("user_contents_tests").push().getKey();
 
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            uriString = uri.toString();
-                            contentDTO.imageUrl_0 = uri.toString();
-                            contentDTO.uid = auth.getCurrentUser().getUid();
-                            contentDTO.userID = auth.getCurrentUser().getEmail();
-                            contentDTO.title = userInputContents.get(0);
-                            contentDTO.description = userInputContents.get(1);
-                            contentDTO.pollMode = userInputContents.get(2); // 단일투표 or 순위투표
-                            contentDTO.contentType = userInputContents.get(3); //아침, 패션, 정치 등..
-                            database.getReference().child("user_contents").push().setValue(contentDTO); //contentDTO에 담아서 setValue로 디비에 저장
-                        }
-                    });
-                }
-            });
-        }
-        if (uri[1].length() != 0) {
-            Uri file_1 = Uri.fromFile(new File(uri[1]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_1.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_1);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-//                            contentDTO.imageUrl_1 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-//                            String contentKey = database.getReference().child("user_contents").get();
-//                            database.getReference().child("user_contents").child(contentKey).updateChildren()
-                        }
-                    });
-                }
-            });
-        }
+            //content input start into fireBase "user_contents"
+            ContentDTO contentDTO = new ContentDTO();
+            contentDTO.title = userInputContents.get(0);
+            contentDTO.contentType = userInputContents.get(1);
+            contentDTO.pollMode = userInputContents.get(2);
+            contentDTO.description = userInputContents.get(3);
+            contentDTO.uid = auth.getCurrentUser().getUid();
+            contentDTO.userID = auth.getCurrentUser().getEmail();
 
-        if (uri[2].length() != 0) {
-            Uri file_2 = Uri.fromFile(new File(uri[2]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_2.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_2);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_2 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            mdatabaseRef.child("user_contents_tests").child(key).setValue(contentDTO);
+//
+            if (uri[0].length() != 0) {
+                Uri file_0 = Uri.fromFile(new File(uri[0]));
 
-        if (uri[3].length() != 0) {
-            Uri file_3 = Uri.fromFile(new File(uri[3]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_3.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_3);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_3 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+                storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                riversRef = storageRef.child("images/" + file_0.getLastPathSegment());
+                uploadTask = riversRef.putFile(file_0);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_0").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[4].length() != 0) {
-            Uri file_4 = Uri.fromFile(new File(uri[4]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_4.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_4);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_4 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            if (uri[1].length() != 0) {
+                Uri file_1 = Uri.fromFile(new File(uri[1]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_1.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_1);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_1").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[5].length() != 0) {
-            Uri file_5 = Uri.fromFile(new File(uri[5]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_5.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_5);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_5 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            if (uri[2].length() != 0) {
+                Uri file_2 = Uri.fromFile(new File(uri[2]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_2.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_2);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_2").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[6].length() != 0) {
-            Uri file_6 = Uri.fromFile(new File(uri[6]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_6.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_6);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_6 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            if (uri[3].length() != 0) {
+                Uri file_3 = Uri.fromFile(new File(uri[3]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_3.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_3);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {//
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_3").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[7].length() != 0) {
-            Uri file_7 = Uri.fromFile(new File(uri[7]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_7.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_7);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_7 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            if (uri[4].length() != 0) {
+                Uri file_4 = Uri.fromFile(new File(uri[4]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_4.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_4);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_4").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[8].length() != 0) {
-            Uri file_8 = Uri.fromFile(new File(uri[8]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_8.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_8);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_8 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
+            if (uri[5].length() != 0) {
+                Uri file_5 = Uri.fromFile(new File(uri[5]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_5.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_5);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_5").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
 
-        if (uri[9].length() != 0) {
-            Uri file_9 = Uri.fromFile(new File(uri[9]));
-            StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
-            final StorageReference riversRef = storageRef.child("images/" + file_9.getLastPathSegment());
-            UploadTask uploadTask = riversRef.putFile(file_9);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {//
-//                            contentDTO.imageUrl_9 = uri.toString();
-//                            database.getReference().child("user_contents").setValue(contentDTO);
-                        }
-                    });
-                }
-            });
-        }
-        if (userInputContents.get(0) == null | userInputContents.get(1) == null | userInputContents.get(2) == null | userInputContents.get(3) == null) {
-            Toast.makeText(getApplicationContext(), "빈 칸이 있어요!", Toast.LENGTH_SHORT).show();
-        }
+            if (uri[6].length() != 0) {
+                Uri file_6 = Uri.fromFile(new File(uri[6]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_6.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_6);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_6").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (uri[7].length() != 0) {
+                Uri file_7 = Uri.fromFile(new File(uri[7]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_7.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_7);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_7").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (uri[8].length() != 0) {
+                Uri file_8 = Uri.fromFile(new File(uri[8]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_8.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_8);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_8").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
+
+            if (uri[9].length() != 0) {
+                Uri file_9 = Uri.fromFile(new File(uri[9]));
+                StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
+                final StorageReference riversRef = storageRef.child("images/" + file_9.getLastPathSegment());
+                UploadTask uploadTask = riversRef.putFile(file_9);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mdatabaseRef.child("user_contents_tests").child(key).child("imageUrl_9").setValue(uri.toString());
+                            }
+                        });
+                    }
+                });
+            }
+
+
 
     }
 
