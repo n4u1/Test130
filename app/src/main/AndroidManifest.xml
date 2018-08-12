@@ -27,7 +27,11 @@
             android:name=".views.FileChoiceActivity"
             android:label="@string/title_activity_file_choice"
             android:theme="@style/AppTheme" />
-        <activity android:name=".views.TestActivity"></activity>
+        <activity android:name=".views.TestActivity" />
+        <activity android:name=".views.PollActivity" />
+        <activity android:name=".views.PollRankingActivity" />
+        <activity android:name=".views.PollMultiActivity" />
+        <activity android:name=".views.PollSingleActivity"></activity>
     </application>
 
 </manifest>

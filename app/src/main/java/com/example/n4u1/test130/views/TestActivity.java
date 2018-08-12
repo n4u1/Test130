@@ -1,70 +1,89 @@
 package com.example.n4u1.test130.views;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.Post;
+import com.example.n4u1.test130.recyclerview.PostViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class TestActivity extends AppCompatActivity {
-    FirebaseStorage storage;
-    FirebaseAuth auth;
-    FirebaseDatabase database;
-    DatabaseReference mdatabase;
-    String key;
-    ContentDTO contentDTO;
+
+    Button B;
+    ImageView I;
+
+    Bitmap bitmap;
+    Bitmap O;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        storage = FirebaseStorage.getInstance();
-        auth = FirebaseAuth.getInstance();
-//        database = FirebaseDatabase.getInstance();
-        mdatabase = FirebaseDatabase.getInstance().getReference();
 
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://test130-1068f.appspot.com");
 
-        Button button = findViewById(R.id.buttonTest);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                key = mdatabase.child("user_contents_tests").push().getKey();
-                contentDTO = new ContentDTO();
-                contentDTO.contentKey = key;
-                contentDTO.imageUrl_0 = "4321url test";
-                contentDTO.uid = auth.getCurrentUser().getUid();
-                contentDTO.userID = auth.getCurrentUser().getEmail();
-                contentDTO.title = "4321title test";
-                contentDTO.description = "421description test";
-                contentDTO.pollMode = "4321pollMode Test"; // 단일투표 or 순위투표
-                contentDTO.contentType = "4321contetntype test"; //아침, 패션, 정치 등..
+        B = (Button) findViewById(R.id.button);
+        I = (ImageView) findViewById(R.id.imageView_1);
 
-                mdatabase.child("user_contents_tests").child(key).setValue(contentDTO);
-                Log.d("lkjlkj", key);
+
+//        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
+
+        Glide.with(this)
+                .load("https://firebasestorage.googleapis.com/v0/b/test130-1068f.appspot.com/o/images%2F20180202144745_haswtala.jpg?alt=media&token=51dcab09-27f5-41a8-9269-b54c331c08d4")
+                .into(I)
+                .getView();
+
+//
+//        Glide.with(this)
+//                .load(R.drawable.common_full_open_on_phone)
+//                .into(I)
+//                .getView();
+
+//        BitmapDrawable BD =  I.setAlpha(0.5f);
+//        bitmap = BD.getBitmap();
+    }
+
+    public void change_color(View view){
+        I.setAlpha(0.5f);
+        /*O = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), bitmap.getConfig());
+
+        for(int i=0; i<bitmap.getWidth(); i++){
+            for(int j=0; j<bitmap.getHeight(); j++){
+                int p = bitmap.getPixel(i, j);
+                int b = Color.blue(p);
+
+                int x =  0;
+                int y =  0;
+                b =  b+150;
+                O.setPixel(i, j, Color.argb(Color.alpha(p), x, y, b));
             }
-        });
-
-
-        Button button1 = findViewById(R.id.button2);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mdatabase.child("user_contents_tests").child(key).child(contentDTO.description).push().setValue("?????");
-            }
-        });
-
+        }
+        I.setImageBitmap(O);
+*/
     }
 }

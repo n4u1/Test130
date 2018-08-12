@@ -45,7 +45,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class FileChoiceActivity extends AppCompatActivity
         implements ImageFragment.OnFragmentInteractionListener,
@@ -215,6 +219,8 @@ public class FileChoiceActivity extends AppCompatActivity
 
         //content input start into fireBase "user_contents"
         ContentDTO contentDTO = new ContentDTO();
+        contentDTO.uploadDate = doYearMonthDay();
+        contentDTO.contentKey = key;
         contentDTO.title = userInputContents.get(0);
         contentDTO.contentType = userInputContents.get(1);
         contentDTO.pollMode = userInputContents.get(2);
@@ -478,6 +484,16 @@ public class FileChoiceActivity extends AppCompatActivity
         cursor.moveToFirst();
 
         return cursor.getString(index);
+    }
+
+    public String doYearMonthDay() {
+        TimeZone timeZone;
+        timeZone = TimeZone.getTimeZone("Asia/Seoul");
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd.(E)HH:mm", Locale.KOREAN);
+        df.setTimeZone(timeZone);
+        String currentDate = df.format(date);
+        return currentDate;
     }
 
 }

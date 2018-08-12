@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.PollSingleActivity">
+
+    <include layout="@layout/mytoolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--제목-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#efefef"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2.5"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제목" />
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:id="@+id/pollActivity_textView_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="title" />
+            </LinearLayout>
+
+
+            <!--시간-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#efefef"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2.5"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="시간" />
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:id="@+id/pollActivity_textView_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="title" />
+            </LinearLayout>
+
+
+            <!--투표방식-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#efefef"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2.5"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="투표방식" />
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:id="@+id/pollActivity_textView_pollMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="title" />
+            </LinearLayout>
+
+
+
+            <!--카테고리-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#efefef"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2.5"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="카테고리" />
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:id="@+id/pollActivity_textView_contentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="title" />
+            </LinearLayout>
+
+
+
+            <!--내용-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#efefef"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="4"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="내용" />
+            </LinearLayout>
+            <TextView
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:id="@+id/pollActivity_textView_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="title" />
+
+
+
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/pollActivity_imageView_userAddContent_1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/pollActivity_imageView_userAddContent_2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/pollActivity_imageView_userAddContent_3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/pollActivity_imageView_userAddContent_4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -57,7 +57,8 @@ public class ContentTypeDialog extends DialogFragment {
 
                         switch (which) {
                             case 0 : result = "단일 투표"; break;
-                            case 1 : result = "순위 투표"; break;
+                            case 1 : result = "다중 투표"; break;
+                            case 2 : result = "순위 투표"; break;
                         }
                         mListener.choiceItemCallback(result);
                     }
