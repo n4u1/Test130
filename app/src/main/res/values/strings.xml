@@ -19,9 +19,8 @@
 
 
     <string-array name="contentType">
-        <item>단일 투표 (한개를 투표하는 방식)</item>
-        <item>다중 투표 (100점을 나누어 투표하는 방식)</item>
-        <item>순위 투표 (등수로 투표하는 방식)</item>
+        <item>단일 투표 </item>
+        <item>순위 투표 </item>
 
     </string-array>
 

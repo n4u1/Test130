@@ -340,7 +340,7 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
     public void onDialogPositiveClick(ArrayList arrayList) {
         textView = findViewById(R.id.editText_addCategory);
         String string = arrayList.toString();
-        if (arrayList.size() < 5) {
+        if (arrayList.size() < 6) {
             String resultString = string.replace("[", "").replace("]", "");
             textView.setText(resultString);
         } else {

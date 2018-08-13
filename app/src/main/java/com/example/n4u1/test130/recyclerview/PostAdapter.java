@@ -15,6 +15,8 @@ import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.views.HomeActivity;
 import com.example.n4u1.test130.views.PollActivity;
+import com.example.n4u1.test130.views.PollRankingActivity;
+import com.example.n4u1.test130.views.PollSingleActivity;
 import com.example.n4u1.test130.views.TestActivity;
 
 import junit.framework.Test;
@@ -83,6 +85,20 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return ITEM_VIEW_TYPE_2;
         } else if (contentDTOS.get(position).getItemViewType() == 4) {
             return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 5) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 5) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 6) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 7) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 8) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 9) {
+            return ITEM_VIEW_TYPE_3;
+        } else if (contentDTOS.get(position).getItemViewType() == 10) {
+            return ITEM_VIEW_TYPE_3;
         } else {
             return ITEM_VIEW_TYPE_1;
         }
@@ -98,21 +114,18 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         String string = contentDTOS.get(position).contentKey;
-                        Log.d("lkjlkj", contentDTOS.get(position).getPollMode());
                         if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
                         } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-
-                        } if (contentDTOS.get(position).getPollMode().equals("다중 투표")) {
-
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
                         }
-
-                        Intent intent = new Intent(mContext, PollActivity.class);
-                        intent.putExtra("contentKey", string);
-                        mContext.startActivity(intent);
                     }
                 });
-
                 //아이템 바인딩
                 ((PostViewHolder)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
@@ -123,14 +136,33 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_1 :
                 ((PostViewHolder1)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
 
                     }
                 });
                 ((PostViewHolder1)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder1)holder).textView_title.setText(contentDTOS.get(position).title);
@@ -143,20 +175,47 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_2 :
                 ((PostViewHolder2)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder2)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder2)holder).imageView_postImg_2.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
 
@@ -171,26 +230,62 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_3 :
                 ((PostViewHolder3)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_2.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_3.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
+                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+                            Intent intent = new Intent(mContext, PollRankingActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
 
+                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+                            Intent intent = new Intent(mContext, PollSingleActivity.class);
+                            intent.putExtra("contentKey", string);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
                 ((PostViewHolder3)holder).textView_title.setText(contentDTOS.get(position).title);

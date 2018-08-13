@@ -18,6 +18,7 @@
         android:layout_height="200dp"
         android:layout_alignTop="@+id/imageView_1"
         android:src="@drawable/n_one"
+        android:visibility="gone"
         />
 
     <Button

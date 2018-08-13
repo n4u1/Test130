@@ -35,7 +35,7 @@ import java.util.TimeZone;
 public class TestActivity extends AppCompatActivity {
 
     Button B;
-    ImageView I;
+    ImageView I,I2;
 
     Bitmap bitmap;
     Bitmap O;
@@ -49,7 +49,7 @@ public class TestActivity extends AppCompatActivity {
 
         B = (Button) findViewById(R.id.button);
         I = (ImageView) findViewById(R.id.imageView_1);
-
+        I2 = findViewById(R.id.imageView_2);
 
 //        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
 
@@ -69,7 +69,15 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void change_color(View view){
-        I.setAlpha(0.5f);
+
+        if (I2.getVisibility() == View.GONE) {
+            I.setAlpha(0.5f);
+            I2.setVisibility(View.VISIBLE);
+        } else {
+            I.setAlpha(1.0f);
+            I2.setVisibility(View.GONE);
+        }
+
         /*O = Bitmap.createBitmap(bitmap.getWidth(),bitmap.getHeight(), bitmap.getConfig());
 
         for(int i=0; i<bitmap.getWidth(); i++){
