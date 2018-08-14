@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,6 +24,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
     private boolean ACTIVITY_REPLY_FLAG;
     private boolean ACTIVITY_RESULT_FLAG;
+    private int pickCandidate = 0;
 
     DatabaseReference mDatabaseReference;
 
@@ -119,12 +121,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 if (!ACTIVITY_RESULT_FLAG) {
+                    int cp = checking_pick();
+                    Log.d("pickCandidate", String.valueOf(cp));
                     pollActivity_imageView_result_downButton.setVisibility(View.GONE);
                     pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
                     pollActivity_textView_result.setText("접기");
                     pollActivity_imageView_test.setVisibility(View.VISIBLE);
                     ACTIVITY_RESULT_FLAG = true;
                 } else  {
+                    int cp = checking_pick();
+                    Log.d("pickCandidate", String.valueOf(cp));
                     pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
                     pollActivity_imageView_result_upButton.setVisibility(View.GONE);
                     pollActivity_textView_result.setText("투표하고 결과보기");
@@ -476,103 +482,147 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void checking_img_1() {
+        pickCandidate = 1;
         pollActivity_imageView_userAddContent_1.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_1.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_1).getView();
     }
     public void checking_img_1_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_1.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_1.setVisibility(View.GONE);
     }
 
     public void checking_img_2() {
+        pickCandidate = 2;
         pollActivity_imageView_userAddContent_2.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_2.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_2).getView();
     }
     public void checking_img_2_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_2.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_2.setVisibility(View.GONE);
     }
 
     public void checking_img_3() {
+        pickCandidate = 3;
         pollActivity_imageView_userAddContent_3.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_3.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_3).getView();
     }
     public void checking_img_3_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_3.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_3.setVisibility(View.GONE);
     }
 
     public void checking_img_4() {
+        pickCandidate = 4;
         pollActivity_imageView_userAddContent_4.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_4.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_4).getView();
     }
     public void checking_img_4_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_4.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_4.setVisibility(View.GONE);
     }
 
     public void checking_img_5() {
+        pickCandidate = 5;
         pollActivity_imageView_userAddContent_5.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_5.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_5).getView();
     }
     public void checking_img_5_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_5.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_5.setVisibility(View.GONE);
     }
 
     public void checking_img_6() {
+        pickCandidate = 6;
         pollActivity_imageView_userAddContent_6.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_6.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_6).getView();
     }
     public void checking_img_6_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_6.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_6.setVisibility(View.GONE);
     }
 
     public void checking_img_7() {
+        pickCandidate = 7;
         pollActivity_imageView_userAddContent_7.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_7.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_7).getView();
     }
     public void checking_img_7_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_7.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_7.setVisibility(View.GONE);
     }
 
     public void checking_img_8() {
+        pickCandidate = 8;
         pollActivity_imageView_userAddContent_8.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_8.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_8).getView();
     }
     public void checking_img_8_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_8.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_8.setVisibility(View.GONE);
     }
 
     public void checking_img_9() {
+        pickCandidate = 9;
         pollActivity_imageView_userAddContent_9.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_9.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_9).getView();
     }
     public void checking_img_9_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_9.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_9.setVisibility(View.GONE);
     }
 
     public void checking_img_10() {
+        pickCandidate = 10;
         pollActivity_imageView_userAddContent_10.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_10.setVisibility(View.VISIBLE);
         Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_10).getView();
     }
     public void checking_img_10_rt() {
+        pickCandidate = 0;
         pollActivity_imageView_userAddContent_10.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_10.setVisibility(View.GONE);
+    }
+
+    public int checking_pick() {
+        if (pollActivity_imageView_userAddContent_1.getAlpha() == 0.7f) {
+            return 1;
+        } else if (pollActivity_imageView_userAddContent_2.getAlpha() == 0.7f){
+            return 2;
+        } else if (pollActivity_imageView_userAddContent_3.getAlpha() == 0.7f) {
+            return 3;
+        } else if (pollActivity_imageView_userAddContent_4.getAlpha() == 0.7f) {
+            return 4;
+        } else if (pollActivity_imageView_userAddContent_5.getAlpha() == 0.7f) {
+            return 5;
+        } else if (pollActivity_imageView_userAddContent_6.getAlpha() == 0.7f) {
+            return 6;
+        } else if (pollActivity_imageView_userAddContent_7.getAlpha() == 0.7f) {
+            return 7;
+        } else if (pollActivity_imageView_userAddContent_8.getAlpha() == 0.7f) {
+            return 8;
+        } else if (pollActivity_imageView_userAddContent_9.getAlpha() == 0.7f) {
+            return 9;
+        } else if (pollActivity_imageView_userAddContent_10.getAlpha() == 0.07f) {
+            return 10;
+        } else return 100;
     }
 
 }
