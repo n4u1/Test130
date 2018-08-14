@@ -49,12 +49,12 @@ public class TestActivity extends AppCompatActivity {
 
         B = (Button) findViewById(R.id.button);
         I = (ImageView) findViewById(R.id.imageView_1);
-        I2 = findViewById(R.id.imageView_2);
+//        I2 = findViewById(R.id.imageView_2);
 
 //        Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
 
         Glide.with(this)
-                .load("https://firebasestorage.googleapis.com/v0/b/test130-1068f.appspot.com/o/images%2F20180202144745_haswtala.jpg?alt=media&token=51dcab09-27f5-41a8-9269-b54c331c08d4")
+                .load(R.drawable.ic_keyboard_arrow_down_black_24dp)
                 .into(I)
                 .getView();
 
