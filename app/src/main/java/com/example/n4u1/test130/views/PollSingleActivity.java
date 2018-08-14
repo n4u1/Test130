@@ -129,8 +129,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     pollActivity_imageView_test.setVisibility(View.VISIBLE);
                     ACTIVITY_RESULT_FLAG = true;
                 } else  {
-                    int cp = checking_pick();
-                    Log.d("pickCandidate", String.valueOf(cp));
+                    int cp1 = checking_pick();
+                    Log.d("pickCandidate", String.valueOf(cp1));
                     pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
                     pollActivity_imageView_result_upButton.setVisibility(View.GONE);
                     pollActivity_textView_result.setText("투표하고 결과보기");

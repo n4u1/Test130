@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
@@ -31,6 +32,8 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private FirebaseDatabase mDatabase;
+    final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+    final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);
         mDatabase = FirebaseDatabase.getInstance();
 
-        final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+
         RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//20180730 전날꺼 보기 getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -69,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setReverseLayout(true);
         recyclerViewList.setLayoutManager(mLayoutManager);
-        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
+//        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
         recyclerViewList.setAdapter(postAdapter);
 
 
@@ -88,8 +91,11 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+
             }
         });
+
+
 
         //Pull to Refresh 당겨서 새로고침
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -124,6 +130,24 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
+    public void resetActivity() {
+        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                contentDTOS.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                    contentDTOS.add(contentDTO);
+                }
+                postAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,4 +180,5 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 //        onBackPressed();
         return super.onOptionsItemSelected(item);
     }
+
 }

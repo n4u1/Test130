@@ -18,10 +18,17 @@ import com.example.n4u1.test130.views.PollActivity;
 import com.example.n4u1.test130.views.PollRankingActivity;
 import com.example.n4u1.test130.views.PollSingleActivity;
 import com.example.n4u1.test130.views.TestActivity;
-
-import junit.framework.Test;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList strings;
@@ -31,13 +38,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ITEM_VIEW_TYPE_2 = 2;
     private static final int ITEM_VIEW_TYPE_3 = 3;
     private static final int ITEM_VIEW_TYPE_0 = 0;
+    private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
 
 
 
     public PostAdapter(Context context, ArrayList<ContentDTO> listItem) {
-        mContext = context;
-        contentDTOS = listItem;
+        this.mContext = context;
+        this.contentDTOS = listItem;
     }
+
+
 
 
 
@@ -56,6 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        auth = FirebaseAuth.getInstance();
         if (viewType == ITEM_VIEW_TYPE_0) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_home_0_img, parent, false);
             return new PostViewHolder(view);
@@ -106,7 +118,26 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //contentDTO 내용을 아이템셋에 배치
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+        final List<String> uidLists = new ArrayList<>();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        //좋아요 클릭을위해서 참조해서 키값 받아옴
+        firebaseDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                uidLists.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String uidKey = snapshot.getKey();
+                    uidLists.add(uidKey);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         switch (holder.getItemViewType()) {
             case ITEM_VIEW_TYPE_0 :
                 //이미지 클릭시 컨텐트 디테일(PollActivity) 로 넘어감
@@ -131,6 +162,20 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
+                ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        resetHomeActivity();
+
+
+                    }
+                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                } else {
+                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
                 break;
 
             case ITEM_VIEW_TYPE_1 :
@@ -165,6 +210,20 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                     }
                 });
+                ((PostViewHolder1)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        resetHomeActivity();
+
+
+                    }
+                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                } else {
+                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
                 ((PostViewHolder1)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder1)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder1)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
@@ -218,7 +277,19 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                     }
                 });
+                ((PostViewHolder2)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        resetHomeActivity();
 
+                    }
+                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                } else {
+                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
                 ((PostViewHolder2)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder2)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder2)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
@@ -288,6 +359,19 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                     }
                 });
+                ((PostViewHolder3)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        resetHomeActivity();
+
+                    }
+                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                } else {
+                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
                 ((PostViewHolder3)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder3)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder3)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
@@ -298,25 +382,52 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
                 default: break;
         }
-
-
-
-
     }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-//        //ContentDTO item = contentDTOS.get(position);
-//        holder.textView_userName.setText(contentDTOS.get(position).userID);
-//
-//        holder.textView_title.setText(contentDTOS.get(position).title);
-////        holder.textView_title.setText(item.getPostText());
-////        holder.textView_likeCount.setText(String.valueOf(item.getPostLikeCount()));
-//
-//    }
 
     @Override
     public int getItemCount() {
         return contentDTOS.size();
+    }
+
+    private void resetHomeActivity() {
+        if (mContext instanceof HomeActivity) {
+            ((HomeActivity)mContext).resetActivity();
+        }
+    }
+
+
+    private void onStarClicked(final DatabaseReference postRef) {
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
+                if (contentDTO == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                if (contentDTO.likes.containsKey(auth.getCurrentUser().getUid())) {
+                    // Unstar the post and remove self from stars
+                    contentDTO.likeCount = contentDTO.likeCount - 1;
+                    contentDTO.likes.remove(auth.getCurrentUser().getUid());
+                } else {
+                    // Star the post and add self to stars
+                    contentDTO.likeCount = contentDTO.likeCount + 1;
+                    contentDTO.likes.put(auth.getCurrentUser().getUid(), true);
+                }
+
+                // Set value and report transaction success
+                mutableData.setValue(contentDTO);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                // Transaction completed
+                Log.d("lkjlkj", "postTransaction:onComplete:" + databaseError);
+
+
+
+            }
+        });
     }
 }

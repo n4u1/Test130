@@ -20,11 +20,12 @@ public class ContentDTO {
     public String contentType;
     public String contentId;
     boolean isUserLike;
-    int postLikeCount;
     int contentHit;
     public String contentKey;
     public int itemViewType;
     public String uploadDate;
+    public int likeCount = 0;
+    public Map<String, Boolean> likes = new HashMap<>();
 
 
     public ContentDTO(){}
@@ -221,14 +222,6 @@ public class ContentDTO {
         isUserLike = userLike;
     }
 
-    public int getPostLikeCount() {
-        return postLikeCount;
-    }
-
-    public void setPostLikeCount(int postLikeCount) {
-        this.postLikeCount = postLikeCount;
-    }
-
     public int getContentHit() {
         return contentHit;
     }
@@ -261,15 +254,19 @@ public class ContentDTO {
         this.uploadDate = uploadDate;
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("contentType", contentType);
-        result.put("title", title);
-        result.put("description", description);
-        result.put("postLikeCount", postLikeCount);
+    public int getLikeCount() {
+        return likeCount;
+    }
 
-        return result;
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Map<String, Boolean> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Map<String, Boolean> likes) {
+        this.likes = likes;
     }
 }
