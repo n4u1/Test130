@@ -1,5 +1,10 @@
 package com.example.n4u1.test130.models;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 
     private String tmpImgUrl_0,tmpImgUrl_1,tmpImgUrl_2,tmpImgUrl_3,tmpImgUrl_4,tmpImgUrl_5,tmpImgUrl_6,tmpImgUrl_7,tmpImgUrl_8,tmpImgUrl_9;
@@ -7,10 +12,11 @@ public class User {
     private String pickContent;
     private int age;
 
+    public Map<String, Boolean> likeContent = new HashMap<>();
 
     public User () {    }
 
-    public User(String tmpImgUrl_0, String tmpImgUrl_1, String tmpImgUrl_2, String tmpImgUrl_3, String tmpImgUrl_4, String tmpImgUrl_5, String tmpImgUrl_6, String tmpImgUrl_7, String tmpImgUrl_8, String tmpImgUrl_9, String deviceName, String sex, String job, String uid, String email, String pickContent, int age) {
+    public User(String tmpImgUrl_0, String tmpImgUrl_1, String tmpImgUrl_2, String tmpImgUrl_3, String tmpImgUrl_4, String tmpImgUrl_5, String tmpImgUrl_6, String tmpImgUrl_7, String tmpImgUrl_8, String tmpImgUrl_9, String deviceName, String sex, String job, String uid, String email, String pickContent, int age, Map<String, Boolean> likeContent) {
         this.tmpImgUrl_0 = tmpImgUrl_0;
         this.tmpImgUrl_1 = tmpImgUrl_1;
         this.tmpImgUrl_2 = tmpImgUrl_2;
@@ -28,6 +34,25 @@ public class User {
         this.email = email;
         this.pickContent = pickContent;
         this.age = age;
+        this.likeContent = likeContent;
+    }
+
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("likeContent", likeContent);
+
+        return result;
+    }
+
+    public Map<String, Boolean> getLikeContent() {
+        return likeContent;
+    }
+
+    public void setLikeContent(Map<String, Boolean> likeContent) {
+        this.likeContent = likeContent;
     }
 
     public String getTmpImgUrl_0() {

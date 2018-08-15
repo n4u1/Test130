@@ -2,6 +2,7 @@ package com.example.n4u1.test130.recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.sip.SipSession;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +14,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
+import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.views.HomeActivity;
 import com.example.n4u1.test130.views.PollActivity;
 import com.example.n4u1.test130.views.PollRankingActivity;
 import com.example.n4u1.test130.views.PollSingleActivity;
 import com.example.n4u1.test130.views.TestActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +31,9 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList strings;
@@ -40,6 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int ITEM_VIEW_TYPE_0 = 0;
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
 
 
@@ -162,6 +168,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                ((PostViewHolder)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
                 ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -229,6 +236,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder1)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder1)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                ((PostViewHolder1)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder1)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder1)holder).imageView_postImg_1);
                 break;
@@ -296,6 +304,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder2)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder2)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                ((PostViewHolder2)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder2)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder2)holder).imageView_postImg_1);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).into(((PostViewHolder2)holder).imageView_postImg_2);
@@ -378,6 +387,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder3)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder3)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder3)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
+                ((PostViewHolder3)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
                 ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder3)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder3)holder).imageView_postImg_1);
@@ -400,7 +410,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
+
+
+
+
     private void onLikeClicked(final DatabaseReference postRef) {
+
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -411,12 +426,34 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 if (contentDTO.likes.containsKey(auth.getCurrentUser().getUid())) {
                     // Unstar the post and remove self from stars
+                    // 좋아요카운트 -1 하고 리스트에서 삭제
                     contentDTO.likeCount = contentDTO.likeCount - 1;
                     contentDTO.likes.remove(auth.getCurrentUser().getUid());
+                    // users/내uid/컨텐트key/false      : 좋아요 누른 컨텐츠 리스트 false
+                    firebaseDatabase.getReference()
+                            .child("users")
+                            .child(auth.getCurrentUser().getUid())
+                            .child("likeContent")
+                            .child(contentDTO.getContentKey())
+                            .setValue("false");
+
                 } else {
                     // Star the post and add self to stars
                     contentDTO.likeCount = contentDTO.likeCount + 1;
                     contentDTO.likes.put(auth.getCurrentUser().getUid(), true);
+                    // users/내uid/컨텐트key/true       : 좋아요 누른 컨텐츠 리스트 true
+                    firebaseDatabase.getReference()
+                            .child("users")
+                            .child(auth.getCurrentUser().getUid())
+                            .child("likeContent")
+                            .child(contentDTO.getContentKey())
+                            .setValue("true");
+//                    User user = new User();
+//                    Map<String, Object> userValues = user.toMap();
+//                    Map<String, Object> childUpdates = new HashMap<>();
+//                    childUpdates.put("/users/", userValues);
+//                    databaseReference.updateChildren(childUpdates);
+
                 }
 
                 // Set value and report transaction success

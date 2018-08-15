@@ -33,9 +33,9 @@ public class ContentDTO {
     public int candidateScore_7 = 0;
     public int candidateScore_8 = 0;
     public int candidateScore_9 = 0;
-    public int contentHit;
-    public int itemViewType;
+    public int contentHit = 0;
     public int likeCount = 0;
+    public int itemViewType;
     public Map<String, Boolean> likes = new HashMap<>();
     public Map<String, Integer> contentPicker = new HashMap<>();
 

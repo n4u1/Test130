@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.button_uploadTestActivity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
 
             }
@@ -244,39 +244,43 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
 
                             Toast.makeText(getApplicationContext(), "User Login Success", Toast.LENGTH_LONG).show();
-
-                            mEmailDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Iterable<DataSnapshot> emailIterable = dataSnapshot.getChildren();
-                                    Iterator<DataSnapshot> emailIterator = emailIterable.iterator();
-
-                                    int userCount = (int)dataSnapshot.getChildrenCount();
-                                    int loopCount = 0;
-
-                                    while (emailIterator.hasNext()) {
-                                        User user = emailIterator.next().getValue(User.class);
-                                        if (!user.getEmail().equals(email)) {
-                                            loopCount++;
-                                        }
-                                    }
-                                    if ( loopCount == userCount) {
-                                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                                        finish();
-                                        startActivity(intent);
-                                    } else {
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        finish();
-                                        startActivity(intent);
-                                    }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
+//
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            finish();
+                            startActivity(intent);
+//
+//                            mEmailDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                    Iterable<DataSnapshot> emailIterable = dataSnapshot.getChildren();
+//                                    Iterator<DataSnapshot> emailIterator = emailIterable.iterator();
+//
+//                                    int userCount = (int)dataSnapshot.getChildrenCount();
+//                                    int loopCount = 0;
+//
+//                                    while (emailIterator.hasNext()) {
+//                                        User user = emailIterator.next().getValue(User.class);
+//                                        if (!user.getEmail().equals(email)) {
+//                                            loopCount++;
+//                                        }
+//                                    }
+//                                    if ( loopCount == userCount) {
+//                                        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//                                        finish();
+//                                        startActivity(intent);
+//                                    } else {
+//                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                                        finish();
+//                                        startActivity(intent);
+//                                    }
+//
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                }
+//                            });
 
 
                         } else {
