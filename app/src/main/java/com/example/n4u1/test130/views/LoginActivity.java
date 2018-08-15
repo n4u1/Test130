@@ -251,7 +251,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Iterable<DataSnapshot> emailIterable = dataSnapshot.getChildren();
                                     Iterator<DataSnapshot> emailIterator = emailIterable.iterator();
 
-
                                     int userCount = (int)dataSnapshot.getChildrenCount();
                                     int loopCount = 0;
 
@@ -299,7 +298,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-
                             Toast.makeText(getApplicationContext(), "User Create Success", Toast.LENGTH_LONG).show();
 
                         } else {

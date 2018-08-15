@@ -80,7 +80,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void writeNewUser(String deviceName, String sex, String job, String uid, String email, int age) {
-        User user = new User(deviceName, sex, job, uid, email, age);
+        User user = new User();
+        user.setAge(age);
+        user.setSex(sex);
+        user.setJob(job);
+        user.setUid(uid);
+        user.setEmail(email);
         mDatabase.child("users").child(uid).setValue(user);
 
     }

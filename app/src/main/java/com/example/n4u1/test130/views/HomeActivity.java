@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 //        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
 
+        //테스트용 액티비티
         Button button = findViewById(R.id.button_test);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +51,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         if (getSupportActionBar() != null){
@@ -59,11 +59,9 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);
         mDatabase = FirebaseDatabase.getInstance();
-
 
         RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//20180730 전날꺼 보기 getApplicationContext()전에 this,?? 였음
@@ -77,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
 
+        //onCreate시 액티비티 최초1회 바인딩
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -87,15 +86,12 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 }
                 postAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
 
             }
         });
-
-
 
         //Pull to Refresh 당겨서 새로고침
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -119,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-
+        //글쓰기 FloatingActionButton
         fab_addContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +126,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
+    //좋아요 클릭후 HomeActivity 새로고침
     public void resetActivity() {
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

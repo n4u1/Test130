@@ -19,13 +19,25 @@ public class ContentDTO {
     public String pollMode;
     public String contentType;
     public String contentId;
-    boolean isUserLike;
-    int contentHit;
-    public String contentKey;
-    public int itemViewType;
     public String uploadDate;
+    public String contentKey;
+    public boolean isUserLike;
+    public int pickCandidate = 0;
+    public int candidateScore_0 = 0;
+    public int candidateScore_1 = 0;
+    public int candidateScore_2 = 0;
+    public int candidateScore_3 = 0;
+    public int candidateScore_4 = 0;
+    public int candidateScore_5 = 0;
+    public int candidateScore_6 = 0;
+    public int candidateScore_7 = 0;
+    public int candidateScore_8 = 0;
+    public int candidateScore_9 = 0;
+    public int contentHit;
+    public int itemViewType;
     public int likeCount = 0;
     public Map<String, Boolean> likes = new HashMap<>();
+    public Map<String, Integer> contentPicker = new HashMap<>();
 
 
     public ContentDTO(){}
@@ -214,20 +226,12 @@ public class ContentDTO {
         this.contentId = contentId;
     }
 
-    public boolean isUserLike() {
-        return isUserLike;
+    public String getUploadDate() {
+        return uploadDate;
     }
 
-    public void setUserLike(boolean userLike) {
-        isUserLike = userLike;
-    }
-
-    public int getContentHit() {
-        return contentHit;
-    }
-
-    public void setContentHit(int contentHit) {
-        this.contentHit = contentHit;
+    public void setUploadDate(String uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     public String getContentKey() {
@@ -238,20 +242,116 @@ public class ContentDTO {
         this.contentKey = contentKey;
     }
 
+    public boolean isUserLike() {
+        return isUserLike;
+    }
+
+    public void setUserLike(boolean userLike) {
+        isUserLike = userLike;
+    }
+
+    public int getPickCandidate() {
+        return pickCandidate;
+    }
+
+    public void setPickCandidate(int pickCandidate) {
+        this.pickCandidate = pickCandidate;
+    }
+
+    public int getCandidateScore_0() {
+        return candidateScore_0;
+    }
+
+    public void setCandidateScore_0(int candidateScore_0) {
+        this.candidateScore_0 = candidateScore_0;
+    }
+
+    public int getCandidateScore_1() {
+        return candidateScore_1;
+    }
+
+    public void setCandidateScore_1(int candidateScore_1) {
+        this.candidateScore_1 = candidateScore_1;
+    }
+
+    public int getCandidateScore_2() {
+        return candidateScore_2;
+    }
+
+    public void setCandidateScore_2(int candidateScore_2) {
+        this.candidateScore_2 = candidateScore_2;
+    }
+
+    public int getCandidateScore_3() {
+        return candidateScore_3;
+    }
+
+    public void setCandidateScore_3(int candidateScore_3) {
+        this.candidateScore_3 = candidateScore_3;
+    }
+
+    public int getCandidateScore_4() {
+        return candidateScore_4;
+    }
+
+    public void setCandidateScore_4(int candidateScore_4) {
+        this.candidateScore_4 = candidateScore_4;
+    }
+
+    public int getCandidateScore_5() {
+        return candidateScore_5;
+    }
+
+    public void setCandidateScore_5(int candidateScore_5) {
+        this.candidateScore_5 = candidateScore_5;
+    }
+
+    public int getCandidateScore_6() {
+        return candidateScore_6;
+    }
+
+    public void setCandidateScore_6(int candidateScore_6) {
+        this.candidateScore_6 = candidateScore_6;
+    }
+
+    public int getCandidateScore_7() {
+        return candidateScore_7;
+    }
+
+    public void setCandidateScore_7(int candidateScore_7) {
+        this.candidateScore_7 = candidateScore_7;
+    }
+
+    public int getCandidateScore_8() {
+        return candidateScore_8;
+    }
+
+    public void setCandidateScore_8(int candidateScore_8) {
+        this.candidateScore_8 = candidateScore_8;
+    }
+
+    public int getCandidateScore_9() {
+        return candidateScore_9;
+    }
+
+    public void setCandidateScore_9(int candidateScore_9) {
+        this.candidateScore_9 = candidateScore_9;
+    }
+
+    public int getContentHit() {
+        return contentHit;
+    }
+
+    public void setContentHit(int contentHit) {
+        this.contentHit = contentHit;
+    }
+
     public int getItemViewType() {
         return itemViewType;
     }
 
     public void setItemViewType(int itemViewType) {
         this.itemViewType = itemViewType;
-    }
-
-    public String getUploadDate() {
-        return uploadDate;
-    }
-
-    public void setUploadDate(String uploadDate) {
-        this.uploadDate = uploadDate;
     }
 
     public int getLikeCount() {

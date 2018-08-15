@@ -161,11 +161,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
+                ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
                 ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
 
 
@@ -213,7 +214,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder1)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
 
 
@@ -227,6 +228,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder1)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder1)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder1)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
+                ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder1)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder1)holder).imageView_postImg_1);
                 break;
@@ -280,7 +282,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder2)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
 
                     }
@@ -293,6 +295,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder2)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder2)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder2)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
+                ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder2)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder2)holder).imageView_postImg_1);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).into(((PostViewHolder2)holder).imageView_postImg_2);
@@ -362,7 +365,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder3)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onStarClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
 
                     }
@@ -375,6 +378,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder3)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder3)holder).textView_userName.setText(contentDTOS.get(position).userID);
                 ((PostViewHolder3)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
+                ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder3)holder).imageView_postImg_0);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder3)holder).imageView_postImg_1);
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).into(((PostViewHolder3)holder).imageView_postImg_2);
@@ -396,7 +400,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    private void onStarClicked(final DatabaseReference postRef) {
+    private void onLikeClicked(final DatabaseReference postRef) {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {

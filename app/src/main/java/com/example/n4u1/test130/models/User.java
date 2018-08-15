@@ -4,14 +4,30 @@ public class User {
 
     private String tmpImgUrl_0,tmpImgUrl_1,tmpImgUrl_2,tmpImgUrl_3,tmpImgUrl_4,tmpImgUrl_5,tmpImgUrl_6,tmpImgUrl_7,tmpImgUrl_8,tmpImgUrl_9;
     private String deviceName, sex, job, uid, email;
+    private String pickContent;
     private int age;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public User () {
+    public User () {    }
 
+    public User(String tmpImgUrl_0, String tmpImgUrl_1, String tmpImgUrl_2, String tmpImgUrl_3, String tmpImgUrl_4, String tmpImgUrl_5, String tmpImgUrl_6, String tmpImgUrl_7, String tmpImgUrl_8, String tmpImgUrl_9, String deviceName, String sex, String job, String uid, String email, String pickContent, int age) {
+        this.tmpImgUrl_0 = tmpImgUrl_0;
+        this.tmpImgUrl_1 = tmpImgUrl_1;
+        this.tmpImgUrl_2 = tmpImgUrl_2;
+        this.tmpImgUrl_3 = tmpImgUrl_3;
+        this.tmpImgUrl_4 = tmpImgUrl_4;
+        this.tmpImgUrl_5 = tmpImgUrl_5;
+        this.tmpImgUrl_6 = tmpImgUrl_6;
+        this.tmpImgUrl_7 = tmpImgUrl_7;
+        this.tmpImgUrl_8 = tmpImgUrl_8;
+        this.tmpImgUrl_9 = tmpImgUrl_9;
+        this.deviceName = deviceName;
+        this.sex = sex;
+        this.job = job;
+        this.uid = uid;
+        this.email = email;
+        this.pickContent = pickContent;
+        this.age = age;
     }
 
     public String getTmpImgUrl_0() {
@@ -94,10 +110,6 @@ public class User {
         this.tmpImgUrl_9 = tmpImgUrl_9;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getDeviceName() {
         return deviceName;
     }
@@ -130,6 +142,22 @@ public class User {
         this.uid = uid;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPickContent() {
+        return pickContent;
+    }
+
+    public void setPickContent(String pickContent) {
+        this.pickContent = pickContent;
+    }
+
     public int getAge() {
         return age;
     }
@@ -138,12 +166,4 @@ public class User {
         this.age = age;
     }
 
-    public User(String deviceName, String sex, String job, String uid, String email, int age) {
-        this.deviceName = deviceName;
-        this.sex = sex;
-        this.job = job;
-        this.uid = uid;
-        this.email = email;
-        this.age = age;
-    }
 }
