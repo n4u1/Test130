@@ -1,12 +1,16 @@
 package com.example.n4u1.test130.views;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +19,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
+import com.example.n4u1.test130.models.ReplyDTO;
+import com.example.n4u1.test130.recyclerview.PostAdapter;
+import com.example.n4u1.test130.recyclerview.ReplyAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +30,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class PollSingleActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,6 +46,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase firebaseDatabase;
+
+    final ArrayList<ReplyDTO> replyDTO = new ArrayList<>();
+    final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTO);
 
     TextView pollActivity_textView_title, pollActivity_textView_description,
             pollActivity_textView_pollMode, pollActivity_textView_contentType, pollActivity_textView_date;
@@ -50,6 +66,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     ImageView pollActivity_imageView_test, pollActivity_imageView_result_downButton, pollActivity_imageView_reply_upButton,
             pollActivity_imageView_result_upButton, pollActivity_imageView_reply_downButton;
 
+    Button pollActivity_button_replySend;
+    TextInputLayout pollActivity_textInputLayout_reply;
+    EditText pollActivity_editText_reply;
     RecyclerView pollActivity_recyclerView_reply;
     RelativeLayout pollActivity_relativeLayout_result, pollActivity_relativeLayout_reply;
     TextView pollActivity_textView_result, pollActivity_textView_reply;
@@ -109,6 +128,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_recyclerView_reply = findViewById(R.id.pollActivity_recyclerView_reply);
         pollActivity_textView_result = findViewById(R.id.pollActivity_textView_result);
         pollActivity_textView_reply = findViewById(R.id.pollActivity_textView_reply);
+        pollActivity_editText_reply = findViewById(R.id.pollActivity_editText_reply);
+        pollActivity_textInputLayout_reply = findViewById(R.id.pollActivity_textInputLayout_reply);
+        pollActivity_button_replySend = findViewById(R.id.pollActivity_button_replySend);
 
 
         pollActivity_imageView_userAddContent_1.setOnClickListener(this);
@@ -142,7 +164,29 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//getApplicationContext()전에 this,?? 였음
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLayoutManager.isSmoothScrollbarEnabled();
+        mLayoutManager.setStackFromEnd(true);
+        mLayoutManager.setReverseLayout(true);
+        pollActivity_recyclerView_reply.setLayoutManager(mLayoutManager);
+//        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
+        pollActivity_recyclerView_reply.setAdapter(replyAdapter);
 
+
+
+        //reply button click, 댓글달기버튼
+        pollActivity_button_replySend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String reply = pollActivity_editText_reply.getText().toString();
+                String date = doYearMonthDay();
+//                ContentDTO contentDTO = new ContentDTO();
+//                contentDTO.setReply(pollActivity_editText_reply.getText().toString());
+//                contentDTO.setReplyDate(doYearMonthDay());
+                mDatabaseReference.child("reply").child(date).child(auth.getCurrentUser().getUid()).push().setValue(reply);
+            }
+        });
 
 
         //contentDTO binding
@@ -302,12 +346,20 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_reply_upButton.setVisibility(View.VISIBLE);
             pollActivity_textView_reply.setText("접기");
             pollActivity_recyclerView_reply.setVisibility(View.VISIBLE);
+            pollActivity_editText_reply.setVisibility(View.VISIBLE);
+            pollActivity_textInputLayout_reply.setVisibility(View.VISIBLE);
+
+            pollActivity_button_replySend.setVisibility(View.VISIBLE);
             ACTIVITY_REPLY_FLAG = true;
         } else  {
             pollActivity_imageView_reply_downButton.setVisibility(View.VISIBLE);
             pollActivity_imageView_reply_upButton.setVisibility(View.GONE);
             pollActivity_textView_reply.setText("댓글보기");
             pollActivity_recyclerView_reply.setVisibility(View.GONE);
+            pollActivity_editText_reply.setVisibility(View.VISIBLE);
+            pollActivity_textInputLayout_reply.setVisibility(View.GONE);
+
+            pollActivity_button_replySend.setVisibility(View.GONE);
             ACTIVITY_REPLY_FLAG = false;
         }
     }
@@ -553,6 +605,17 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
             }
         });
+    }
+
+
+    public String doYearMonthDay() {
+        TimeZone timeZone;
+        timeZone = TimeZone.getTimeZone("Asia/Seoul");
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddEHHmm", Locale.KOREAN);
+        df.setTimeZone(timeZone);
+        String currentDate = df.format(date);
+        return currentDate;
     }
 
 

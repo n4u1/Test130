@@ -21,6 +21,8 @@ public class ContentDTO {
     public String contentId;
     public String uploadDate;
     public String contentKey;
+    public String replyDate;
+    public String reply;
     public boolean isUserLike;
     public int pickCandidate = 0;
     public int candidateScore_0 = 0;
@@ -36,6 +38,7 @@ public class ContentDTO {
     public int contentHit = 0;
     public int likeCount = 0;
     public int itemViewType;
+    public int replyCount = 0;
     public Map<String, Boolean> likes = new HashMap<>();
     public Map<String, Integer> contentPicker = new HashMap<>();
 
@@ -242,6 +245,22 @@ public class ContentDTO {
         this.contentKey = contentKey;
     }
 
+    public String getReplyDate() {
+        return replyDate;
+    }
+
+    public void setReplyDate(String replyDate) {
+        this.replyDate = replyDate;
+    }
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
+    }
+
     public boolean isUserLike() {
         return isUserLike;
     }
@@ -346,14 +365,6 @@ public class ContentDTO {
         this.contentHit = contentHit;
     }
 
-    public int getItemViewType() {
-        return itemViewType;
-    }
-
-    public void setItemViewType(int itemViewType) {
-        this.itemViewType = itemViewType;
-    }
-
     public int getLikeCount() {
         return likeCount;
     }
@@ -362,11 +373,35 @@ public class ContentDTO {
         this.likeCount = likeCount;
     }
 
+    public int getItemViewType() {
+        return itemViewType;
+    }
+
+    public void setItemViewType(int itemViewType) {
+        this.itemViewType = itemViewType;
+    }
+
+    public int getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(int replyCount) {
+        this.replyCount = replyCount;
+    }
+
     public Map<String, Boolean> getLikes() {
         return likes;
     }
 
     public void setLikes(Map<String, Boolean> likes) {
         this.likes = likes;
+    }
+
+    public Map<String, Integer> getContentPicker() {
+        return contentPicker;
+    }
+
+    public void setContentPicker(Map<String, Integer> contentPicker) {
+        this.contentPicker = contentPicker;
     }
 }

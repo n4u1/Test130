@@ -63,9 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_login);
-//
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -75,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
+        //파일업로드용 기기 저장소 접근 권한 요청
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
         }
@@ -86,6 +84,10 @@ public class LoginActivity extends AppCompatActivity {
         Button button_bLogin = findViewById(R.id.button_bLogin);
         Button button_cLogin = findViewById(R.id.button_cLogin);
         Button button_dLogin = findViewById(R.id.button_dLogin);
+        Button button_eLogin = findViewById(R.id.button_eLogin);
+        Button button_fLogin = findViewById(R.id.button_fLogin);
+        Button button_gLogin = findViewById(R.id.button_gLogin);
+        Button button_hLogin = findViewById(R.id.button_hLogin);
         Button button_uploadTest = findViewById(R.id.button_uploadTest);
 
         mAuth = FirebaseAuth.getInstance();
@@ -99,31 +101,33 @@ public class LoginActivity extends AppCompatActivity {
         button_CreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                EditText editTextEmail = findViewById(R.id.editText_email);
-                EditText editTextPassword = findViewById(R.id.editText_password);
-                final String inputUserEmail = editTextEmail.getText().toString();
-                final String inputUserPassword = editTextPassword.getText().toString();
-
-                if (inputUserEmail.isEmpty() || inputUserPassword.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "빈칸이 있어요!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (!checkEmail(inputUserEmail)) {
-                    Toast.makeText(getApplicationContext(), "이메일 형식으로 입력해주세요!!!!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (inputUserPassword.length() < 6) {
-                    int test = inputUserPassword.length();
-                    Toast.makeText(getApplicationContext(), "비밀번호가 너무 짧아요ㅠ_ㅠ (6자 이상)", Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), "현재 몇글자??? >>> " + test, Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                //email 계정 생성
-                createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, CreateUserActivity.class);
+                startActivity(intent);
+//
+//                EditText editTextEmail = findViewById(R.id.editText_email);
+//                EditText editTextPassword = findViewById(R.id.editText_password);
+//                final String inputUserEmail = editTextEmail.getText().toString();
+//                final String inputUserPassword = editTextPassword.getText().toString();
+//
+//                if (inputUserEmail.isEmpty() || inputUserPassword.isEmpty()) {
+//                    Toast.makeText(getApplicationContext(), "빈칸이 있어요!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//
+//                if (!checkEmail(inputUserEmail)) {
+//                    Toast.makeText(getApplicationContext(), "이메일 형식으로 입력해주세요!!!!", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//
+//                if (inputUserPassword.length() < 6) {
+//                    int test = inputUserPassword.length();
+//                    Toast.makeText(getApplicationContext(), "비밀번호가 너무 짧아요ㅠ_ㅠ (6자 이상)", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "현재 몇글자??? >>> " + test, Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//
+//                //email 계정 생성
+//                createUser(editTextEmail.getText().toString(), editTextPassword.getText().toString());
 
             }
         });
@@ -163,6 +167,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loginUser("d@d.com", "dddddd");
+            }
+        });
+
+        button_eLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("e@e.com", "eeeeee");
+            }
+        });
+
+        button_fLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("f@f.com", "ffffff");
+            }
+        });
+
+        button_gLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("g@g.com", "gggggg");
+            }
+        });
+
+        button_hLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUser("h@h.com", "hhhhhh");
             }
         });
 
