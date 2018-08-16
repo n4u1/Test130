@@ -31,8 +31,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        ((ReplyViewHolder)holder).textView_id.setText(replyDTO.);
-        ((ReplyViewHolder)holder).textView_reply.setText("dddddddddccccccom");
+        ((ReplyViewHolder)holder).textView_id.setText(replyDTO.get(position).getId());
+        ((ReplyViewHolder)holder).textView_date.setText(replyDTO.get(position).getDate());
+        ((ReplyViewHolder)holder).textView_reply.setText(replyDTO.get(position).getReply());
+
 
     }
 

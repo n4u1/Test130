@@ -2,24 +2,36 @@
 <RelativeLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"     
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
+        android:textSize="12dp"
         android:layout_marginRight="8dp"
         android:id="@+id/textView_id"
         android:text="a@a.com"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    
+
     <TextView
+        android:textSize="12dp"
         android:text="댓글입니당"
         android:id="@+id/textView_reply"
         android:layout_toRightOf="@+id/textView_id"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
-    
-    
+    <TextView
+        android:textSize="12dp"
+        android:paddingLeft="4dp"
+        android:text="시간입니당"
+        android:id="@+id/textView_date"
+        android:layout_toRightOf="@+id/textView_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
 </RelativeLayout>

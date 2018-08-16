@@ -89,7 +89,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
             }
         });
 

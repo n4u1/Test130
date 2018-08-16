@@ -22,7 +22,6 @@ public class ContentDTO {
     public String uploadDate;
     public String contentKey;
     public String replyDate;
-    public String reply;
     public boolean isUserLike;
     public int pickCandidate = 0;
     public int candidateScore_0 = 0;
@@ -39,11 +38,16 @@ public class ContentDTO {
     public int likeCount = 0;
     public int itemViewType;
     public int replyCount = 0;
+    public Map<String, String> reply = new HashMap<>();
     public Map<String, Boolean> likes = new HashMap<>();
     public Map<String, Integer> contentPicker = new HashMap<>();
 
 
     public ContentDTO(){}
+
+    public void setReply(Map<String, String> reply) {
+        this.reply = reply;
+    }
 
     public String getImageUrl_0() {
         return imageUrl_0;
@@ -251,14 +255,6 @@ public class ContentDTO {
 
     public void setReplyDate(String replyDate) {
         this.replyDate = replyDate;
-    }
-
-    public String getReply() {
-        return reply;
-    }
-
-    public void setReply(String reply) {
-        this.reply = reply;
     }
 
     public boolean isUserLike() {

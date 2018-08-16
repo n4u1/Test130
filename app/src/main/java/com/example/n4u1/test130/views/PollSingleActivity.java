@@ -47,8 +47,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase firebaseDatabase;
 
-    final ArrayList<ReplyDTO> replyDTO = new ArrayList<>();
-    final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTO);
+    final ArrayList<ReplyDTO> replyDTOS = new ArrayList<>();
+    final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTOS);
 
     TextView pollActivity_textView_title, pollActivity_textView_description,
             pollActivity_textView_pollMode, pollActivity_textView_contentType, pollActivity_textView_date;
@@ -161,6 +161,21 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 openReply();
+                firebaseDatabase.getReference().child("reply").child(contentKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        replyDTOS.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            ReplyDTO replyDTO = snapshot.getValue(ReplyDTO.class);
+                            replyDTOS.add(replyDTO);
+                        }
+                        replyAdapter.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -179,12 +194,17 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_button_replySend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String reply = pollActivity_editText_reply.getText().toString();
-                String date = doYearMonthDay();
-//                ContentDTO contentDTO = new ContentDTO();
-//                contentDTO.setReply(pollActivity_editText_reply.getText().toString());
-//                contentDTO.setReplyDate(doYearMonthDay());
-                mDatabaseReference.child("reply").child(date).child(auth.getCurrentUser().getUid()).push().setValue(reply);
+                String date = getDate();
+                onReplyClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey));
+                ReplyDTO replyDTO = new ReplyDTO();
+                replyDTO.setDate(date);
+                replyDTO.setId(auth.getCurrentUser().getEmail());
+                replyDTO.setReply(pollActivity_editText_reply.getText().toString());
+                replyDTO.setContentKey(contentKey);
+                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(replyDTO);
+//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(pollActivity_editText_reply.getText().toString());
+//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(date);
+//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(auth.getCurrentUser().getUid());
             }
         });
 
@@ -551,7 +571,34 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
         }
+    }
 
+    private void onReplyClicked(DatabaseReference postRef) {
+        final String date = getDate();
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
+                if (contentDTO == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                contentDTO.reply.put(date, pollActivity_editText_reply.getText().toString());
+
+                // Set value and report transaction success
+                mutableData.setValue(contentDTO);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b,
+                                   DataSnapshot dataSnapshot) {
+
+
+                // Transaction completed
+
+            }
+        });
     }
 
     private void onResultClicked(final DatabaseReference postRef, int candidate) {
@@ -608,11 +655,11 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    public String doYearMonthDay() {
+    public String getDate() {
         TimeZone timeZone;
         timeZone = TimeZone.getTimeZone("Asia/Seoul");
         Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddEHHmm", Locale.KOREAN);
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddEHHmmssSS", Locale.KOREAN);
         df.setTimeZone(timeZone);
         String currentDate = df.format(date);
         return currentDate;
