@@ -299,6 +299,11 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/pollActivity_button_statistic"
+                android:text="통계테스트"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"

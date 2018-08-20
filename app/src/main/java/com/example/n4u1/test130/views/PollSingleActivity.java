@@ -17,6 +17,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
+import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -45,11 +47,14 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 public class PollSingleActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,6 +65,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReferencePicker;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseDatabase mFirebaseDatabase;
 
@@ -82,7 +88,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     HorizontalBarChart pollActivity_horizontalBarChart_result;
     ImageView pollActivity_imageView_result_downButton, pollActivity_imageView_reply_upButton,
             pollActivity_imageView_result_upButton, pollActivity_imageView_reply_downButton;
-
+    Button pollActivity_button_statistic;
     ImageView pollActivity_button_replySend;
     TextInputLayout pollActivity_textInputLayout_reply;
     EditText pollActivity_editText_reply;
@@ -108,6 +114,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         final int contentAmount = getIntent().getIntExtra("itemViewType", 0);
         final String contentKey = getIntent().getStringExtra("contentKey");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("user_contents").child(contentKey);
+        mDatabaseReferencePicker = FirebaseDatabase.getInstance().getReference("users");
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -152,6 +159,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_editText_reply = findViewById(R.id.pollActivity_editText_reply);
         pollActivity_button_replySend = findViewById(R.id.pollActivity_button_replySend);
 
+        pollActivity_button_statistic = findViewById(R.id.pollActivity_button_statistic);
 
         pollActivity_imageView_userAddContent_1.setOnClickListener(this);
         pollActivity_imageView_userAddContent_2.setOnClickListener(this);
@@ -165,6 +173,53 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_userAddContent_10.setOnClickListener(this);
 
 
+
+        //통계테스트 버튼
+        pollActivity_button_statistic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabaseReference.child("contentPicker").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Map<String, Object> contentPicker = (Map<String, Object>) dataSnapshot.getValue();
+                        Set set = contentPicker.keySet();
+                        int contentHit = set.size();
+                        ArrayList<String> pickerUid = new ArrayList<>(set);
+                        Log.d("statistic1", pickerUid.get(0));
+                        Log.d("statistic2", pickerUid.get(1));
+                        Log.d("statistic3", pickerUid.get(2));
+                        Log.d("statistic4", pickerUid.get(3));
+
+                        
+
+
+                        mDatabaseReferencePicker.child(pickerUid.get(1)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+                                Log.d("lkj user", user.get("job").toString());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+
         //처음 댓글펼치기 버튼의 setText (리플 갯수 넣기위함)
         firebaseDatabase.getReference().child("user_contents").child(contentKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -172,13 +227,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 ContentDTO contentDTO = dataSnapshot.getValue(ContentDTO.class);
                 int replyCount = contentDTO.getReplyCount();
                 pollActivity_textView_reply.setText("댓글 펼치기(" + replyCount + ")");
-//                if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-//                    pollActivity_textView_result.setText("결과보기");
-//                } else {
-//                    pollActivity_textView_result.setText("투표하고 결과보기");
-//                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -766,9 +815,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
 
     private void onResultClicked(final DatabaseReference postRef, int candidate) {
-
         final int contentAmount = getIntent().getIntExtra("itemViewType", 0);
-
         Log.d("lkj contentAmount", String.valueOf(contentAmount));
         postRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -778,7 +825,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     return Transaction.success(mutableData);
                 }
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -786,10 +832,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         }
                     });
 
-                    // Unstar the post and remove self from stars
-//                    contentDTO.likeCount = contentDTO.likeCount - 1;
-//                    contentDTO.likes.remove(auth.getCurrentUser().getUid());
-//                    Toast.makeText(getcontex, "이미 투표했습니다!", Toast.LENGTH_SHORT).show();
                 } else {
 
                     if (pollChecking()) { //체크되있으면 true, 안되있으면 false

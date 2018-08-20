@@ -57,6 +57,7 @@ public class ContentDTO {
         result.put("candidateScore_7", candidateScore_7);
         result.put("candidateScore_8", candidateScore_8);
         result.put("candidateScore_9", candidateScore_9);
+//        result.put("contentPicker", contentPicker);
 
 
         return result;
