@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:layout_marginRight="8dp"
         android:id="@+id/textView_id"
         android:text="a@a.com"
@@ -14,8 +14,9 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:text="댓글입니당"
+        android:textColor="#6c6c6c"
         android:id="@+id/textView_reply"
         android:layout_toRightOf="@+id/textView_id"
         android:layout_width="wrap_content"
@@ -23,14 +24,23 @@
 
 
     <TextView
-        android:textSize="12dp"
+        android:layout_below="@id/textView_reply"
+        android:layout_alignLeft="@id/textView_reply"
+        android:textSize="10dp"
         android:paddingLeft="4dp"
         android:text="시간입니당"
+        android:textColor="#9f9f9f"
         android:id="@+id/textView_date"
         android:layout_toRightOf="@+id/textView_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+    <View
+        android:layout_below="@id/textView_date"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#efefef" />
 
 
 

@@ -42,12 +42,14 @@
             android:src="@drawable/ic_create_black_24dp"
             app:backgroundTint="#ffffff" />
 
-        <Button
-            android:id="@+id/button_test"
-            android:layout_below="@+id/my_toolbar"
-            android:text="go_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+
+        <!--&lt;!&ndash;테스트용 엑티비티&ndash;&gt;-->
+        <!--<Button-->
+            <!--android:id="@+id/button_test"-->
+            <!--android:layout_below="@+id/my_toolbar"-->
+            <!--android:text="go_test"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
 
         <android.support.v7.widget.RecyclerView

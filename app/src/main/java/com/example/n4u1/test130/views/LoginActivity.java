@@ -212,7 +212,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.button_uploadTestActivity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, TestActivity.class);
                 startActivity(intent);
 
             }

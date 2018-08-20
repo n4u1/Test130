@@ -41,15 +41,15 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 //        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
 
-        //테스트용 액티비티
-        Button button = findViewById(R.id.button_test);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, TestActivity.class);
-                startActivity(intent);
-            }
-        });
+//        //테스트용 액티비티
+//        Button button = findViewById(R.id.button_test);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);

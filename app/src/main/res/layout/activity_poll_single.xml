@@ -12,7 +12,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,99 +22,71 @@
 
 
             <!--제목-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#efefef" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="제   목"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/pollActivity_textView_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint=""
-                    android:textSize="16dp" />
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
             </LinearLayout>
 
 
-            <!--시간-->
+            <!--투표모드 / 시간-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#efefef" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="시   간"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/pollActivity_textView_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint=""
-                    android:textSize="16dp" />
-            </LinearLayout>
-
-
-            <!--투표방식-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#efefef" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="방   식"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
                 <TextView
                     android:id="@+id/pollActivity_textView_pollMode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint=""
-                    android:textSize="16dp" />
+                    android:textColor="#636363"
+                    android:textSize="14dp" />
+                <TextView
+                    android:gravity="right"
+                    android:id="@+id/pollActivity_textView_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#636363"
+                    android:textSize="12dp" />
             </LinearLayout>
+
+
+            <!--&lt;!&ndash;투표방식&ndash;&gt;-->
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="#efefef" />-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="방   식"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="16dp"-->
+                    <!--android:textStyle="bold" />-->
+
+            <!--</LinearLayout>-->
 
 
             <!--카테고리-->
@@ -122,30 +94,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#efefef" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="분   류"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
+                    android:layout_weight="8.5"
+                    android:textColor="#636363"
+                    android:text="분류 :"
+                    android:textSize="14dp"/>
                 <TextView
+                    android:textColor="#636363"
                     android:id="@+id/pollActivity_textView_contentType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint=""
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
             </LinearLayout>
 
 
@@ -154,41 +121,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#efefef" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:gravity="center"
-                    android:text="내   용"
-                    android:textColor="#000000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="16dp" />
-            </LinearLayout>
-
-
             <TextView
+                android:layout_marginTop="8dp"
                 android:id="@+id/pollActivity_textView_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint=""
-                android:paddingLeft="18dp"
                 android:textSize="16dp" />
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -367,7 +305,7 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
-            <!--결과 -->
+            <!--결과 펼치기 -->
             <RelativeLayout
                 android:id="@+id/pollActivity_relativeLayout_result"
                 android:layout_width="match_parent"
@@ -400,18 +338,26 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
+            <!--결과 차트-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <android.support.v7.widget.AppCompatImageView
-                    android:background="#9e6767"
-                    android:id="@+id/pollActivity_imageView_test"
+
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:visibility="gone"
+                    android:id="@+id/pollActivity_horizontalBarChart_result"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:visibility="gone"/>
+                    android:layout_height="500dp"/>
+                <!---->
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:background="#9e6767"-->
+                    <!--android:id="@+id/pollActivity_imageView_test"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="500dp"-->
+                    <!--android:visibility="gone"/>-->
             </RelativeLayout>
 
-            <!--댓글 -->
+            <!--댓글 펼치기 -->
             <RelativeLayout
                 android:id="@+id/pollActivity_relativeLayout_reply"
                 android:layout_width="match_parent"
@@ -419,7 +365,7 @@
                 <TextView
                     android:paddingTop="4dp"
                     android:gravity="center"
-                    android:text="댓글펼치기"
+                    android:text="댓글펼치기(?)"
                     android:textSize="18sp"
                     android:id="@+id/pollActivity_textView_reply"
                     android:layout_width="match_parent"
@@ -444,6 +390,7 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
+            <!--댓글-->
             <android.support.v7.widget.RecyclerView
                 android:visibility="gone"
                 android:id="@+id/pollActivity_recyclerView_reply"
@@ -456,38 +403,29 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="305dp"
-                android:layout_height="73dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:theme="@style/TextLabel"
-                android:visibility="gone"
-                android:id="@+id/pollActivity_textInputLayout_reply">
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="232dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:ems="10"
-                    android:visibility="gone"
-                    android:hint="댓글을 입력해주세요"
-                    android:id="@+id/pollActivity_editText_reply"/>
-            </android.support.design.widget.TextInputLayout>
-            <Button
-                android:visibility="gone"
-                android:id="@+id/pollActivity_button_replySend"
-                android:textSize="12dp"
-                android:text="댓글달기"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/pollActivity_editText_reply"
+                    android:hint="댓글..."
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_weight="9"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_arrow_forward_black_24dp"
+                    android:id="@+id/pollActivity_button_replySend"
+                    android:textSize="12dp"
+                    android:text="전송"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

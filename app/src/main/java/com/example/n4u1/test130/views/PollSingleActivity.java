@@ -1,5 +1,10 @@
 package com.example.n4u1.test130.views;
 
+
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -7,21 +12,28 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
-import com.example.n4u1.test130.recyclerview.PostAdapter;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,15 +75,17 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_userAddContent_check_7, pollActivity_imageView_userAddContent_check_8,
             pollActivity_imageView_userAddContent_check_9, pollActivity_imageView_userAddContent_check_10;
 
-    ImageView pollActivity_imageView_test, pollActivity_imageView_result_downButton, pollActivity_imageView_reply_upButton,
+    HorizontalBarChart pollActivity_horizontalBarChart_result;
+    ImageView pollActivity_imageView_result_downButton, pollActivity_imageView_reply_upButton,
             pollActivity_imageView_result_upButton, pollActivity_imageView_reply_downButton;
 
-    Button pollActivity_button_replySend;
+    ImageView pollActivity_button_replySend;
     TextInputLayout pollActivity_textInputLayout_reply;
     EditText pollActivity_editText_reply;
     RecyclerView pollActivity_recyclerView_reply;
     RelativeLayout pollActivity_relativeLayout_result, pollActivity_relativeLayout_reply;
     TextView pollActivity_textView_result, pollActivity_textView_reply;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +101,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
+        final int contentAmount = getIntent().getIntExtra("itemViewType", 0);
         final String contentKey = getIntent().getStringExtra("contentKey");
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("user_contents").child(contentKey);
         auth = FirebaseAuth.getInstance();
@@ -120,7 +135,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_userAddContent_check_10 = findViewById(R.id.pollActivity_imageView_userAddContent_check_10);
         pollActivity_relativeLayout_result = findViewById(R.id.pollActivity_relativeLayout_result);
         pollActivity_relativeLayout_reply = findViewById(R.id.pollActivity_relativeLayout_reply);
-        pollActivity_imageView_test = findViewById(R.id.pollActivity_imageView_test);
+//        pollActivity_imageView_test = findViewById(R.id.pollActivity_imageView_test);
+        pollActivity_horizontalBarChart_result = findViewById(R.id.pollActivity_horizontalBarChart_result);
         pollActivity_imageView_result_downButton = findViewById(R.id.pollActivity_imageView_result_downButton);
         pollActivity_imageView_result_upButton = findViewById(R.id.pollActivity_imageView_result_upButton);
         pollActivity_imageView_reply_downButton = findViewById(R.id.pollActivity_imageView_reply_downButton);
@@ -129,7 +145,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_textView_result = findViewById(R.id.pollActivity_textView_result);
         pollActivity_textView_reply = findViewById(R.id.pollActivity_textView_reply);
         pollActivity_editText_reply = findViewById(R.id.pollActivity_editText_reply);
-        pollActivity_textInputLayout_reply = findViewById(R.id.pollActivity_textInputLayout_reply);
         pollActivity_button_replySend = findViewById(R.id.pollActivity_button_replySend);
 
 
@@ -146,21 +161,41 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
 
 
+        //처음 댓글펼치기 버튼의 setText (리플 갯수 넣기위함)
+        firebaseDatabase.getReference().child("user_contents").child(contentKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ContentDTO contentDTO = dataSnapshot.getValue(ContentDTO.class);
+                int replyCount = contentDTO.getReplyCount();
+                pollActivity_textView_reply.setText("댓글 펼치기(" + replyCount + ")");
+
+                if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
+                    pollActivity_textView_result.setText("결과보기");
+                } else {
+                    pollActivity_textView_result.setText("투표하고 결과보기");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         //투표하고 결과보기
         pollActivity_relativeLayout_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openResult();
-                onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
-
+                    onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
             }
         });
+
 
         //댓글 펼치기
         pollActivity_relativeLayout_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openReply();
+                openReply(contentKey);
                 firebaseDatabase.getReference().child("reply").child(contentKey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -176,14 +211,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                     }
                 });
+
             }
         });
 
+        //댓글 리사이클러뷰
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.isSmoothScrollbarEnabled();
         mLayoutManager.setStackFromEnd(true);
-        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setReverseLayout(false);
         pollActivity_recyclerView_reply.setLayoutManager(mLayoutManager);
 //        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
         pollActivity_recyclerView_reply.setAdapter(replyAdapter);
@@ -202,9 +239,13 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 replyDTO.setReply(pollActivity_editText_reply.getText().toString());
                 replyDTO.setContentKey(contentKey);
                 firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(replyDTO);
-//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(pollActivity_editText_reply.getText().toString());
-//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(date);
-//                firebaseDatabase.getReference().child("reply").child(contentKey).push().setValue(auth.getCurrentUser().getUid());
+                firebaseDatabase.getReference().child("users").child(auth.getCurrentUser().getUid()).child("reply").child(contentKey).push().setValue(replyDTO);
+                pollActivity_editText_reply.setText(null);//editText 초기화
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE); //키보드 숨기기
+                inputMethodManager.hideSoftInputFromWindow(pollActivity_editText_reply.getWindowToken(), 0); //키보드 숨기기
+
+
+
             }
         });
 
@@ -357,52 +398,118 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
             }
         });
+
+
+
     }
 
-    //댓글펼치기
-    private void openReply() {
-        if (!ACTIVITY_REPLY_FLAG) {
-            pollActivity_imageView_reply_downButton.setVisibility(View.GONE);
-            pollActivity_imageView_reply_upButton.setVisibility(View.VISIBLE);
-            pollActivity_textView_reply.setText("접기");
-            pollActivity_recyclerView_reply.setVisibility(View.VISIBLE);
-            pollActivity_editText_reply.setVisibility(View.VISIBLE);
-            pollActivity_textInputLayout_reply.setVisibility(View.VISIBLE);
 
-            pollActivity_button_replySend.setVisibility(View.VISIBLE);
-            ACTIVITY_REPLY_FLAG = true;
-        } else  {
-            pollActivity_imageView_reply_downButton.setVisibility(View.VISIBLE);
-            pollActivity_imageView_reply_upButton.setVisibility(View.GONE);
-            pollActivity_textView_reply.setText("댓글보기");
-            pollActivity_recyclerView_reply.setVisibility(View.GONE);
-            pollActivity_editText_reply.setVisibility(View.VISIBLE);
-            pollActivity_textInputLayout_reply.setVisibility(View.GONE);
 
-            pollActivity_button_replySend.setVisibility(View.GONE);
-            ACTIVITY_REPLY_FLAG = false;
+    private boolean pollChecking() {
+        if (pollActivity_imageView_userAddContent_1.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_2.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_3.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_4.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_5.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_6.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_7.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_8.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_9.getAlpha() == 0.7f ||
+                pollActivity_imageView_userAddContent_10.getAlpha() == 0.7f ) {
+            return true;
+        } else {
+            return false;
         }
+
+
+    }
+
+    /**onCreate()*/
+
+    //댓글펼치기
+    private void openReply(String currentContentKey) {
+        firebaseDatabase.getReference().child("user_contents").child(currentContentKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ContentDTO contentDTO = dataSnapshot.getValue(ContentDTO.class);
+                int replyCount = contentDTO.getReplyCount();
+                if (!ACTIVITY_REPLY_FLAG) {
+                    pollActivity_imageView_reply_downButton.setVisibility(View.GONE);
+                    pollActivity_imageView_reply_upButton.setVisibility(View.VISIBLE);
+                    pollActivity_textView_reply.setText("접기");
+                    pollActivity_recyclerView_reply.setVisibility(View.VISIBLE);
+                    pollActivity_editText_reply.setVisibility(View.VISIBLE);
+                    pollActivity_button_replySend.setVisibility(View.VISIBLE);
+                    ACTIVITY_REPLY_FLAG = true;
+                } else  {
+                    pollActivity_imageView_reply_downButton.setVisibility(View.VISIBLE);
+                    pollActivity_imageView_reply_upButton.setVisibility(View.GONE);
+                    pollActivity_textView_reply.setText("댓글 펼치기 (" + replyCount + ")");
+                    pollActivity_recyclerView_reply.setVisibility(View.GONE);
+                    pollActivity_editText_reply.setVisibility(View.GONE);
+                    pollActivity_button_replySend.setVisibility(View.GONE);
+                    ACTIVITY_REPLY_FLAG = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     //투표하고 결과보기
-    private void openResult() {
+    private void openResult(int contentN) {
         if (!ACTIVITY_RESULT_FLAG) {
-            int cp = currentPick();
-            Log.d("pickCandidate", String.valueOf(cp));
+
             pollActivity_imageView_result_downButton.setVisibility(View.GONE);
             pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
             pollActivity_textView_result.setText("접기");
-            pollActivity_imageView_test.setVisibility(View.VISIBLE);
+            pollActivity_horizontalBarChart_result.setVisibility(View.VISIBLE);
+            setChartData(contentN, 100); //bar개수 : contentN개, 가로 최대길이 range
+            int cp = currentPick();
+            Log.d("pickCandidate", String.valueOf(cp));
             ACTIVITY_RESULT_FLAG = true;
         } else  {
-            int cp1 = currentPick();
-            Log.d("pickCandidate", String.valueOf(cp1));
             pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
             pollActivity_imageView_result_upButton.setVisibility(View.GONE);
-            pollActivity_textView_result.setText("투표하고 결과보기");
-            pollActivity_imageView_test.setVisibility(View.GONE);
+            pollActivity_textView_result.setText("결과보기");
+            pollActivity_horizontalBarChart_result.setVisibility(View.GONE);
             ACTIVITY_RESULT_FLAG = false;
         }
+    }
+
+    private void setChartData(int contentN, int range) {
+        ArrayList<BarEntry> yValue = new ArrayList<>();
+        float barWidth = 1.5f;
+        float spaceForBar = 2f;
+
+        for (int i = 0; i < contentN; i++) {
+            float val =(float) Math.random()*range;
+            yValue.add(new BarEntry(i*spaceForBar, val));
+        }
+
+        BarDataSet set1;
+        set1 = new BarDataSet(yValue,null);
+        set1.setColor(Color.GRAY);
+
+        BarData data1 = new BarData(set1);
+        pollActivity_horizontalBarChart_result.animateY(3000);
+        pollActivity_horizontalBarChart_result.setFitBars(true);
+        pollActivity_horizontalBarChart_result.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
+        pollActivity_horizontalBarChart_result.getXAxis().setXOffset(-350);
+        pollActivity_horizontalBarChart_result.getAxisLeft().setEnabled(true);
+        pollActivity_horizontalBarChart_result.getAxisRight().setEnabled(true);
+        pollActivity_horizontalBarChart_result.getXAxis().setValueFormatter(new LargeValueFormatter());
+        pollActivity_horizontalBarChart_result.getXAxis().setEnabled(false);
+//        mChart.getLegend().setEnabled(true);
+        pollActivity_horizontalBarChart_result.setDrawGridBackground(false);
+        data1.setBarWidth(barWidth); //바 크기
+//        mChart.setBackgroundColor(Color.YELLOW);
+//        mChart.invalidate(); //refresh
+        pollActivity_horizontalBarChart_result.setData(data1);
     }
 
 
@@ -573,7 +680,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void onReplyClicked(DatabaseReference postRef) {
+    private void onReplyClicked(final DatabaseReference postRef) {
         final String date = getDate();
         postRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -582,11 +689,18 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 if (contentDTO == null) {
                     return Transaction.success(mutableData);
                 }
-
                 contentDTO.reply.put(date, pollActivity_editText_reply.getText().toString());
-
-                // Set value and report transaction success
                 mutableData.setValue(contentDTO);
+                firebaseDatabase.getReference().child("reply").child(postRef.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        firebaseDatabase.getReference().child("user_contents").child(postRef.getKey()).child("replyCount").setValue(dataSnapshot.getChildrenCount());
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 return Transaction.success(mutableData);
             }
 
@@ -601,7 +715,15 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
+
+
+
+
     private void onResultClicked(final DatabaseReference postRef, int candidate) {
+
+        final int contentAmount = getIntent().getIntExtra("itemViewType", 0);
+
+        Log.d("lkj contentAmount", String.valueOf(contentAmount));
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -609,33 +731,61 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 if (contentDTO == null) {
                     return Transaction.success(mutableData);
                 }
-
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            openResult(contentAmount);
+                        }
+                    });
+
                     // Unstar the post and remove self from stars
 //                    contentDTO.likeCount = contentDTO.likeCount - 1;
 //                    contentDTO.likes.remove(auth.getCurrentUser().getUid());
 //                    Toast.makeText(getcontex, "이미 투표했습니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Star the post and add self to stars
-                    contentDTO.contentHit = contentDTO.contentHit + 1;
-                    if (currentPick() == 0) contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
-                    if (currentPick() == 1) contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + 1;
-                    if (currentPick() == 2) contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + 1;
-                    if (currentPick() == 3) contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + 1;
-                    if (currentPick() == 4) contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + 1;
-                    if (currentPick() == 5) contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + 1;
-                    if (currentPick() == 6) contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + 1;
-                    if (currentPick() == 7) contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + 1;
-                    if (currentPick() == 8) contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
-                    if (currentPick() == 9) contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
-                    contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
-                    String key = getIntent().getStringExtra("contentKey");
-                    firebaseDatabase.getReference()
-                            .child("users")
-                            .child(auth.getCurrentUser().getUid())
-                            .child("pickContent")
-                            .child(key)
-                            .setValue(currentPick());
+                    if (pollChecking()) { //체크되있으면 true, 안되있으면 false
+                        // Star the post and add self to stars
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                openResult(contentAmount);
+                            }
+                        });
+
+                        contentDTO.contentHit = contentDTO.contentHit + 1;
+                        if (currentPick() == 0) contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
+                        if (currentPick() == 1) contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + 1;
+                        if (currentPick() == 2) contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + 1;
+                        if (currentPick() == 3) contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + 1;
+                        if (currentPick() == 4) contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + 1;
+                        if (currentPick() == 5) contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + 1;
+                        if (currentPick() == 6) contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + 1;
+                        if (currentPick() == 7) contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + 1;
+                        if (currentPick() == 8) contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
+                        if (currentPick() == 9) contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
+                        contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
+                        String key = getIntent().getStringExtra("contentKey");
+                        firebaseDatabase.getReference()
+                                .child("users")
+                                .child(auth.getCurrentUser().getUid())
+                                .child("pickContent")
+                                .child(key)
+                                .setValue(currentPick());
+                    } else {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "투표를 먼저 해주세요~!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+
                 }
 
                 // Set value and report transaction success
@@ -659,7 +809,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         TimeZone timeZone;
         timeZone = TimeZone.getTimeZone("Asia/Seoul");
         Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddEHHmmssSS", Locale.KOREAN);
+        SimpleDateFormat df = new SimpleDateFormat("yyMMdd-HHmmss-SS", Locale.KOREAN);
         df.setTimeZone(timeZone);
         String currentDate = df.format(date);
         return currentDate;

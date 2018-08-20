@@ -3,6 +3,7 @@ package com.example.n4u1.test130.recyclerview;
 import android.content.Context;
 import android.content.Intent;
 import android.net.sip.SipSession;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -150,6 +151,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        movePoll(position);
                         String string = contentDTOS.get(position).contentKey;
                         if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
                             Intent intent = new Intent(mContext, PollRankingActivity.class);
@@ -189,42 +191,22 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_1 :
                 ((PostViewHolder1)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
-
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder1)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
+
                 ((PostViewHolder1)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
-
-
                     }
                 });
                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
@@ -244,47 +226,20 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_2 :
                 ((PostViewHolder2)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder2)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder2)holder).imageView_postImg_2.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder2)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
@@ -313,62 +268,26 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case ITEM_VIEW_TYPE_3 :
                 ((PostViewHolder3)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_1.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_2.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder3)holder).imageView_postImg_3.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+                    public void onClick(View v) {
+                        movePoll(position);
                     }
                 });
                 ((PostViewHolder3)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
@@ -395,6 +314,29 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_3).into(((PostViewHolder3)holder).imageView_postImg_3);
                 break;
                 default: break;
+        }
+    }
+
+    private void movePoll(int position) {
+        String string = contentDTOS.get(position).contentKey;
+        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+            Log.d("lkj i ??", String.valueOf(contentDTOS.get(position).itemViewType));
+            Intent intent = new Intent(mContext, PollRankingActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("contentKey", string);
+            bundle.putInt("itemViewType", contentDTOS.get(position).itemViewType);
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+
+        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+            Log.d("lkj i ??", String.valueOf(contentDTOS.get(position).itemViewType));
+            Intent intent = new Intent(mContext, PollSingleActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("contentKey", string);
+            bundle.putInt("itemViewType", contentDTOS.get(position).itemViewType);
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+            mContext.startActivity(intent);
         }
     }
 
