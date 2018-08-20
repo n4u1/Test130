@@ -336,7 +336,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bundle.putInt("itemViewType", contentDTOS.get(position).itemViewType);
             intent.putExtras(bundle);
             mContext.startActivity(intent);
-            mContext.startActivity(intent);
+
         }
     }
 

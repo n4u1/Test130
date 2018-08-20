@@ -43,6 +43,25 @@ public class ContentDTO {
     public Map<String, Integer> contentPicker = new HashMap<>();
 
 
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("candidateScore_0", candidateScore_0);
+        result.put("candidateScore_1", candidateScore_1);
+        result.put("candidateScore_2", candidateScore_2);
+        result.put("candidateScore_3", candidateScore_3);
+        result.put("candidateScore_4", candidateScore_4);
+        result.put("candidateScore_5", candidateScore_5);
+        result.put("candidateScore_6", candidateScore_6);
+        result.put("candidateScore_7", candidateScore_7);
+        result.put("candidateScore_8", candidateScore_8);
+        result.put("candidateScore_9", candidateScore_9);
+
+
+        return result;
+    }
+
     public ContentDTO(){}
 
     public void setReply(Map<String, String> reply) {
