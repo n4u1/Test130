@@ -46,7 +46,6 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-
         B = (Button) findViewById(R.id.button);
         I = (ImageView) findViewById(R.id.imageView_1);
 //        I2 = findViewById(R.id.imageView_2);

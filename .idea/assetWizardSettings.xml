@@ -33,6 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="color" value="ff1029" />
                             <entry key="outputName" value="ic_favorite_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\n4u1\Desktop\n4u1\outline-check-24px.svg" />
                           </map>
