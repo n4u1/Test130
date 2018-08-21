@@ -345,14 +345,16 @@
 
             <!--결과 차트-->
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.github.mikephil.charting.charts.HorizontalBarChart
+
                     android:visibility="gone"
                     android:id="@+id/pollActivity_horizontalBarChart_result"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"/>
+                    android:layout_height="400dp"/>
                 <!---->
                 <!--<android.support.v7.widget.AppCompatImageView-->
                     <!--android:background="#9e6767"-->

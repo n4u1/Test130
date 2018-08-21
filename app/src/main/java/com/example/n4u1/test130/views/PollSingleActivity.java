@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -32,12 +33,17 @@ import com.example.n4u1.test130.models.ReplyDTO;
 import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -484,11 +490,13 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         int statisticsGender;
         final ArrayList<String> pickerUid = new ArrayList<>();
         for (int i = 0; i < j; i++) {
-            mDatabaseReferencePicker.child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+            mFirebaseDatabase.getReference().child("users").child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+//                    User user = dataSnapshot.getValue(User.class);
                     Log.d("lkj gender", user.get("sex").toString());
+//                    Log.d("lkj gender", user.getSex());
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -559,7 +567,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
             pollActivity_textView_result.setText("접기");
             pollActivity_horizontalBarChart_result.setVisibility(View.VISIBLE);
-            setChartData(contentN, 50); //bar개수 : contentN개, 가로 최대길이 range
+            setChartData(contentN, 100); //bar개수 : contentN개, 가로 최대길이 range
             int cp = currentPick();
             Log.d("pickCandidate", String.valueOf(cp));
             ACTIVITY_RESULT_FLAG = true;
@@ -573,16 +581,23 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    //차트 만들기
     private void setChartData(final int contentN, final int range) {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
 
+                ArrayList<String> labels = new ArrayList<>();
                 ArrayList<BarEntry> yValue = new ArrayList<>();
                 ArrayList<Integer> tmp = new ArrayList<>();
-                float barWidth = 1.2f;
-                float spaceForBar = 2f;
+
+
+                for (int i = 0; i < contentN+1; i++) {
+                    int j = contentN - i + 1;
+                    labels.add(String.valueOf(j));
+                }
+
 
                 Object object0 = contentDTO.get("candidateScore_0");
                 Object object1 = contentDTO.get("candidateScore_1");
@@ -606,34 +621,56 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 tmp.add(Integer.parseInt(object8.toString()));
                 tmp.add(Integer.parseInt(object9.toString()));
 
-                for (int i = 0; i < contentN; i++) {
-                    yValue.add(new BarEntry((float)i+1 , tmp.get(i)));
-                }
 
-                BarDataSet set1;
-                set1 = new BarDataSet(yValue, null);
-                set1.setColor(Color.GRAY);
-                Legend legend = pollActivity_horizontalBarChart_result.getLegend();
-                BarData data1 = new BarData(set1);
-                legend.setEnabled(true);
-                set1.setHighlightEnabled(true);
-                set1.setHighLightColor(Color.GREEN);
-                data1.setBarWidth(0.8f); //바 크기
+                CategoryBarChartXaxisFormatter xAxisFormatter = new CategoryBarChartXaxisFormatter(labels);
+                XAxis xAxis = pollActivity_horizontalBarChart_result.getXAxis();
+                xAxis.setValueFormatter(xAxisFormatter);
+                xAxis.setDrawAxisLine(false);
+                xAxis.setDrawGridLines(false);
+                xAxis.setGranularity(1);
+                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                xAxis.setXOffset(10); // 후보 1,2,3,4,5....위치
+                xAxis.setTextSize(20f); // 후보 1,2,3,4,5... 크기
+
+
+                YAxis yAxis = pollActivity_horizontalBarChart_result.getAxisLeft();
+                yAxis.setAxisMinimum(0);
+                yAxis.setMinWidth(0);
+                yAxis.setMaxWidth(3);
+                yAxis.setDrawZeroLine(true);
+                yAxis.setDrawTopYLabelEntry(true);
+
+                yAxis.setCenterAxisLabels(true);
+                yAxis.setEnabled(true);
+
+                pollActivity_horizontalBarChart_result.getDescription().setEnabled(false);
                 pollActivity_horizontalBarChart_result.setTouchEnabled(false);
                 pollActivity_horizontalBarChart_result.setDragEnabled(false);
                 pollActivity_horizontalBarChart_result.setDoubleTapToZoomEnabled(false);
                 pollActivity_horizontalBarChart_result.setPinchZoom(false);
                 pollActivity_horizontalBarChart_result.setDescription(null);
-                pollActivity_horizontalBarChart_result.animateY(4000);
+                pollActivity_horizontalBarChart_result.animateY(3000);
                 pollActivity_horizontalBarChart_result.setFitBars(true);
-                pollActivity_horizontalBarChart_result.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
-                pollActivity_horizontalBarChart_result.getXAxis().setXOffset(-380);
+                pollActivity_horizontalBarChart_result.setDrawBarShadow(false);
                 pollActivity_horizontalBarChart_result.getAxisLeft().setEnabled(false);
                 pollActivity_horizontalBarChart_result.getAxisRight().setEnabled(false);
-                pollActivity_horizontalBarChart_result.getXAxis().setValueFormatter(new LargeValueFormatter());
                 pollActivity_horizontalBarChart_result.getXAxis().setEnabled(true);
+                pollActivity_horizontalBarChart_result.setDrawValueAboveBar(true);
                 pollActivity_horizontalBarChart_result.setDrawGridBackground(false);
-//        mChart.setBackgroundColor(Color.YELLOW);
+                pollActivity_horizontalBarChart_result.getLegend().setEnabled(false);
+
+
+                for (int i = 0; i < contentN; i++) {
+                    yValue.add(new BarEntry((float)contentN-i , tmp.get(i)));
+                }
+
+                BarDataSet set1 = new BarDataSet(yValue, null);
+                set1.setColor(Color.GRAY);
+                BarData data1 = new BarData(set1);
+                data1.setBarWidth(0.5f); //바 크기
+                data1.setValueTextSize(15f); //결과값 크기
+                data1.setValueTextColor(Color.GRAY);
+
                 pollActivity_horizontalBarChart_result.setData(data1);
                 pollActivity_horizontalBarChart_result.invalidate(); //refresh
 
@@ -648,7 +685,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         });
 
     }
-
 
 
     private void onReplyClicked(final DatabaseReference postRef) {
@@ -1089,6 +1125,31 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     checking_img_10();
                 }
                 break;
+        }
+    }
+
+    public class CategoryBarChartXaxisFormatter implements IAxisValueFormatter {
+
+        ArrayList<String> mValues;
+
+        public CategoryBarChartXaxisFormatter(ArrayList<String> values) {
+            this.mValues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+
+            int val = (int) value;
+            String label = "";
+            if (val >= 0 && val < mValues.size()) {
+                label = mValues.get(val);
+            } else {
+                label = "";
+            }
+//            label = label.replace(".", "");
+//            label = label.replace("00", "표");
+
+            return label;
         }
     }
 
