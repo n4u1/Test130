@@ -97,6 +97,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     TextView pollActivity_textView_result, pollActivity_textView_reply;
 
 
+    final ArrayList<String> pickerAge = new ArrayList<>();
+    final ArrayList<String> pickerJob = new ArrayList<>();
+    final ArrayList<String> pickerJob_ = new ArrayList<>();
+    final ArrayList<String> pickerGender = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +110,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("  AQA");
         }
@@ -183,34 +190,11 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Map<String, Object> contentPicker = (Map<String, Object>) dataSnapshot.getValue();
                         Set set = contentPicker.keySet();
-                        int contentHit = set.size();
                         ArrayList<String> pickerUid = new ArrayList<>(set);
-                        Log.d("statistic1", pickerUid.get(0));
-                        Log.d("statistic2", pickerUid.get(1));
-                        Log.d("statistic3", pickerUid.get(2));
-                        Log.d("statistic4", pickerUid.get(3));
-
-                        
-
-
-                        mDatabaseReferencePicker.child(pickerUid.get(1)).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-                                Log.d("lkj user", user.get("job").toString());
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-
-
+                        getStatisticsJob(set.size(), pickerUid);
+                        getStatisticsGender(set.size(), pickerUid);
+                        getStatisticsAge(set.size(), pickerUid);
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -451,11 +435,71 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
             }
         });
+    }
+    /**
+     * onCreate()
+     */
 
+    private void getStatisticsJob(int j, ArrayList<String> uid) {
+        int statisticsJob;
+        final ArrayList<String> pickerUid = new ArrayList<>();
+        for (int i = 0; i < j; i++) {
+            mDatabaseReferencePicker.child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.d("lkj job", user.get("job").toString());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
 
+    private void getStatisticsAge(int j, ArrayList<String> uid) {
+        int statisticsAge;
+        final ArrayList<String> pickerUid = new ArrayList<>();
+        for (int i = 0; i < j; i++) {
+            mDatabaseReferencePicker.child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.d("lkj age", user.get("age").toString());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+
+    private void getStatisticsGender(int j, ArrayList<String> uid) {
+        int statisticsGender;
+        final ArrayList<String> pickerUid = new ArrayList<>();
+        for (int i = 0; i < j; i++) {
+            mDatabaseReferencePicker.child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.d("lkj gender", user.get("sex").toString());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
+
+    //현재 Activity 에서의 투표 체크 유무
     private boolean pollChecking() {
         if (pollActivity_imageView_userAddContent_1.getAlpha() == 0.7f ||
                 pollActivity_imageView_userAddContent_2.getAlpha() == 0.7f ||
@@ -471,13 +515,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         } else {
             return false;
         }
-
-
     }
 
-    /**
-     * onCreate()
-     */
 
     //댓글펼치기
     private void openReply(String currentContentKey) {
@@ -520,7 +559,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
             pollActivity_textView_result.setText("접기");
             pollActivity_horizontalBarChart_result.setVisibility(View.VISIBLE);
-            setChartData(contentN, 100); //bar개수 : contentN개, 가로 최대길이 range
+            setChartData(contentN, 50); //bar개수 : contentN개, 가로 최대길이 range
             int cp = currentPick();
             Log.d("pickCandidate", String.valueOf(cp));
             ACTIVITY_RESULT_FLAG = true;
@@ -532,6 +571,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             ACTIVITY_RESULT_FLAG = false;
         }
     }
+
 
     private void setChartData(final int contentN, final int range) {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -579,19 +619,19 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 set1.setHighlightEnabled(true);
                 set1.setHighLightColor(Color.GREEN);
                 data1.setBarWidth(0.8f); //바 크기
-                pollActivity_horizontalBarChart_result.setTouchEnabled(true);
+                pollActivity_horizontalBarChart_result.setTouchEnabled(false);
                 pollActivity_horizontalBarChart_result.setDragEnabled(false);
                 pollActivity_horizontalBarChart_result.setDoubleTapToZoomEnabled(false);
                 pollActivity_horizontalBarChart_result.setPinchZoom(false);
                 pollActivity_horizontalBarChart_result.setDescription(null);
-                pollActivity_horizontalBarChart_result.animateY(3000);
+                pollActivity_horizontalBarChart_result.animateY(4000);
                 pollActivity_horizontalBarChart_result.setFitBars(true);
                 pollActivity_horizontalBarChart_result.getXAxis().setPosition(XAxis.XAxisPosition.TOP);
-                pollActivity_horizontalBarChart_result.getXAxis().setXOffset(-350);
+                pollActivity_horizontalBarChart_result.getXAxis().setXOffset(-380);
                 pollActivity_horizontalBarChart_result.getAxisLeft().setEnabled(false);
                 pollActivity_horizontalBarChart_result.getAxisRight().setEnabled(false);
                 pollActivity_horizontalBarChart_result.getXAxis().setValueFormatter(new LargeValueFormatter());
-                pollActivity_horizontalBarChart_result.getXAxis().setEnabled(false);
+                pollActivity_horizontalBarChart_result.getXAxis().setEnabled(true);
                 pollActivity_horizontalBarChart_result.setDrawGridBackground(false);
 //        mChart.setBackgroundColor(Color.YELLOW);
                 pollActivity_horizontalBarChart_result.setData(data1);
@@ -610,172 +650,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    //이미지 선택시 체크하기
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.pollActivity_imageView_userAddContent_1:
-                if (pollActivity_imageView_userAddContent_1.getAlpha() == 0.7f) {
-                    checking_img_1_rt();
-                } else {
-                    checking_img_1();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_2:
-                if (pollActivity_imageView_userAddContent_2.getAlpha() == 0.7f) {
-                    checking_img_2_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_3:
-                if (pollActivity_imageView_userAddContent_3.getAlpha() == 0.7f) {
-                    checking_img_3_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_4:
-                if (pollActivity_imageView_userAddContent_4.getAlpha() == 0.7f) {
-                    checking_img_4_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_5:
-                if (pollActivity_imageView_userAddContent_5.getAlpha() == 0.7f) {
-                    checking_img_5_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_6:
-                if (pollActivity_imageView_userAddContent_6.getAlpha() == 0.7f) {
-                    checking_img_6_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_7:
-                if (pollActivity_imageView_userAddContent_7.getAlpha() == 0.7f) {
-                    checking_img_7_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_8:
-                if (pollActivity_imageView_userAddContent_8.getAlpha() == 0.7f) {
-                    checking_img_8_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_9:
-                if (pollActivity_imageView_userAddContent_9.getAlpha() == 0.7f) {
-                    checking_img_9_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9();
-                    checking_img_10_rt();
-                }
-                break;
-            case R.id.pollActivity_imageView_userAddContent_10:
-                if (pollActivity_imageView_userAddContent_10.getAlpha() == 0.7f) {
-                    checking_img_10_rt();
-                } else {
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10();
-                }
-                break;
-        }
-    }
 
     private void onReplyClicked(final DatabaseReference postRef) {
         final String date = getDate();
@@ -842,26 +716,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                             }
                         });
                         contentDTO.contentHit = contentDTO.contentHit + 1;
-                        if (currentPick() == 0)
-                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
-                        if (currentPick() == 1)
-                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + 1;
-                        if (currentPick() == 2)
-                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + 1;
-                        if (currentPick() == 3)
-                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + 1;
-                        if (currentPick() == 4)
-                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + 1;
-                        if (currentPick() == 5)
-                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + 1;
-                        if (currentPick() == 6)
-                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + 1;
-                        if (currentPick() == 7)
-                            contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + 1;
-                        if (currentPick() == 8)
-                            contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
-                        if (currentPick() == 9)
-                            contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
+                        if (currentPick() == 0) contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
+                        if (currentPick() == 1) contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + 1;
+                        if (currentPick() == 2) contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + 1;
+                        if (currentPick() == 3) contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + 1;
+                        if (currentPick() == 4) contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + 1;
+                        if (currentPick() == 5) contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + 1;
+                        if (currentPick() == 6) contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + 1;
+                        if (currentPick() == 7) contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + 1;
+                        if (currentPick() == 8) contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
+                        if (currentPick() == 9) contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
                         contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
                         String key = getIntent().getStringExtra("contentKey");
                         firebaseDatabase.getReference()
@@ -1058,6 +922,174 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 0;
         pollActivity_imageView_userAddContent_10.setAlpha(1.0f);
         pollActivity_imageView_userAddContent_check_10.setVisibility(View.GONE);
+    }
+
+
+    //이미지 선택시 체크하기
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pollActivity_imageView_userAddContent_1:
+                if (pollActivity_imageView_userAddContent_1.getAlpha() == 0.7f) {
+                    checking_img_1_rt();
+                } else {
+                    checking_img_1();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_2:
+                if (pollActivity_imageView_userAddContent_2.getAlpha() == 0.7f) {
+                    checking_img_2_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_3:
+                if (pollActivity_imageView_userAddContent_3.getAlpha() == 0.7f) {
+                    checking_img_3_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_4:
+                if (pollActivity_imageView_userAddContent_4.getAlpha() == 0.7f) {
+                    checking_img_4_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_5:
+                if (pollActivity_imageView_userAddContent_5.getAlpha() == 0.7f) {
+                    checking_img_5_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_6:
+                if (pollActivity_imageView_userAddContent_6.getAlpha() == 0.7f) {
+                    checking_img_6_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_7:
+                if (pollActivity_imageView_userAddContent_7.getAlpha() == 0.7f) {
+                    checking_img_7_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_8:
+                if (pollActivity_imageView_userAddContent_8.getAlpha() == 0.7f) {
+                    checking_img_8_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8();
+                    checking_img_9_rt();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_9:
+                if (pollActivity_imageView_userAddContent_9.getAlpha() == 0.7f) {
+                    checking_img_9_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9();
+                    checking_img_10_rt();
+                }
+                break;
+            case R.id.pollActivity_imageView_userAddContent_10:
+                if (pollActivity_imageView_userAddContent_10.getAlpha() == 0.7f) {
+                    checking_img_10_rt();
+                } else {
+                    checking_img_1_rt();
+                    checking_img_2_rt();
+                    checking_img_3_rt();
+                    checking_img_4_rt();
+                    checking_img_5_rt();
+                    checking_img_6_rt();
+                    checking_img_7_rt();
+                    checking_img_8_rt();
+                    checking_img_9_rt();
+                    checking_img_10();
+                }
+                break;
+        }
     }
 
 }

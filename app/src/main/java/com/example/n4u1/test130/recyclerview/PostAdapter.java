@@ -320,7 +320,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void movePoll(int position) {
         String string = contentDTOS.get(position).contentKey;
         if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-            Log.d("lkj i ??", String.valueOf(contentDTOS.get(position).itemViewType));
+
             Intent intent = new Intent(mContext, PollRankingActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("contentKey", string);
@@ -329,7 +329,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mContext.startActivity(intent);
 
         } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-            Log.d("lkj i ??", String.valueOf(contentDTOS.get(position).itemViewType));
+
             Intent intent = new Intent(mContext, PollSingleActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("contentKey", string);
