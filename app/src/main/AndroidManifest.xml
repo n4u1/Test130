@@ -30,7 +30,6 @@
         <activity android:name=".views.TestActivity" />
         <activity android:name=".views.PollActivity" />
         <activity android:name=".views.PollRankingActivity" />
-        <activity android:name=".views.PollMultiActivity" />
         <activity android:name=".views.PollSingleActivity" />
         <activity android:name=".views.CreateUserActivity"></activity>
     </application>

@@ -57,6 +57,18 @@ public class ContentDTO {
         result.put("candidateScore_7", candidateScore_7);
         result.put("candidateScore_8", candidateScore_8);
         result.put("candidateScore_9", candidateScore_9);
+        result.put("imageUrl_0", imageUrl_0);
+        result.put("imageUrl_1", imageUrl_1);
+        result.put("imageUrl_2", imageUrl_2);
+        result.put("imageUrl_3", imageUrl_3);
+        result.put("imageUrl_4", imageUrl_4);
+        result.put("imageUrl_5", imageUrl_5);
+        result.put("imageUrl_6", imageUrl_6);
+        result.put("imageUrl_7", imageUrl_7);
+        result.put("imageUrl_8", imageUrl_8);
+        result.put("imageUrl_9", imageUrl_9);
+
+
 //        result.put("contentPicker", contentPicker);
 
 

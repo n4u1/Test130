@@ -99,6 +99,7 @@ public class ContentChoiceDialog extends DialogFragment {
                     }
                 });
 
+
         return builder.create();
     }
 }

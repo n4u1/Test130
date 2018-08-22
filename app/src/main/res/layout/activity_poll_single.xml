@@ -138,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/pollActivity_imageView_userAddContent_1"
                     android:layout_width="match_parent"
@@ -145,6 +146,16 @@
                     android:layout_margin="8dp"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:visibility="gone"
+                    android:id="@+id/pollActivity_imageView_zoom"
+                    android:src="@drawable/ic_zoom_in_black_24dp"
+                    android:layout_alignTop="@+id/pollActivity_imageView_userAddContent_1"
+                    android:layout_alignEnd="@+id/pollActivity_imageView_userAddContent_1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_alignBottom="@id/pollActivity_imageView_userAddContent_1"
                     android:id="@+id/pollActivity_imageView_userAddContent_check_1"
@@ -299,11 +310,11 @@
                     android:visibility="gone"/>
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/pollActivity_button_statistic"
-                android:text="통계테스트"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<Button-->
+                <!--android:id="@+id/pollActivity_button_statistic"-->
+                <!--android:text="통계테스트"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <View
                 android:layout_width="match_parent"
