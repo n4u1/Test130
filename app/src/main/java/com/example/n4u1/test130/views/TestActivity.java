@@ -48,18 +48,9 @@ public class TestActivity extends AppCompatActivity {
 
         PhotoView photoView = findViewById(R.id.photoView);
 
+        String imgUrl = getIntent().getStringExtra("imgUrl");
 
-        String imgUrl_0 = getIntent().getStringExtra("imgUrl");
-//
-//        if (imgUrl_0 == null){
-//            Log.d("lkj imgUrl_00", "none");
-//        } else {
-//            Log.d("lkj imgUrl_00", imgUrl_0);
-//        }
-
-
-        Uri uri = Uri.parse(imgUrl_0);
-        Glide.with(this).load(imgUrl_0).into(photoView);
+        Glide.with(this).load(imgUrl).into(photoView);
 
 
 
