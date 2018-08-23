@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.User;
+import com.example.n4u1.test130.util.GlideApp;
 import com.example.n4u1.test130.views.HomeActivity;
 import com.example.n4u1.test130.views.PollActivity;
 import com.example.n4u1.test130.views.PollRankingActivity;
@@ -31,12 +34,13 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private ArrayList strings;
     private Context mContext;
     private ArrayList<ContentDTO> contentDTOS;
@@ -61,6 +65,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //아이템 클릭시 실행 함수
     private ItemClick itemClick;
+
+
     public interface ItemClick {
         public void onClick(View view,int position);
     }
@@ -70,6 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setItemClick(ItemClick itemClick) {
         this.itemClick = itemClick;
     }
+
 
 
     @NonNull
@@ -171,7 +178,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 ((PostViewHolder)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder)holder).imageView_postImg_0);
+                GlideApp
+                        .with(holder.itemView.getContext())
+                        .load(contentDTOS.get(position).imageUrl_0)
+                        .thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f))
+                        .centerCrop()
+                        .into(((PostViewHolder)holder).imageView_postImg_0);
+
+
+
+
                 ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -219,8 +235,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder1)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 ((PostViewHolder1)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder1)holder).imageView_postImg_0);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder1)holder).imageView_postImg_1);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder1)holder).imageView_postImg_0);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder1)holder).imageView_postImg_1);
+
+
                 break;
 
             case ITEM_VIEW_TYPE_2 :
@@ -260,9 +278,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder2)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 ((PostViewHolder2)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder2)holder).imageView_postImg_0);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder2)holder).imageView_postImg_1);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).into(((PostViewHolder2)holder).imageView_postImg_2);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0)
+                        .thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon))
+
+                        .centerCrop().into(((PostViewHolder2)holder).imageView_postImg_0);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder2)holder).imageView_postImg_1);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder2)holder).imageView_postImg_2);
+
                 break;
 
             case ITEM_VIEW_TYPE_3 :
@@ -308,12 +330,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((PostViewHolder3)holder).textView_contentType.setText(contentDTOS.get(position).contentType);
                 ((PostViewHolder3)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
                 ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).into(((PostViewHolder3)holder).imageView_postImg_0);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).into(((PostViewHolder3)holder).imageView_postImg_1);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).into(((PostViewHolder3)holder).imageView_postImg_2);
-                Glide.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_3).into(((PostViewHolder3)holder).imageView_postImg_3);
+
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_0).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder3)holder).imageView_postImg_0);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_1).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder3)holder).imageView_postImg_1);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_2).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder3)holder).imageView_postImg_2);
+                GlideApp.with(holder.itemView.getContext()).load(contentDTOS.get(position).imageUrl_3).thumbnail(0.01f).thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon).thumbnail(0.1f)).centerCrop().into(((PostViewHolder3)holder).imageView_postImg_3);
                 break;
-                default: break;
+            default: break;
         }
     }
 
