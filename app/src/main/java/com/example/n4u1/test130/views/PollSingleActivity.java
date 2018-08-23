@@ -838,21 +838,22 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     return Transaction.success(mutableData);
                 }
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            //투표가 되어있으면 PollResultDialog
-                            PollResultDialog pollResultDialog = new PollResultDialog();
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("imagePick", currentPick());
-                            bundle.putInt("imageN", getIntent().getIntExtra("itemViewType",100));
-                            bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
-                            pollResultDialog.setArguments(bundle);
-                            pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
+                    //투표가 되어있으면 PollResultDialog
+                    PollResultDialog pollResultDialog = new PollResultDialog();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("imagePick", currentPick());
+                    bundle.putInt("imageN", getIntent().getIntExtra("itemViewType",100));
+                    bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
+                    pollResultDialog.setArguments(bundle);
+                    pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
 //                            openResult(contentAmount);
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//
+//                        }
+//                    });
 
                 } else {
 
@@ -874,7 +875,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         Bundle bundle = new Bundle();
                         bundle.putInt("imagePick", currentPick());
                         bundle.putInt("imageN", getIntent().getIntExtra("itemViewType",100));
-                        bundle.putString("currentContent", "11");
+                        bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
                         pollResultDialog.setArguments(bundle);
                         pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
 

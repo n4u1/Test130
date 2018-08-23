@@ -67,6 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
     private ItemClick itemClick;
 
 
+
     public interface ItemClick {
         public void onClick(View view,int position);
     }

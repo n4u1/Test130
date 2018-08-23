@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.views.PollSingleActivity;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,20 +39,20 @@ public class PollResultDialog extends DialogFragment {
     public PollResultDialog() {
     }
     private DatabaseReference mDatabaseReference;
-    private FirebaseDatabase mFirebaseDatabase;
-
-
-
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_pollresult, container);
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        //차트클릭시 다이얼로그 닫기
         HorizontalBarChart pollActivity_horizontalBarChart_result = view.findViewById(R.id.pollActivity_horizontalBarChart_result);
+        pollActivity_horizontalBarChart_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -60,21 +62,17 @@ public class PollResultDialog extends DialogFragment {
             Log.d("lkj contentKey", contentKey);
             Log.d("lkj imageN", String.valueOf(imageN));
             Log.d("lkj currentPick", String.valueOf(currentPick));
-            setChartData(mDatabaseReference, imageN, contentKey, view, currentPick);
+            setChartData(imageN, contentKey, view, currentPick);
         }
 
         return view;
     }
 
-
-
-
     //차트 세팅
-    private void setChartData(@NonNull DatabaseReference databaseReference, final int contentN, String key, final View v, final int pick)  {
-//        mDatabaseReference = FirebaseDatabase.getInstance().getReference("user_contents").child(key);
+    private void setChartData(final int contentN, String key, final View v, final int pick)  {
 
-
-        databaseReference.child("user_contents").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference.child("user_contents").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
@@ -111,6 +109,7 @@ public class PollResultDialog extends DialogFragment {
                 tmp.add(Integer.parseInt(object9.toString()));
 
                 HorizontalBarChart pollActivity_horizontalBarChart_result = v.findViewById(R.id.pollActivity_horizontalBarChart_result);
+//                HorizontalBarChart pollActivity_horizontalBarChart_result1 = v.findViewById(R.id.pollActivity_horizontalBarChart_result1);
 
                 CategoryBarChartXaxisFormatter xAxisFormatter = new CategoryBarChartXaxisFormatter(labels);
                 XAxis xAxis = pollActivity_horizontalBarChart_result.getXAxis();
@@ -130,11 +129,12 @@ public class PollResultDialog extends DialogFragment {
                 yAxis.setDrawZeroLine(true);
                 yAxis.setDrawTopYLabelEntry(true);
 
+
                 yAxis.setCenterAxisLabels(true);
                 yAxis.setEnabled(true);
 
 //                pollActivity_horizontalBarChart_result.getDescription().setEnabled(false);
-                pollActivity_horizontalBarChart_result.setTouchEnabled(false);
+                pollActivity_horizontalBarChart_result.setTouchEnabled(true);
                 pollActivity_horizontalBarChart_result.setDragEnabled(false);
                 pollActivity_horizontalBarChart_result.setDoubleTapToZoomEnabled(false);
                 pollActivity_horizontalBarChart_result.setPinchZoom(false);
@@ -149,16 +149,20 @@ public class PollResultDialog extends DialogFragment {
                 pollActivity_horizontalBarChart_result.setDrawGridBackground(false);
                 pollActivity_horizontalBarChart_result.getLegend().setEnabled(false);
 
+
                 for (int i = 0; i < contentN; i++) {
                     yValue.add(new BarEntry((float) contentN - i, tmp.get(i)));
                 }
 
                 BarDataSet set1 = new BarDataSet(yValue, null);
-                set1.setColor(Color.GRAY);
+//                set1.setColor(Color.GRAY);
+                set1.setColors(ColorTemplate.JOYFUL_COLORS);
+
                 BarData data1 = new BarData(set1);
                 data1.setBarWidth(0.5f); //바 크기
                 data1.setValueTextSize(15f); //결과값 크기
                 data1.setValueTextColor(Color.GRAY);
+
 
 
                 ResultValueFormatter resultValueFormatter = new ResultValueFormatter();
@@ -172,6 +176,7 @@ public class PollResultDialog extends DialogFragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("lkj setChartData", "setChartData ERR");
 
             }
         });
@@ -183,6 +188,8 @@ public class PollResultDialog extends DialogFragment {
         private DecimalFormat mFormat;
         public ResultValueFormatter() {
             mFormat = new DecimalFormat("###,###,##0");
+
+
         }
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
