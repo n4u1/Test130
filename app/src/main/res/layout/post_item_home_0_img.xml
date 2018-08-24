@@ -25,8 +25,7 @@
                 android:id="@+id/imageView_postImg_0"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-
-                android:scaleType="centerCrop" />
+                android:scaleType="fitCenter"/>
 
 
             <!--<ImageView-->

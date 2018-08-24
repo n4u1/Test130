@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
@@ -40,7 +41,9 @@ import com.example.n4u1.test130.dialog.PollResultDialog;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
 import com.example.n4u1.test130.models.User;
+import com.example.n4u1.test130.recyclerview.PostViewHolder2;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
+import com.example.n4u1.test130.util.GlideApp;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -345,15 +348,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     case 1:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_1.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
+
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
                         break;
                     case 2:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
                         pollActivity_imageView_zoom_2.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_1.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_2.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
                         break;
                     case 3:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -362,9 +366,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_1.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_2.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_3.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
                         break;
                     case 4:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -375,10 +379,10 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_2.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_3.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_4.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
                         break;
                     case 5:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -391,11 +395,11 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_3.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_4.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_5.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
                         break;
                     case 6:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -410,12 +414,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_4.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_5.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_6.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).into(pollActivity_imageView_userAddContent_6).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_6).getView();
                         break;
                     case 7:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -432,13 +436,13 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_5.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_6.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_7.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).into(pollActivity_imageView_userAddContent_6).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).into(pollActivity_imageView_userAddContent_7).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_6).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_7).getView();
                         break;
                     case 8:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -457,14 +461,14 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_6.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_7.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_8.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).into(pollActivity_imageView_userAddContent_6).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).into(pollActivity_imageView_userAddContent_7).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).into(pollActivity_imageView_userAddContent_8).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_6).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_7).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_8).getView();
                         break;
                     case 9:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -485,15 +489,15 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_7.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_8.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_9.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).into(pollActivity_imageView_userAddContent_6).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).into(pollActivity_imageView_userAddContent_7).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).into(pollActivity_imageView_userAddContent_8).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_8()).into(pollActivity_imageView_userAddContent_9).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_6).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_7).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_8).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_8()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_9).getView();
                         break;
                     case 10:
                         pollActivity_imageView_zoom_1.setVisibility(View.VISIBLE);
@@ -516,16 +520,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         pollActivity_imageView_userAddContent_8.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_9.setVisibility(View.VISIBLE);
                         pollActivity_imageView_userAddContent_10.setVisibility(View.VISIBLE);
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).into(pollActivity_imageView_userAddContent_1).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).into(pollActivity_imageView_userAddContent_2).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).into(pollActivity_imageView_userAddContent_3).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).into(pollActivity_imageView_userAddContent_4).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).into(pollActivity_imageView_userAddContent_5).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).into(pollActivity_imageView_userAddContent_6).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).into(pollActivity_imageView_userAddContent_7).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).into(pollActivity_imageView_userAddContent_8).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_8()).into(pollActivity_imageView_userAddContent_9).getView();
-                        Glide.with(getApplicationContext()).load(contentDTO.getImageUrl_9()).into(pollActivity_imageView_userAddContent_10).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_0()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_1).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_1()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_2).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_2()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_3).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_3()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_4).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_4()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_5).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_5()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_6).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_6()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_7).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_7()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_8).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_8()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_9).getView();
+                        GlideApp.with(getApplicationContext()).load(contentDTO.getImageUrl_9()).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_10).getView();
                         break;
                 }
             }
@@ -971,7 +975,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
         pollActivity_imageView_userAddContent_1.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_1.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_1).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_1).getView();
     }
 
 
@@ -985,7 +989,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 2;
         pollActivity_imageView_userAddContent_2.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_2.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_2).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_2).getView();
     }
 
     public void checking_img_2_rt() {
@@ -998,7 +1002,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 3;
         pollActivity_imageView_userAddContent_3.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_3.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_3).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_3).getView();
     }
 
     public void checking_img_3_rt() {
@@ -1011,7 +1015,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 4;
         pollActivity_imageView_userAddContent_4.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_4.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_4).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_4).getView();
     }
 
     public void checking_img_4_rt() {
@@ -1024,7 +1028,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 5;
         pollActivity_imageView_userAddContent_5.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_5.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_5).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_5).getView();
     }
 
     public void checking_img_5_rt() {
@@ -1037,7 +1041,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 6;
         pollActivity_imageView_userAddContent_6.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_6.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_6).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_6).getView();
     }
 
     public void checking_img_6_rt() {
@@ -1050,7 +1054,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 7;
         pollActivity_imageView_userAddContent_7.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_7.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_7).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_7).getView();
     }
 
     public void checking_img_7_rt() {
@@ -1063,7 +1067,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 8;
         pollActivity_imageView_userAddContent_8.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_8.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_8).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_8).getView();
     }
 
     public void checking_img_8_rt() {
@@ -1076,7 +1080,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 9;
         pollActivity_imageView_userAddContent_9.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_9.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_9).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_9).getView();
     }
 
     public void checking_img_9_rt() {
@@ -1089,7 +1093,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pickCandidate = 10;
         pollActivity_imageView_userAddContent_10.setAlpha(0.7f);
         pollActivity_imageView_userAddContent_check_10.setVisibility(View.VISIBLE);
-        Glide.with(this).load(R.drawable.ic_check_black_24dp).into(pollActivity_imageView_userAddContent_check_10).getView();
+        GlideApp.with(this).load(R.drawable.ic_check_black_24dp).centerCrop().thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loadingicon)).into(pollActivity_imageView_userAddContent_check_10).getView();
     }
 
     public void checking_img_10_rt() {

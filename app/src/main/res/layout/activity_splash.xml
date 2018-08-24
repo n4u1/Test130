@@ -15,12 +15,12 @@
     <ImageView
         android:layout_marginTop="200dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_do_not_disturb_black_24dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:src="@drawable/aqa"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
 
     <pl.droidsonroids.gif.GifImageView
-        android:paddingTop="20dp"
+
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
