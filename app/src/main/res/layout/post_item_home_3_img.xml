@@ -26,7 +26,7 @@
                     android:id="@+id/imageView_postImg_0"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="center"
                     
                      />
                 <android.support.v7.widget.AppCompatImageView
@@ -34,7 +34,7 @@
                     android:id="@+id/imageView_postImg_1"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="center"
                     
                      />
                 <android.support.v7.widget.AppCompatImageView
@@ -42,7 +42,7 @@
                     android:id="@+id/imageView_postImg_2"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="center"
                     
                      />
                 <android.support.v7.widget.AppCompatImageView
@@ -50,7 +50,7 @@
                     android:id="@+id/imageView_postImg_3"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:scaleType="fitCenter"
+                    android:scaleType="center"
                     
                      />
 

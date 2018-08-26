@@ -167,17 +167,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                     @Override
                     public void onClick(View v) {
                         movePoll(position);
-                        String string = contentDTOS.get(position).contentKey;
-                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-                            Intent intent = new Intent(mContext, PollRankingActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-
-                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-                            Intent intent = new Intent(mContext, PollSingleActivity.class);
-                            intent.putExtra("contentKey", string);
-                            mContext.startActivity(intent);
-                        }
+//                        String string = contentDTOS.get(position).contentKey;
+//                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
+//                            movePoll(position);
+//
+//                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
+//                            movePoll(position);
+//                        }
                     }
                 });
                 //아이템 바인딩

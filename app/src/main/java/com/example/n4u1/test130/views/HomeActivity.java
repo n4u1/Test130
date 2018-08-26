@@ -53,10 +53,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle("  AQA");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setIcon(R.drawable.aqa2);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);

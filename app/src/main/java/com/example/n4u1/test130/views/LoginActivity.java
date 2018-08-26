@@ -68,9 +68,9 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle("  AQA");
+            getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+        getSupportActionBar().setIcon(R.drawable.aqa2);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //파일업로드용 기기 저장소 접근 권한 요청

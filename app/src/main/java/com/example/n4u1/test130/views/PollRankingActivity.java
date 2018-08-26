@@ -38,10 +38,11 @@ public class PollRankingActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setTitle("  AQA");
-        }
-        getSupportActionBar().setIcon(R.drawable.ic_do_not_disturb_black_24dp);
+//        if (getSupportActionBar() != null){
+//            getSupportActionBar().setTitle("  AQA");
+//        }
+        getSupportActionBar().setIcon(R.drawable.aqa2);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

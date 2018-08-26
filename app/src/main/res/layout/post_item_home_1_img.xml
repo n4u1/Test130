@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:scaleType="fitCenter"
+                android:scaleType="center"
                 
                  />
 
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:scaleType="fitCenter"
+                android:scaleType="center"
 
                  />
 
