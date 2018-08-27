@@ -21,7 +21,6 @@
 
 
         <LinearLayout
-            android:layout_below="@+id/frameLayout_addContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -29,6 +28,14 @@
             <!--추가된 사진(이미지뷰), 사용자 업로드 사진      -->
 
 
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textSize="12dp"
+                android:text="※동영상은 4개까지 등록 가능합니다."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <LinearLayout
                 android:paddingLeft="4dp"
                 android:id="@+id/linearLayout_userAddContent_1"
@@ -44,15 +51,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_1"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_1"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
+
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:id="@+id/imageView_userAddContent_1"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="200dp"-->
+                    <!--android:layout_margin="8dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:visibility="gone" />-->
             </LinearLayout>
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -69,15 +85,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_2"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_2"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -94,15 +111,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_3"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_3"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -119,15 +137,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_4"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_4"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -144,15 +163,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_5"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_5"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -169,15 +189,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_6"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_6"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -194,15 +215,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_7"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_7"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -219,15 +241,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_8"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_8"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -244,15 +267,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_9"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_9"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:paddingLeft="4dp"
@@ -269,15 +293,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:visibility="gone"/>
-                <android.support.v7.widget.AppCompatImageView
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/videoView_userAddContent_10"
                     android:layout_weight="1"
-                    android:id="@+id/imageView_userAddContent_10"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="8dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
             </LinearLayout>
+
 
 
 
@@ -295,7 +319,7 @@
             android:padding="20dp">
 
             <ImageView
-                android:id="@+id/imageView_addImage"
+                android:id="@+id/imageView_addVideo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerInside"

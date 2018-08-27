@@ -317,6 +317,44 @@ public class ImageFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        if (imageView_userAddContent_1 != null) {
+            imageView_userAddContent_1 = null;
+        }
+        if (imageView_userAddContent_2 != null) {
+            imageView_userAddContent_2 = null;
+        }
+        if (imageView_userAddContent_3 != null) {
+            imageView_userAddContent_3 = null;
+        }
+        if (imageView_userAddContent_4 != null) {
+            imageView_userAddContent_4 = null;
+        }
+        if (imageView_userAddContent_5 != null) {
+            imageView_userAddContent_5 = null;
+        }
+        if (imageView_userAddContent_6 != null) {
+            imageView_userAddContent_6 = null;
+        }
+        if (imageView_userAddContent_7 != null) {
+            imageView_userAddContent_7 = null;
+        }
+        if (imageView_userAddContent_8 != null) {
+            imageView_userAddContent_8 = null;
+        }
+        if (imageView_userAddContent_9 != null) {
+            imageView_userAddContent_9 = null;
+        }
+        if (imageView_userAddContent_10 != null) {
+            imageView_userAddContent_10 = null;
+        }
+
+
+        Log.d("lkjFragment onDestroy", "onDestroy");
+        super.onDestroy();
+    }
+
 //
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

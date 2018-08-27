@@ -8,8 +8,12 @@ import java.util.Map;
 
 public class ContentDTO {
 //    public String[] imageUrl = null;
+
     public String imageUrl_0, imageUrl_1, imageUrl_2, imageUrl_3, imageUrl_4, imageUrl_5,
-                imageUrl_6, imageUrl_7, imageUrl_8, imageUrl_9;
+            imageUrl_6, imageUrl_7, imageUrl_8, imageUrl_9;
+    public String videoUrl_0, videoUrl_1, videoUrl_2, videoUrl_3, videoUrl_4, videoUrl_5,
+            videoUrl_6, videoUrl_7, videoUrl_8, videoUrl_9;
+
     public String title;
     public String description;
     public String descriptionVideo_1, descriptionVideo_2, descriptionVideo_3;
@@ -57,6 +61,16 @@ public class ContentDTO {
         result.put("candidateScore_7", candidateScore_7);
         result.put("candidateScore_8", candidateScore_8);
         result.put("candidateScore_9", candidateScore_9);
+        result.put("videoUrl_0", videoUrl_0);
+        result.put("videoUrl_1", videoUrl_1);
+        result.put("videoUrl_2", videoUrl_2);
+        result.put("videoUrl_3", videoUrl_3);
+        result.put("videoUrl_4", videoUrl_4);
+        result.put("videoUrl_5", videoUrl_5);
+        result.put("videoUrl_6", videoUrl_6);
+        result.put("videoUrl_7", videoUrl_7);
+        result.put("videoUrl_8", videoUrl_8);
+        result.put("videoUrl_9", videoUrl_9);
         result.put("imageUrl_0", imageUrl_0);
         result.put("imageUrl_1", imageUrl_1);
         result.put("imageUrl_2", imageUrl_2);
@@ -67,7 +81,6 @@ public class ContentDTO {
         result.put("imageUrl_7", imageUrl_7);
         result.put("imageUrl_8", imageUrl_8);
         result.put("imageUrl_9", imageUrl_9);
-
 
 //        result.put("contentPicker", contentPicker);
 
