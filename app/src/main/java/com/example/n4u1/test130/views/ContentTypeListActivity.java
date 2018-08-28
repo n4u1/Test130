@@ -23,7 +23,7 @@ public class ContentTypeListActivity extends AppCompatActivity {
 //        if (getSupportActionBar() != null){
 //            getSupportActionBar().setTitle("  AQA");
 //        }
-        getSupportActionBar().setIcon(R.drawable.aqa2);
+        getSupportActionBar().setIcon(R.drawable.q);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

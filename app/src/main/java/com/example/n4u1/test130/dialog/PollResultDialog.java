@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
+import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.views.PollSingleActivity;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -33,20 +35,31 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 
 public class PollResultDialog extends DialogFragment {
     public PollResultDialog() {
     }
+
     private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReference_;
+    int contentHit;
+    int male = 0;
+    int female = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_pollresult, container);
+        TextView textView = view.findViewById(R.id.textView);
+        HorizontalBarChart pollActivity_horizontalBarChart_result = view.findViewById(R.id.pollActivity_horizontalBarChart_result);
+
 
         //차트클릭시 다이얼로그 닫기
-        HorizontalBarChart pollActivity_horizontalBarChart_result = view.findViewById(R.id.pollActivity_horizontalBarChart_result);
         pollActivity_horizontalBarChart_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,17 +72,88 @@ public class PollResultDialog extends DialogFragment {
             String contentKey = bundle.getString("currentContent", null);
             int imageN = bundle.getInt("imageN");
             int currentPick = bundle.getInt("imagePick");
+            contentHit = bundle.getInt("contentHits");
             Log.d("lkj contentKey", contentKey);
             Log.d("lkj imageN", String.valueOf(imageN));
             Log.d("lkj currentPick", String.valueOf(currentPick));
+            Log.d("lkj currentHits", String.valueOf(contentHit));
             setChartData(imageN, contentKey, view, currentPick);
+            getPicker(contentKey);
+            //textView Test
+
         }
 
         return view;
     }
 
+
+    //투표한 사용자 uid parsing
+    private void getPicker(String k) {
+        mDatabaseReference_ = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference_.child("user_contents").child(k).child("contentPicker").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String string = dataSnapshot.getValue().toString();
+                int contentPickerCount = (int) dataSnapshot.getChildrenCount();
+
+                ArrayList<String> stringArrayList = new ArrayList<>();
+                String[] stringArray;
+                stringArray = string.split("=");
+                stringArray[0] = stringArray[0].replace("{", "");
+
+                for (int i = 1; i < contentPickerCount; i++) {
+                    int idx = stringArray[i].indexOf(" ");
+                    int idx_ = stringArray[i].length();
+                    stringArray[i] = stringArray[i].substring(idx + 1, idx_);
+                }
+                stringArray[contentPickerCount] = null;
+                Collections.addAll(stringArrayList, stringArray);
+                tt(stringArrayList);
+                Log.d("lkj contentpicker0", "\n[" + stringArray[0] + "]");
+                Log.d("lkj contentpicker1", "\n[" + stringArray[1] + "]");
+                Log.d("lkj contentpicker2", "\n[" + stringArray[2] + "]");
+                Log.d("lkj contentpicker3", "\n[" + stringArray[3] + "]");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //투표한 사람 uid로 통계 구하기
+    private void tt(ArrayList<String> stringArrayList) {
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        for (int i = 0; i < contentHit; i++) {
+
+            mDatabaseReference.child("users").child(stringArrayList.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
+                    if (contentDTO.get("sex").equals("남")){
+                        Log.d("lkj sex 남자", "남");
+                    } else {
+                        Log.d("lkj sex 여자", "여");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+    }
+
+
+
+
+
+
     //차트 세팅
-    private void setChartData(final int contentN, String key, final View v, final int pick)  {
+    private void setChartData(final int contentN, String key, final View v, final int pick) {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mDatabaseReference.child("user_contents").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -156,13 +240,12 @@ public class PollResultDialog extends DialogFragment {
 
                 BarDataSet set1 = new BarDataSet(yValue, null);
 //                set1.setColor(Color.GRAY);
-                set1.setColors(ColorTemplate.JOYFUL_COLORS);
+                set1.setColors(ColorTemplate.MATERIAL_COLORS);
 
                 BarData data1 = new BarData(set1);
                 data1.setBarWidth(0.5f); //바 크기
                 data1.setValueTextSize(15f); //결과값 크기
                 data1.setValueTextColor(Color.GRAY);
-
 
 
                 ResultValueFormatter resultValueFormatter = new ResultValueFormatter();
@@ -186,11 +269,13 @@ public class PollResultDialog extends DialogFragment {
 
     public class ResultValueFormatter implements IValueFormatter {
         private DecimalFormat mFormat;
+
         public ResultValueFormatter() {
             mFormat = new DecimalFormat("###,###,##0");
 
 
         }
+
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return mFormat.format(value) + "표";
@@ -199,9 +284,11 @@ public class PollResultDialog extends DialogFragment {
 
     public class CategoryBarChartXaxisFormatter implements IAxisValueFormatter {
         ArrayList<String> mValues;
+
         public CategoryBarChartXaxisFormatter(ArrayList<String> values) {
             this.mValues = values;
         }
+
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
 

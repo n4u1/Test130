@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.aqa2);
+        getSupportActionBar().setIcon(R.drawable.q);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);

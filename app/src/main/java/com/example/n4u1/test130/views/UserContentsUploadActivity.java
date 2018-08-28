@@ -83,10 +83,10 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar().setTitle("  AQA");
-//        }
-        getSupportActionBar().setIcon(R.drawable.aqa2);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(" ");
+        }
+        getSupportActionBar().setIcon(R.drawable.q);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 //
 
@@ -70,8 +72,11 @@ public class LoginActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.aqa2);
+//        getSupportActionBar().setIcon(R.drawable.q);
+        getSupportActionBar().setLogo(R.drawable.q);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
 
         //파일업로드용 기기 저장소 접근 권한 요청
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
