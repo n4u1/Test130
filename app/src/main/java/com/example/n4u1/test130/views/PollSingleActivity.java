@@ -895,39 +895,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                     pollResultDialog.setArguments(bundle);
                     pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
-//                            openResult(contentAmount);
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//
-//                        }
-//                    });
 
+                    //투표가 안되어있으면 투표하고 PollResultDialog
                 } else {
-
-                    if (pollChecking()) { //체크되있으면 true, 안되있으면 false
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                PollResultDialog pollResultDialog = new PollResultDialog();
-//                                Bundle bundle = new Bundle();
-//                                bundle.putInt("imagePick", currentPick());
-//                                bundle.putInt("imageN", getIntent().getIntExtra("itemViewType",100));
-//                                bundle.putString("currentContent", "11");
-//                                pollResultDialog.setArguments(bundle);
-//                                pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
-////                                openResult(contentAmount);
-//                            }
-//                        });
-                        PollResultDialog pollResultDialog = new PollResultDialog();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("imagePick", currentPick());
-                        bundle.putInt("imageN", getIntent().getIntExtra("itemViewType", 100));
-                        bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
-                        pollResultDialog.setArguments(bundle);
-                        pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
-
+                        //투표 선택 되있으면 true, 안되있으면 false
+                    if (pollChecking()) {
+                        //true면 투표수 추가하고 PollResultDialog
                         contentDTO.contentHit = contentDTO.contentHit + 1;
                         if (currentPick() == 0)
                             contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
@@ -957,7 +930,16 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                                 .child("pickContent")
                                 .child(key)
                                 .setValue(currentPick());
-                    } else {
+
+                        PollResultDialog pollResultDialog = new PollResultDialog();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("imagePick", currentPick());
+                        bundle.putInt("imageN", getIntent().getIntExtra("itemViewType", 100));
+                        bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
+                        pollResultDialog.setArguments(bundle);
+                        pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
+
+                    } else { //투표 선택 안되있으면
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -984,7 +966,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         TimeZone timeZone;
         timeZone = TimeZone.getTimeZone("Asia/Seoul");
         Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyMMdd-HHmmss-SS", Locale.KOREAN);
+        SimpleDateFormat df = new SimpleDateFormat("yyMMdd-HHmm", Locale.KOREAN);
         df.setTimeZone(timeZone);
         String currentDate = df.format(date);
         return currentDate;
@@ -1170,7 +1152,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
 
 
-    //이미지 선택시 체크하기
+    //이미지 선택시 전체화면으로 보여주기
+    //N선택 선택시 파란색으로 바뀌면서 체크
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

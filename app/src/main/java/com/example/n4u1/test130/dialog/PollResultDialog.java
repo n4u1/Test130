@@ -27,6 +27,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.android.gms.common.stats.StatisticsTracker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +51,9 @@ public class PollResultDialog extends DialogFragment {
     int contentHit;
     int male = 0;
     int female = 0;
+
+    String STATISTICS_CODE = "0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0";
+
 
     @Nullable
     @Override
@@ -123,18 +127,18 @@ public class PollResultDialog extends DialogFragment {
 
     //투표한 사람 uid로 통계 구하기
     private void tt(ArrayList<String> stringArrayList) {
-
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         for (int i = 0; i < contentHit; i++) {
-
             mDatabaseReference.child("users").child(stringArrayList.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
                     if (contentDTO.get("sex").equals("남")){
                         Log.d("lkj sex 남자", "남");
+                        yy("남");
                     } else {
                         Log.d("lkj sex 여자", "여");
+                        uu("여");
                     }
                 }
 
@@ -144,11 +148,25 @@ public class PollResultDialog extends DialogFragment {
                 }
             });
         }
-
     }
 
+    private void yy(String string) {
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        stringArrayList.add(string);
+        for (int i = 0; i < 10; i++) {
+            if(stringArrayList.get(i)==null) Log.d("lkj yy", "lkj yy");
+            else Log.d("lkj yy", stringArrayList.get(i));
+        }
+    }
 
-
+    private void uu(String string) {
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        stringArrayList.add(string);
+        for (int i = 0; i < 10; i++) {
+            if(stringArrayList.get(i)==null) if(stringArrayList.get(i)==null) Log.d("lkj uu", "lkj uu");
+            else Log.d("lkj uu", stringArrayList.get(i));
+        }
+    }
 
 
 
