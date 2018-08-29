@@ -235,6 +235,7 @@ public class FileChoiceActivity extends AppCompatActivity
             contentDTO.pollMode = userInputContents.get(2);
             contentDTO.description = userInputContents.get(3);
             contentDTO.uid = auth.getCurrentUser().getUid();
+
             contentDTO.userID = auth.getCurrentUser().getEmail();
             mdatabaseRef.child("user_contents").child(key).setValue(contentDTO);
 //

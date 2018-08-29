@@ -47,7 +47,7 @@ public class PollResultDialog extends DialogFragment {
     }
 
     private DatabaseReference mDatabaseReference;
-    private DatabaseReference mDatabaseReference_;
+
     int contentHit;
     int male = 0;
     int female = 0;
@@ -93,6 +93,7 @@ public class PollResultDialog extends DialogFragment {
 
     //투표한 사용자 uid parsing
     private void getPicker(String k) {
+        DatabaseReference mDatabaseReference_;
         mDatabaseReference_ = FirebaseDatabase.getInstance().getReference();
         mDatabaseReference_.child("user_contents").child(k).child("contentPicker").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -113,10 +114,6 @@ public class PollResultDialog extends DialogFragment {
                 stringArray[contentPickerCount] = null;
                 Collections.addAll(stringArrayList, stringArray);
                 tt(stringArrayList);
-                Log.d("lkj contentpicker0", "\n[" + stringArray[0] + "]");
-                Log.d("lkj contentpicker1", "\n[" + stringArray[1] + "]");
-                Log.d("lkj contentpicker2", "\n[" + stringArray[2] + "]");
-                Log.d("lkj contentpicker3", "\n[" + stringArray[3] + "]");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -135,10 +132,10 @@ public class PollResultDialog extends DialogFragment {
                     Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
                     if (contentDTO.get("sex").equals("남")){
                         Log.d("lkj sex 남자", "남");
-                        yy("남");
+//                        yy("남");
                     } else {
                         Log.d("lkj sex 여자", "여");
-                        uu("여");
+//                        uu("여");
                     }
                 }
 

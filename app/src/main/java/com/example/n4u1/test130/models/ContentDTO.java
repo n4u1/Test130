@@ -9,6 +9,9 @@ import java.util.Map;
 public class ContentDTO {
 //    public String[] imageUrl = null;
 
+
+    public String statistics_code = "0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0";
+
     public String imageUrl_0, imageUrl_1, imageUrl_2, imageUrl_3, imageUrl_4, imageUrl_5,
             imageUrl_6, imageUrl_7, imageUrl_8, imageUrl_9;
     public String videoUrl_0, videoUrl_1, videoUrl_2, videoUrl_3, videoUrl_4, videoUrl_5,
@@ -16,8 +19,6 @@ public class ContentDTO {
 
     public String title;
     public String description;
-    public String descriptionVideo_1, descriptionVideo_2, descriptionVideo_3;
-    public String descriptionImage_1, descriptionImage_2, descriptionImage_3;
     public String uid;
     public String userID;
     public String pollMode;
@@ -89,6 +90,98 @@ public class ContentDTO {
     }
 
     public ContentDTO(){}
+
+    public String getStatistics_code() {
+        return statistics_code;
+    }
+
+    public void setStatistics_code(String statistics_code) {
+        this.statistics_code = statistics_code;
+    }
+
+    public String getVideoUrl_0() {
+        return videoUrl_0;
+    }
+
+    public void setVideoUrl_0(String videoUrl_0) {
+        this.videoUrl_0 = videoUrl_0;
+    }
+
+    public String getVideoUrl_1() {
+        return videoUrl_1;
+    }
+
+    public void setVideoUrl_1(String videoUrl_1) {
+        this.videoUrl_1 = videoUrl_1;
+    }
+
+    public String getVideoUrl_2() {
+        return videoUrl_2;
+    }
+
+    public void setVideoUrl_2(String videoUrl_2) {
+        this.videoUrl_2 = videoUrl_2;
+    }
+
+    public String getVideoUrl_3() {
+        return videoUrl_3;
+    }
+
+    public void setVideoUrl_3(String videoUrl_3) {
+        this.videoUrl_3 = videoUrl_3;
+    }
+
+    public String getVideoUrl_4() {
+        return videoUrl_4;
+    }
+
+    public void setVideoUrl_4(String videoUrl_4) {
+        this.videoUrl_4 = videoUrl_4;
+    }
+
+    public String getVideoUrl_5() {
+        return videoUrl_5;
+    }
+
+    public void setVideoUrl_5(String videoUrl_5) {
+        this.videoUrl_5 = videoUrl_5;
+    }
+
+    public String getVideoUrl_6() {
+        return videoUrl_6;
+    }
+
+    public void setVideoUrl_6(String videoUrl_6) {
+        this.videoUrl_6 = videoUrl_6;
+    }
+
+    public String getVideoUrl_7() {
+        return videoUrl_7;
+    }
+
+    public void setVideoUrl_7(String videoUrl_7) {
+        this.videoUrl_7 = videoUrl_7;
+    }
+
+    public String getVideoUrl_8() {
+        return videoUrl_8;
+    }
+
+    public void setVideoUrl_8(String videoUrl_8) {
+        this.videoUrl_8 = videoUrl_8;
+    }
+
+    public String getVideoUrl_9() {
+        return videoUrl_9;
+    }
+
+    public void setVideoUrl_9(String videoUrl_9) {
+        this.videoUrl_9 = videoUrl_9;
+    }
+
+    public Map<String, String> getReply() {
+        return reply;
+    }
 
     public void setReply(Map<String, String> reply) {
         this.reply = reply;
@@ -188,54 +281,6 @@ public class ContentDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDescriptionVideo_1() {
-        return descriptionVideo_1;
-    }
-
-    public void setDescriptionVideo_1(String descriptionVideo_1) {
-        this.descriptionVideo_1 = descriptionVideo_1;
-    }
-
-    public String getDescriptionVideo_2() {
-        return descriptionVideo_2;
-    }
-
-    public void setDescriptionVideo_2(String descriptionVideo_2) {
-        this.descriptionVideo_2 = descriptionVideo_2;
-    }
-
-    public String getDescriptionVideo_3() {
-        return descriptionVideo_3;
-    }
-
-    public void setDescriptionVideo_3(String descriptionVideo_3) {
-        this.descriptionVideo_3 = descriptionVideo_3;
-    }
-
-    public String getDescriptionImage_1() {
-        return descriptionImage_1;
-    }
-
-    public void setDescriptionImage_1(String descriptionImage_1) {
-        this.descriptionImage_1 = descriptionImage_1;
-    }
-
-    public String getDescriptionImage_2() {
-        return descriptionImage_2;
-    }
-
-    public void setDescriptionImage_2(String descriptionImage_2) {
-        this.descriptionImage_2 = descriptionImage_2;
-    }
-
-    public String getDescriptionImage_3() {
-        return descriptionImage_3;
-    }
-
-    public void setDescriptionImage_3(String descriptionImage_3) {
-        this.descriptionImage_3 = descriptionImage_3;
     }
 
     public String getUid() {

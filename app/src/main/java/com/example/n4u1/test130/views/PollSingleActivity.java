@@ -163,7 +163,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-
         final String contentKey = getIntent().getStringExtra("contentKey");
         contentHit = getIntent().getIntExtra("contentHit", 999999);
 
@@ -715,50 +714,53 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             });
         }
     }
-
-    //나이별 투표 결과
-    private void getStatisticsAge(int j, ArrayList<String> uid) {
-        int statisticsAge;
-        final ArrayList<String> pickerUid = new ArrayList<>();
-        for (int i = 0; i < j; i++) {
-            mDatabaseReferencePicker.child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-                    Log.d("lkj age", user.get("age").toString());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-    }
-
-    //성별 투표 결과
-    private void getStatisticsGender(int j, ArrayList<String> uid) {
-        int statisticsGender;
-        final ArrayList<String> pickerUid = new ArrayList<>();
-        for (int i = 0; i < j; i++) {
-            mFirebaseDatabase.getReference().child("users").child(uid.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-//                    User user = dataSnapshot.getValue(User.class);
-                    Log.d("lkj gender", user.get("sex").toString());
-//                    Log.d("lkj gender", user.getSex());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
-    }
+//
+//    //나이별 투표 결과
+//    private int getStatisticsAge(String uid) {
+//        int statisticsAge;
+//
+//        for (int i = 0; i < j; i++) {
+//            mDatabaseReferencePicker.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+//                    if (user.get("gender").equals(""))
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//        }
+//    }
+//
+//    //성별 투표 결과
+//    private String getStatisticsGender(String uid) {
+//        String gender;
+//        final ArrayList<String> pickerUid = new ArrayList<>();
+//
+//            mDatabaseReferencePicker.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+//                    if (user.get("gender").equals("남")) {
+//                        gender = "남";
+//                    }
+//                    if (user.get("gender").equals("여")){
+//                        return "여";
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+//
+//
+//    }
 
 
     //댓글펼치기
@@ -880,7 +882,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
+                final ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
                 if (contentDTO == null) {
                     return Transaction.success(mutableData);
                 }
@@ -898,7 +900,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                     //투표가 안되어있으면 투표하고 PollResultDialog
                 } else {
-                        //투표 선택 되있으면 true, 안되있으면 false
+                    //투표 선택 되있으면 true, 안되있으면 false
                     if (pollChecking()) {
                         //true면 투표수 추가하고 PollResultDialog
                         contentDTO.contentHit = contentDTO.contentHit + 1;
@@ -922,6 +924,26 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                             contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
                         if (currentPick() == 9)
                             contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
+
+
+//                        tmp.add(Integer.parseInt(object0.toString()));
+                        mDatabaseReferencePicker.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
+                                Object object = user.get("age");
+                                int currentAge = Integer.parseInt(object.toString());
+                                String currentGender = user.get("sex").toString();
+                                addStatistics(contentDTO.statistics_code, currentPick(), currentGender, currentAge);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
                         contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
                         String key = getIntent().getStringExtra("contentKey");
                         firebaseDatabase.getReference()
@@ -1028,7 +1050,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     public void checking_img_3() {
         pickCandidate = 3;
         pollActivity_imageView_around_3.setBackgroundColor(0xff4485c9);
@@ -1041,7 +1062,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_around_3.setBackgroundColor(0xfff2f2f2);
         pollActivity_imageView_choice_3.setBackgroundColor(0xfff2f2f2);
     }
-
 
 
     public void checking_img_4() {
@@ -1058,7 +1078,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     public void checking_img_5() {
         pickCandidate = 5;
         pollActivity_imageView_around_5.setBackgroundColor(0xff4485c9);
@@ -1071,7 +1090,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_around_5.setBackgroundColor(0xfff2f2f2);
         pollActivity_imageView_choice_5.setBackgroundColor(0xfff2f2f2);
     }
-
 
 
     public void checking_img_6() {
@@ -1088,7 +1106,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     public void checking_img_7() {
         pickCandidate = 7;
         pollActivity_imageView_around_7.setBackgroundColor(0xff4485c9);
@@ -1101,7 +1118,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_around_7.setBackgroundColor(0xfff2f2f2);
         pollActivity_imageView_choice_7.setBackgroundColor(0xfff2f2f2);
     }
-
 
 
     public void checking_img_8() {
@@ -1118,7 +1134,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     public void checking_img_9() {
         pickCandidate = 9;
         pollActivity_imageView_around_9.setBackgroundColor(0xff4485c9);
@@ -1133,7 +1148,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     public void checking_img_10() {
         pickCandidate = 10;
         pollActivity_imageView_around_10.setBackgroundColor(0xff4485c9);
@@ -1146,10 +1160,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_around_10.setBackgroundColor(0xfff2f2f2);
         pollActivity_imageView_choice_10.setBackgroundColor(0xfff2f2f2);
     }
-
-
-
-
 
 
     //이미지 선택시 전체화면으로 보여주기
@@ -1509,7 +1519,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 break;
 
 
-
 //
 //            case R.id.pollActivity_imageView_choice_1:
 //                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1729,4 +1738,91 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
+    //picker의 현재픽,성별,나이 가져와서 통계항목에 +1
+    private void addStatistics(String statistics_code, int currentPick, String gender, int age) {
+        String[] stringArray = null;
+        stringArray = statistics_code.split(":");
+        int[] tmpStatistics = new int[stringArray.length];
+        for (int i = 0; i < stringArray.length; i++) {
+            tmpStatistics[i] = Integer.parseInt(stringArray[i]);
+        }
+
+
+        Log.d("lkj statistics_code", statistics_code);
+        Log.d("lkj currentPick", String.valueOf(currentPick));
+        Log.d("lkj gender", gender);
+        Log.d("lkj age", String.valueOf(age));
+
+
+        if (gender.equals("여")) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[0]++;
+                    break;
+                case 1:
+                    tmpStatistics[1]++;
+                    break;
+                case 2:
+                    tmpStatistics[2]++;
+                    break;
+                case 3:
+                    tmpStatistics[3]++;
+                    break;
+                case 4:
+                    tmpStatistics[4]++;
+                    break;
+                case 5:
+                    tmpStatistics[5]++;
+                    break;
+                case 6:
+                    tmpStatistics[6]++;
+                    break;
+                case 7:
+                    tmpStatistics[7]++;
+                    break;
+                case 8:
+                    tmpStatistics[8]++;
+                    break;
+                case 9:
+                    tmpStatistics[9]++;
+                    break;
+            }
+        } else {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[10]++;
+                    break;
+                case 1:
+                    tmpStatistics[11]++;
+                    break;
+                case 2:
+                    tmpStatistics[12]++;
+                    break;
+                case 3:
+                    tmpStatistics[13]++;
+                    break;
+                case 4:
+                    tmpStatistics[14]++;
+                    break;
+                case 5:
+                    tmpStatistics[15]++;
+                    break;
+                case 6:
+                    tmpStatistics[16]++;
+                    break;
+                case 7:
+                    tmpStatistics[17]++;
+                    break;
+                case 8:
+                    tmpStatistics[18]++;
+                    break;
+                case 9:
+                    tmpStatistics[19]++;
+                    break;
+            }
+        }
+    }
 }
+
+
