@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class PollResultDialog extends DialogFragment {
@@ -51,16 +55,108 @@ public class PollResultDialog extends DialogFragment {
     int contentHit;
     int male = 0;
     int female = 0;
+    int imageN;
+    int currentPick;
+    String contentKey;
+    String statisticsCode;
+    String genderRange = "전 체";
+    String ageRange = "전 체";
+    AppCompatSpinner pollResultDialog_spinner_age, pollResultDialog_spinner_gender;
+    
+    List<String> ageRangeList = new ArrayList<>();
+    List<String> genderList = new ArrayList<>();
 
-    String STATISTICS_CODE = "0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0";
+
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_pollresult, container);
-        TextView textView = view.findViewById(R.id.textView);
         HorizontalBarChart pollActivity_horizontalBarChart_result = view.findViewById(R.id.pollActivity_horizontalBarChart_result);
+        pollResultDialog_spinner_age = view.findViewById(R.id.pollResultDialog_spinner_age);
+        pollResultDialog_spinner_gender = view.findViewById(R.id.pollResultDialog_spinner_gender);
+
+          genderList.add("전 체");
+          genderList.add("여자");
+          genderList.add("남자");
+        ageRangeList.add("전 체");
+        ageRangeList.add("10대 초반 (10 ~ 12)");
+        ageRangeList.add("10대 중반 (13 ~ 16)");
+        ageRangeList.add("10대 후반 (17 ~ 19)");
+        ageRangeList.add("20대 초반 (20 ~ 22)");
+        ageRangeList.add("20대 중반 (23 ~ 26)");
+        ageRangeList.add("20대 후반 (27 ~ 20)");
+        ageRangeList.add("30대 초반 (30 ~ 32)");
+        ageRangeList.add("30대 중반 (33 ~ 36)");
+        ageRangeList.add("30대 후반 (37 ~ 39)");
+        ageRangeList.add("40대 초반 (40 ~ 42)");
+        ageRangeList.add("40대 중반 (43 ~ 46)");
+        ageRangeList.add("40대 후반 (47 ~ 40)");
+        ageRangeList.add("50대 초반 (50 ~ 52)");
+        ageRangeList.add("50대 중반 (53 ~ 56)");
+        ageRangeList.add("50대 후반 (57 ~ 59)");
+        ageRangeList.add("60대 초반 (60 ~ 62)");
+        ageRangeList.add("60대 중반 (63 ~ 66)");
+        ageRangeList.add("60대 후반 (67 ~ 69)");
+        ageRangeList.add("70대 초반 (70 ~ 72)");
+        ageRangeList.add("70대 중반 (73 ~ 76)");
+        ageRangeList.add("70대 후반 (77 ~ 79)");
+        ageRangeList.add("80대 초반 (80 ~ 82)");
+        ageRangeList.add("80대 중반 (83 ~ 86)");
+        ageRangeList.add("80대 후반 (87 ~ 89)");
+        ageRangeList.add("90대 초반 (90 ~ 92)");
+        ageRangeList.add("90대 중반 (93 ~ 96)");
+        ageRangeList.add("90대 후반 (97 ~ 99)");
+
+        ArrayAdapter ageRangeAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, ageRangeList);
+        ArrayAdapter genderRangeAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, genderList);
+        ageRangeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        genderRangeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        pollResultDialog_spinner_age.setAdapter(ageRangeAdapter);
+        pollResultDialog_spinner_gender.setAdapter(genderRangeAdapter);
+
+
+
+        pollResultDialog_spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genderRange = genderList.get(position);
+                    Log.d("lkj in gd", genderRange);
+                    Log.d("lkj in gd_", ageRange);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        pollResultDialog_spinner_age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ageRange = ageRangeList.get(position);
+                    Log.d("lkj in ag", ageRange);
+                    Log.d("lkj in ag_", genderRange);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //차트클릭시 다이얼로그 닫기
@@ -71,21 +167,24 @@ public class PollResultDialog extends DialogFragment {
             }
         });
 
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String contentKey = bundle.getString("currentContent", null);
-            int imageN = bundle.getInt("imageN");
-            int currentPick = bundle.getInt("imagePick");
+            contentKey = bundle.getString("currentContent", null);
+            statisticsCode = bundle.getString("statisticsCode");
+            imageN = bundle.getInt("imageN");
+            currentPick = bundle.getInt("imagePick");
             contentHit = bundle.getInt("contentHits");
             Log.d("lkj contentKey", contentKey);
             Log.d("lkj imageN", String.valueOf(imageN));
             Log.d("lkj currentPick", String.valueOf(currentPick));
             Log.d("lkj currentHits", String.valueOf(contentHit));
+            Log.d("lkj statisticsCodeeee", statisticsCode);
             setChartData(imageN, contentKey, view, currentPick);
-            getPicker(contentKey);
-            //textView Test
+//            getPicker(contentKey);            //textView Test
 
         }
+
 
         return view;
     }
@@ -113,7 +212,7 @@ public class PollResultDialog extends DialogFragment {
                 }
                 stringArray[contentPickerCount] = null;
                 Collections.addAll(stringArrayList, stringArray);
-                tt(stringArrayList);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -122,48 +221,6 @@ public class PollResultDialog extends DialogFragment {
         });
     }
 
-    //투표한 사람 uid로 통계 구하기
-    private void tt(ArrayList<String> stringArrayList) {
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        for (int i = 0; i < contentHit; i++) {
-            mDatabaseReference.child("users").child(stringArrayList.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Map<String, Object> contentDTO = (Map<String, Object>) dataSnapshot.getValue();
-                    if (contentDTO.get("sex").equals("남")){
-                        Log.d("lkj sex 남자", "남");
-//                        yy("남");
-                    } else {
-                        Log.d("lkj sex 여자", "여");
-//                        uu("여");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-    }
-
-    private void yy(String string) {
-        ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add(string);
-        for (int i = 0; i < 10; i++) {
-            if(stringArrayList.get(i)==null) Log.d("lkj yy", "lkj yy");
-            else Log.d("lkj yy", stringArrayList.get(i));
-        }
-    }
-
-    private void uu(String string) {
-        ArrayList<String> stringArrayList = new ArrayList<>();
-        stringArrayList.add(string);
-        for (int i = 0; i < 10; i++) {
-            if(stringArrayList.get(i)==null) if(stringArrayList.get(i)==null) Log.d("lkj uu", "lkj uu");
-            else Log.d("lkj uu", stringArrayList.get(i));
-        }
-    }
 
 
 
@@ -255,7 +312,8 @@ public class PollResultDialog extends DialogFragment {
 
                 BarDataSet set1 = new BarDataSet(yValue, null);
 //                set1.setColor(Color.GRAY);
-                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+//                set1.setColors(ColorTemplate.MATERIAL_COLORS);
+                set1.setColors(0xff4485c9);
 
                 BarData data1 = new BarData(set1);
                 data1.setBarWidth(0.5f); //바 크기

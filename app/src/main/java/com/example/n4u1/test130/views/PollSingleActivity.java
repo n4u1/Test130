@@ -125,8 +125,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_around_9, pollActivity_imageView_around_10;
 
     HorizontalBarChart pollActivity_horizontalBarChart_result;
-    ImageView pollActivity_imageView_result_downButton, pollActivity_imageView_reply_upButton,
-            pollActivity_imageView_result_upButton, pollActivity_imageView_reply_downButton;
+    ImageView pollActivity_imageView_reply_upButton, pollActivity_imageView_reply_downButton;
     //    Button pollActivity_button_statistic;
     ImageView pollActivity_button_replySend;
     EditText pollActivity_editText_reply;
@@ -205,8 +204,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_relativeLayout_reply = findViewById(R.id.pollActivity_relativeLayout_reply);
 //        pollActivity_imageView_test = findViewById(R.id.pollActivity_imageView_test);
         pollActivity_horizontalBarChart_result = findViewById(R.id.pollActivity_horizontalBarChart_result);
-        pollActivity_imageView_result_downButton = findViewById(R.id.pollActivity_imageView_result_downButton);
-        pollActivity_imageView_result_upButton = findViewById(R.id.pollActivity_imageView_result_upButton);
+//        pollActivity_imageView_result_downButton = findViewById(R.id.pollActivity_imageView_result_downButton);
+//        pollActivity_imageView_result_upButton = findViewById(R.id.pollActivity_imageView_result_upButton);
         pollActivity_imageView_reply_downButton = findViewById(R.id.pollActivity_imageView_reply_downButton);
         pollActivity_imageView_reply_upButton = findViewById(R.id.pollActivity_imageView_reply_upButton);
         pollActivity_recyclerView_reply = findViewById(R.id.pollActivity_recyclerView_reply);
@@ -773,8 +772,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     //투표하고 결과보기
     private void openResult(int contentN) {
         if (!ACTIVITY_RESULT_FLAG) {
-            pollActivity_imageView_result_downButton.setVisibility(View.GONE);
-            pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
+//            pollActivity_imageView_result_downButton.setVisibility(View.GONE);
+//            pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
             pollActivity_textView_result.setText("접기");
             pollActivity_horizontalBarChart_result.setVisibility(View.VISIBLE);
 //            setChartData(contentN, 100); //bar개수 : contentN개, 가로 최대길이 range
@@ -782,8 +781,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             Log.d("pickCandidate", String.valueOf(cp));
             ACTIVITY_RESULT_FLAG = true;
         } else {
-            pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
-            pollActivity_imageView_result_upButton.setVisibility(View.GONE);
+//            pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
+//            pollActivity_imageView_result_upButton.setVisibility(View.GONE);
             pollActivity_textView_result.setText("결과보기");
             pollActivity_horizontalBarChart_result.setVisibility(View.GONE);
             ACTIVITY_RESULT_FLAG = false;
@@ -843,10 +842,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     //투표가 되어있으면 PollResultDialog
                     PollResultDialog pollResultDialog = new PollResultDialog();
                     Bundle bundle = new Bundle();
+
                     bundle.putInt("imagePick", currentPick());
                     bundle.putInt("imageN", getIntent().getIntExtra("itemViewType", 100));
                     bundle.putInt("contentHits", contentHit);
                     bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
+                    bundle.putString("statisticsCode", contentDTO.statistics_code);
 
                     pollResultDialog.setArguments(bundle);
                     pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
@@ -887,7 +888,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                                 Object object = user.get("age");
                                 int currentAge = Integer.parseInt(object.toString());
                                 String currentGender = user.get("sex").toString();
-                                addStatistics(contentDTO.statistics_code, currentPick(), currentGender, currentAge);
+                                String statisticsCodeTmp = addStatistics(contentDTO.statistics_code, currentPick(), currentGender, currentAge);
+                                mDatabaseReference.child("statistics_code").setValue(statisticsCodeTmp);
+
                             }
 
                             @Override
@@ -895,8 +898,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                             }
                         });
-
-
                         contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
                         String key = getIntent().getStringExtra("contentKey");
                         firebaseDatabase.getReference()
@@ -911,6 +912,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                         bundle.putInt("imagePick", currentPick());
                         bundle.putInt("imageN", getIntent().getIntExtra("itemViewType", 100));
                         bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
+                        bundle.putString("statisticsCode", contentDTO.statistics_code);
                         pollResultDialog.setArguments(bundle);
                         pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
 
@@ -1511,7 +1513,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
 
     //picker의 현재픽,성별,나이 가져와서 통계항목에 +1
-    private void addStatistics(String statistics_code, int currentPick, String gender, int age) {
+    private String addStatistics(String statistics_code, int currentPick, String gender, int age) {
         String[] stringArray = null;
         stringArray = statistics_code.split(":");
         int[] tmpStatistics = new int[stringArray.length];
@@ -2404,21 +2406,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        String s = java.util.Arrays.toString(tmpStatistics);
+        String callbackStatistics = java.util.Arrays.toString(tmpStatistics);
+        callbackStatistics = callbackStatistics.replace(", ",":");
+        callbackStatistics = callbackStatistics.replace("[","");
+        callbackStatistics = callbackStatistics.replace("]","");
 
-            Log.d("lkj tmpStatistics", s + "\n");
-//
-//        String[] stringArray = null;
-//        stringArray = statistics_code.split(":");
-//        int[] tmpStatistics = new int[stringArray.length];
-        String[] stringArray2 = null;
-        stringArray2 = s.split(",");
-        stringArray2[0] = stringArray2[0].replace("[", "");
-        for (int i = 0; i < 292; i++) {
-            Log.d("lkj stringArray2", "[" + i + "] : " + stringArray2[i]);
-        }
-
-
+        return callbackStatistics;
     }
 }
 

@@ -569,24 +569,26 @@
                 <TextView
                     android:paddingTop="4dp"
                     android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="18dp"
                     android:text="투표하고 결과보기"
                     android:textSize="18sp"
                     android:id="@+id/pollActivity_textView_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <android.support.v7.widget.AppCompatImageView
-                    android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                    android:id="@+id/pollActivity_imageView_result_downButton"
-                    android:layout_below="@id/pollActivity_textView_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <android.support.v7.widget.AppCompatImageView
-                    android:visibility="gone"
-                    android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
-                    android:id="@+id/pollActivity_imageView_result_upButton"
-                    android:layout_below="@id/pollActivity_textView_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp"-->
+                    <!--android:id="@+id/pollActivity_imageView_result_downButton"-->
+                    <!--android:layout_below="@id/pollActivity_textView_result"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
+                <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:visibility="gone"-->
+                    <!--android:src="@drawable/ic_keyboard_arrow_up_black_24dp"-->
+                    <!--android:id="@+id/pollActivity_imageView_result_upButton"-->
+                    <!--android:layout_below="@id/pollActivity_textView_result"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content" />-->
             </RelativeLayout>
 
             <View
