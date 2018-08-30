@@ -714,53 +714,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             });
         }
     }
-//
-//    //나이별 투표 결과
-//    private int getStatisticsAge(String uid) {
-//        int statisticsAge;
-//
-//        for (int i = 0; i < j; i++) {
-//            mDatabaseReferencePicker.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-//                    if (user.get("gender").equals(""))
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//        }
-//    }
-//
-//    //성별 투표 결과
-//    private String getStatisticsGender(String uid) {
-//        String gender;
-//        final ArrayList<String> pickerUid = new ArrayList<>();
-//
-//            mDatabaseReferencePicker.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-//                    if (user.get("gender").equals("남")) {
-//                        gender = "남";
-//                    }
-//                    if (user.get("gender").equals("여")){
-//                        return "여";
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-//
-//
-//    }
 
 
     //댓글펼치기
@@ -1517,188 +1470,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     checking_img_9_rt();
                 }
                 break;
-
-
-//
-//            case R.id.pollActivity_imageView_choice_1:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_0").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_2:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_1").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_3:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_2").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_4:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_3").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_5:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_4").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_6:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_5").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_7:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_6").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_8:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_7").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_9:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_8").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
-//
-//            case R.id.pollActivity_imageView_choice_10:
-//                mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Map<String, Object> contentInfo = (Map<String, Object>) dataSnapshot.getValue();
-//
-//                        String url = contentInfo.get("imageUrl_9").toString();
-//
-//                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
-//                        intent.putExtra("imgUrl", url);
-//                        startActivity(intent);
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//                break;
         }
     }
 
@@ -1748,13 +1519,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             tmpStatistics[i] = Integer.parseInt(stringArray[i]);
         }
 
-
-        Log.d("lkj statistics_code", statistics_code);
-        Log.d("lkj currentPick", String.valueOf(currentPick));
-        Log.d("lkj gender", gender);
-        Log.d("lkj age", String.valueOf(age));
-
-
         if (gender.equals("여")) {
             switch (currentPick) {
                 case 0:
@@ -1788,7 +1552,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     tmpStatistics[9]++;
                     break;
             }
-        } else {
+        }
+        if (gender.equals("남")) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[10]++;
@@ -1822,6 +1587,838 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     break;
             }
         }
+        if (age==10 || age==11 || age==12) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[20]++;
+                    break;
+                case 1:
+                    tmpStatistics[21]++;
+                    break;
+                case 2:
+                    tmpStatistics[22]++;
+                    break;
+                case 3:
+                    tmpStatistics[23]++;
+                    break;
+                case 4:
+                    tmpStatistics[24]++;
+                    break;
+                case 5:
+                    tmpStatistics[25]++;
+                    break;
+                case 6:
+                    tmpStatistics[26]++;
+                    break;
+                case 7:
+                    tmpStatistics[27]++;
+                    break;
+                case 8:
+                    tmpStatistics[28]++;
+                    break;
+                case 9:
+                    tmpStatistics[29]++;
+                    break;
+            }
+        }
+        if (age==13 || age==14 || age==15 || age==16) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[30]++;
+                    break;
+                case 1:
+                    tmpStatistics[31]++;
+                    break;
+                case 2:
+                    tmpStatistics[32]++;
+                    break;
+                case 3:
+                    tmpStatistics[33]++;
+                    break;
+                case 4:
+                    tmpStatistics[34]++;
+                    break;
+                case 5:
+                    tmpStatistics[35]++;
+                    break;
+                case 6:
+                    tmpStatistics[36]++;
+                    break;
+                case 7:
+                    tmpStatistics[37]++;
+                    break;
+                case 8:
+                    tmpStatistics[38]++;
+                    break;
+                case 9:
+                    tmpStatistics[39]++;
+                    break;
+            }
+        }
+        if (age==17 || age==18 || age==19) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[40]++;
+                    break;
+                case 1:
+                    tmpStatistics[41]++;
+                    break;
+                case 2:
+                    tmpStatistics[42]++;
+                    break;
+                case 3:
+                    tmpStatistics[43]++;
+                    break;
+                case 4:
+                    tmpStatistics[44]++;
+                    break;
+                case 5:
+                    tmpStatistics[45]++;
+                    break;
+                case 6:
+                    tmpStatistics[46]++;
+                    break;
+                case 7:
+                    tmpStatistics[47]++;
+                    break;
+                case 8:
+                    tmpStatistics[48]++;
+                    break;
+                case 9:
+                    tmpStatistics[49]++;
+                    break;
+            }
+        }
+        if (age==20 || age==21 || age==22) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[50]++;
+                    break;
+                case 1:
+                    tmpStatistics[51]++;
+                    break;
+                case 2:
+                    tmpStatistics[52]++;
+                    break;
+                case 3:
+                    tmpStatistics[53]++;
+                    break;
+                case 4:
+                    tmpStatistics[54]++;
+                    break;
+                case 5:
+                    tmpStatistics[55]++;
+                    break;
+                case 6:
+                    tmpStatistics[56]++;
+                    break;
+                case 7:
+                    tmpStatistics[57]++;
+                    break;
+                case 8:
+                    tmpStatistics[58]++;
+                    break;
+                case 9:
+                    tmpStatistics[59]++;
+                    break;
+            }
+        }
+        if (age==23 || age==24 || age==25 || age==26) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[60]++;
+                    break;
+                case 1:
+                    tmpStatistics[61]++;
+                    break;
+                case 2:
+                    tmpStatistics[62]++;
+                    break;
+                case 3:
+                    tmpStatistics[63]++;
+                    break;
+                case 4:
+                    tmpStatistics[64]++;
+                    break;
+                case 5:
+                    tmpStatistics[65]++;
+                    break;
+                case 6:
+                    tmpStatistics[66]++;
+                    break;
+                case 7:
+                    tmpStatistics[67]++;
+                    break;
+                case 8:
+                    tmpStatistics[68]++;
+                    break;
+                case 9:
+                    tmpStatistics[69]++;
+                    break;
+            }
+        }
+        if (age==27 || age==28 || age==29) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[70]++;
+                    break;
+                case 1:
+                    tmpStatistics[71]++;
+                    break;
+                case 2:
+                    tmpStatistics[72]++;
+                    break;
+                case 3:
+                    tmpStatistics[73]++;
+                    break;
+                case 4:
+                    tmpStatistics[74]++;
+                    break;
+                case 5:
+                    tmpStatistics[75]++;
+                    break;
+                case 6:
+                    tmpStatistics[76]++;
+                    break;
+                case 7:
+                    tmpStatistics[77]++;
+                    break;
+                case 8:
+                    tmpStatistics[78]++;
+                    break;
+                case 9:
+                    tmpStatistics[79]++;
+                    break;
+            }
+        }
+        if (age==30 || age==31 || age==32) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[80]++;
+                    break;
+                case 1:
+                    tmpStatistics[81]++;
+                    break;
+                case 2:
+                    tmpStatistics[82]++;
+                    break;
+                case 3:
+                    tmpStatistics[83]++;
+                    break;
+                case 4:
+                    tmpStatistics[84]++;
+                    break;
+                case 5:
+                    tmpStatistics[85]++;
+                    break;
+                case 6:
+                    tmpStatistics[86]++;
+                    break;
+                case 7:
+                    tmpStatistics[87]++;
+                    break;
+                case 8:
+                    tmpStatistics[88]++;
+                    break;
+                case 9:
+                    tmpStatistics[89]++;
+                    break;
+            }
+        }
+        if (age==33 || age==34 || age==35 || age==36) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[90]++;
+                    break;
+                case 1:
+                    tmpStatistics[91]++;
+                    break;
+                case 2:
+                    tmpStatistics[92]++;
+                    break;
+                case 3:
+                    tmpStatistics[93]++;
+                    break;
+                case 4:
+                    tmpStatistics[94]++;
+                    break;
+                case 5:
+                    tmpStatistics[95]++;
+                    break;
+                case 6:
+                    tmpStatistics[96]++;
+                    break;
+                case 7:
+                    tmpStatistics[97]++;
+                    break;
+                case 8:
+                    tmpStatistics[98]++;
+                    break;
+                case 9:
+                    tmpStatistics[99]++;
+                    break;
+            }
+        }
+        if (age==37 || age==38 || age==39) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[100]++;
+                    break;
+                case 1:
+                    tmpStatistics[101]++;
+                    break;
+                case 2:
+                    tmpStatistics[102]++;
+                    break;
+                case 3:
+                    tmpStatistics[103]++;
+                    break;
+                case 4:
+                    tmpStatistics[104]++;
+                    break;
+                case 5:
+                    tmpStatistics[105]++;
+                    break;
+                case 6:
+                    tmpStatistics[106]++;
+                    break;
+                case 7:
+                    tmpStatistics[107]++;
+                    break;
+                case 8:
+                    tmpStatistics[108]++;
+                    break;
+                case 9:
+                    tmpStatistics[109]++;
+                    break;
+            }
+        }
+        if (age==40 || age==41 || age==42) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[110]++;
+                    break;
+                case 1:
+                    tmpStatistics[111]++;
+                    break;
+                case 2:
+                    tmpStatistics[112]++;
+                    break;
+                case 3:
+                    tmpStatistics[113]++;
+                    break;
+                case 4:
+                    tmpStatistics[114]++;
+                    break;
+                case 5:
+                    tmpStatistics[115]++;
+                    break;
+                case 6:
+                    tmpStatistics[116]++;
+                    break;
+                case 7:
+                    tmpStatistics[117]++;
+                    break;
+                case 8:
+                    tmpStatistics[118]++;
+                    break;
+                case 9:
+                    tmpStatistics[119]++;
+                    break;
+            }
+        }
+        if (age==43 || age==44 || age==45 || age==46) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[120]++;
+                    break;
+                case 1:
+                    tmpStatistics[121]++;
+                    break;
+                case 2:
+                    tmpStatistics[122]++;
+                    break;
+                case 3:
+                    tmpStatistics[123]++;
+                    break;
+                case 4:
+                    tmpStatistics[124]++;
+                    break;
+                case 5:
+                    tmpStatistics[125]++;
+                    break;
+                case 6:
+                    tmpStatistics[126]++;
+                    break;
+                case 7:
+                    tmpStatistics[127]++;
+                    break;
+                case 8:
+                    tmpStatistics[128]++;
+                    break;
+                case 9:
+                    tmpStatistics[129]++;
+                    break;
+            }
+        }
+        if (age==47 || age==48 || age==49) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[130]++;
+                    break;
+                case 1:
+                    tmpStatistics[131]++;
+                    break;
+                case 2:
+                    tmpStatistics[132]++;
+                    break;
+                case 3:
+                    tmpStatistics[133]++;
+                    break;
+                case 4:
+                    tmpStatistics[134]++;
+                    break;
+                case 5:
+                    tmpStatistics[135]++;
+                    break;
+                case 6:
+                    tmpStatistics[136]++;
+                    break;
+                case 7:
+                    tmpStatistics[137]++;
+                    break;
+                case 8:
+                    tmpStatistics[138]++;
+                    break;
+                case 9:
+                    tmpStatistics[139]++;
+                    break;
+            }
+        }
+        if (age==50 || age==51 || age==52) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[140]++;
+                    break;
+                case 1:
+                    tmpStatistics[141]++;
+                    break;
+                case 2:
+                    tmpStatistics[142]++;
+                    break;
+                case 3:
+                    tmpStatistics[143]++;
+                    break;
+                case 4:
+                    tmpStatistics[144]++;
+                    break;
+                case 5:
+                    tmpStatistics[145]++;
+                    break;
+                case 6:
+                    tmpStatistics[146]++;
+                    break;
+                case 7:
+                    tmpStatistics[147]++;
+                    break;
+                case 8:
+                    tmpStatistics[148]++;
+                    break;
+                case 9:
+                    tmpStatistics[149]++;
+                    break;
+            }
+        }
+        if (age==53 || age==54 || age==55 || age==56) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[150]++;
+                    break;
+                case 1:
+                    tmpStatistics[151]++;
+                    break;
+                case 2:
+                    tmpStatistics[152]++;
+                    break;
+                case 3:
+                    tmpStatistics[153]++;
+                    break;
+                case 4:
+                    tmpStatistics[154]++;
+                    break;
+                case 5:
+                    tmpStatistics[155]++;
+                    break;
+                case 6:
+                    tmpStatistics[156]++;
+                    break;
+                case 7:
+                    tmpStatistics[157]++;
+                    break;
+                case 8:
+                    tmpStatistics[158]++;
+                    break;
+                case 9:
+                    tmpStatistics[159]++;
+                    break;
+            }
+        }
+        if (age==57 || age==58 || age==59) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[160]++;
+                    break;
+                case 1:
+                    tmpStatistics[161]++;
+                    break;
+                case 2:
+                    tmpStatistics[162]++;
+                    break;
+                case 3:
+                    tmpStatistics[163]++;
+                    break;
+                case 4:
+                    tmpStatistics[164]++;
+                    break;
+                case 5:
+                    tmpStatistics[165]++;
+                    break;
+                case 6:
+                    tmpStatistics[166]++;
+                    break;
+                case 7:
+                    tmpStatistics[167]++;
+                    break;
+                case 8:
+                    tmpStatistics[168]++;
+                    break;
+                case 9:
+                    tmpStatistics[169]++;
+                    break;
+            }
+        }
+        if (age==60 || age==61 || age==62) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[170]++;
+                    break;
+                case 1:
+                    tmpStatistics[171]++;
+                    break;
+                case 2:
+                    tmpStatistics[172]++;
+                    break;
+                case 3:
+                    tmpStatistics[173]++;
+                    break;
+                case 4:
+                    tmpStatistics[174]++;
+                    break;
+                case 5:
+                    tmpStatistics[175]++;
+                    break;
+                case 6:
+                    tmpStatistics[176]++;
+                    break;
+                case 7:
+                    tmpStatistics[177]++;
+                    break;
+                case 8:
+                    tmpStatistics[178]++;
+                    break;
+                case 9:
+                    tmpStatistics[179]++;
+                    break;
+            }
+        }
+        if (age==63 || age==64 || age==65 || age==66) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[180]++;
+                    break;
+                case 1:
+                    tmpStatistics[181]++;
+                    break;
+                case 2:
+                    tmpStatistics[182]++;
+                    break;
+                case 3:
+                    tmpStatistics[183]++;
+                    break;
+                case 4:
+                    tmpStatistics[184]++;
+                    break;
+                case 5:
+                    tmpStatistics[185]++;
+                    break;
+                case 6:
+                    tmpStatistics[186]++;
+                    break;
+                case 7:
+                    tmpStatistics[187]++;
+                    break;
+                case 8:
+                    tmpStatistics[188]++;
+                    break;
+                case 9:
+                    tmpStatistics[189]++;
+                    break;
+            }
+        }
+        if (age==67 || age==68 || age==69) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[190]++;
+                    break;
+                case 1:
+                    tmpStatistics[191]++;
+                    break;
+                case 2:
+                    tmpStatistics[192]++;
+                    break;
+                case 3:
+                    tmpStatistics[193]++;
+                    break;
+                case 4:
+                    tmpStatistics[194]++;
+                    break;
+                case 5:
+                    tmpStatistics[195]++;
+                    break;
+                case 6:
+                    tmpStatistics[196]++;
+                    break;
+                case 7:
+                    tmpStatistics[197]++;
+                    break;
+                case 8:
+                    tmpStatistics[198]++;
+                    break;
+                case 9:
+                    tmpStatistics[199]++;
+                    break;
+            }
+        }
+        if (age==70 || age==71 || age==72) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[200]++;
+                    break;
+                case 1:
+                    tmpStatistics[201]++;
+                    break;
+                case 2:
+                    tmpStatistics[202]++;
+                    break;
+                case 3:
+                    tmpStatistics[203]++;
+                    break;
+                case 4:
+                    tmpStatistics[204]++;
+                    break;
+                case 5:
+                    tmpStatistics[205]++;
+                    break;
+                case 6:
+                    tmpStatistics[206]++;
+                    break;
+                case 7:
+                    tmpStatistics[207]++;
+                    break;
+                case 8:
+                    tmpStatistics[208]++;
+                    break;
+                case 9:
+                    tmpStatistics[209]++;
+                    break;
+            }
+        }
+        if (age==73 || age==74 || age==75 || age==76) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[210]++;
+                    break;
+                case 1:
+                    tmpStatistics[211]++;
+                    break;
+                case 2:
+                    tmpStatistics[212]++;
+                    break;
+                case 3:
+                    tmpStatistics[213]++;
+                    break;
+                case 4:
+                    tmpStatistics[214]++;
+                    break;
+                case 5:
+                    tmpStatistics[215]++;
+                    break;
+                case 6:
+                    tmpStatistics[216]++;
+                    break;
+                case 7:
+                    tmpStatistics[217]++;
+                    break;
+                case 8:
+                    tmpStatistics[218]++;
+                    break;
+                case 9:
+                    tmpStatistics[219]++;
+                    break;
+            }
+        }
+        if (age==77 || age==78 || age==79) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[220]++;
+                    break;
+                case 1:
+                    tmpStatistics[221]++;
+                    break;
+                case 2:
+                    tmpStatistics[222]++;
+                    break;
+                case 3:
+                    tmpStatistics[223]++;
+                    break;
+                case 4:
+                    tmpStatistics[224]++;
+                    break;
+                case 5:
+                    tmpStatistics[225]++;
+                    break;
+                case 6:
+                    tmpStatistics[226]++;
+                    break;
+                case 7:
+                    tmpStatistics[227]++;
+                    break;
+                case 8:
+                    tmpStatistics[228]++;
+                    break;
+                case 9:
+                    tmpStatistics[229]++;
+                    break;
+            }
+        }
+        if (age==80 || age==81 || age==82) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[230]++;
+                    break;
+                case 1:
+                    tmpStatistics[231]++;
+                    break;
+                case 2:
+                    tmpStatistics[232]++;
+                    break;
+                case 3:
+                    tmpStatistics[233]++;
+                    break;
+                case 4:
+                    tmpStatistics[234]++;
+                    break;
+                case 5:
+                    tmpStatistics[235]++;
+                    break;
+                case 6:
+                    tmpStatistics[236]++;
+                    break;
+                case 7:
+                    tmpStatistics[237]++;
+                    break;
+                case 8:
+                    tmpStatistics[238]++;
+                    break;
+                case 9:
+                    tmpStatistics[239]++;
+                    break;
+            }
+        }
+        if (age==83 || age==84 || age==85 || age==86) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[240]++;
+                    break;
+                case 1:
+                    tmpStatistics[241]++;
+                    break;
+                case 2:
+                    tmpStatistics[242]++;
+                    break;
+                case 3:
+                    tmpStatistics[243]++;
+                    break;
+                case 4:
+                    tmpStatistics[244]++;
+                    break;
+                case 5:
+                    tmpStatistics[245]++;
+                    break;
+                case 6:
+                    tmpStatistics[246]++;
+                    break;
+                case 7:
+                    tmpStatistics[247]++;
+                    break;
+                case 8:
+                    tmpStatistics[248]++;
+                    break;
+                case 9:
+                    tmpStatistics[249]++;
+                    break;
+            }
+        }
+        if (age==87 || age==88 || age==89) {
+            switch (currentPick) {
+                case 0:
+                    tmpStatistics[250]++;
+                    break;
+                case 1:
+                    tmpStatistics[251]++;
+                    break;
+                case 2:
+                    tmpStatistics[252]++;
+                    break;
+                case 3:
+                    tmpStatistics[253]++;
+                    break;
+                case 4:
+                    tmpStatistics[254]++;
+                    break;
+                case 5:
+                    tmpStatistics[255]++;
+                    break;
+                case 6:
+                    tmpStatistics[256]++;
+                    break;
+                case 7:
+                    tmpStatistics[257]++;
+                    break;
+                case 8:
+                    tmpStatistics[258]++;
+                    break;
+                case 9:
+                    tmpStatistics[259]++;
+                    break;
+            }
+        }
+
+        String s = java.util.Arrays.toString(tmpStatistics);
+
+            Log.d("lkj tmpStatistics", s + "\n");
+//
+//        String[] stringArray = null;
+//        stringArray = statistics_code.split(":");
+//        int[] tmpStatistics = new int[stringArray.length];
+        String[] stringArray2 = null;
+        stringArray2 = s.split(",");
+        stringArray2[0] = stringArray2[0].replace("[", "");
+        for (int i = 0; i < 292; i++) {
+            Log.d("lkj stringArray2", "[" + i + "] : " + stringArray2[i]);
+        }
+
+
     }
 }
 
