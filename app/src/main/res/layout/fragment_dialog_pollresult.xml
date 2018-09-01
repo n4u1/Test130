@@ -18,16 +18,16 @@
                 <android.support.v7.widget.AppCompatSpinner
                     android:layout_marginBottom="4dp"
                     android:layout_marginTop="4dp"
-                    android:id="@+id/pollResultDialog_spinner_gender"
+                    android:id="@+id/pollResultDialog_spinner_divide"
                     android:layout_gravity="center"
                     android:layout_width="280dp"
                     android:layout_height="40dp"/>
-                <android.support.v7.widget.AppCompatSpinner
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/pollResultDialog_spinner_age"
-                    android:layout_gravity="center"
-                    android:layout_width="280dp"
-                    android:layout_height="40dp"/>
+                <!--<android.support.v7.widget.AppCompatSpinner-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:id="@+id/pollResultDialog_spinner_age"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_width="280dp"-->
+                    <!--android:layout_height="40dp"/>-->
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:layout_gravity="center"

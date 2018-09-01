@@ -57,12 +57,12 @@ public class PollResultDialog extends DialogFragment {
     int currentPick;
     String contentKey;
     String statisticsCode;
-    String genderRange = "전 체";
-    String ageRange = "전 체";
-    AppCompatSpinner pollResultDialog_spinner_age, pollResultDialog_spinner_gender;
+    String selectedDivide = "전 체";
+    //    String ageRange = "전 체";
+    AppCompatSpinner pollResultDialog_spinner_divide;
 
-    List<String> ageRangeList = new ArrayList<>();
-    List<String> genderList = new ArrayList<>();
+    //    List<String> ageRangeList = new ArrayList<>();
+    List<String> divideList = new ArrayList<>();
 
 
     @Nullable
@@ -70,65 +70,64 @@ public class PollResultDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dialog_pollresult, container);
         HorizontalBarChart pollActivity_horizontalBarChart_result = view.findViewById(R.id.pollActivity_horizontalBarChart_result);
-        pollResultDialog_spinner_age = view.findViewById(R.id.pollResultDialog_spinner_age);
-        pollResultDialog_spinner_gender = view.findViewById(R.id.pollResultDialog_spinner_gender);
+//        pollResultDialog_spinner_age = view.findViewById(R.id.pollResultDialog_spinner_age);
+        pollResultDialog_spinner_divide = view.findViewById(R.id.pollResultDialog_spinner_divide);
 
-        genderList.add("전 체");
-        genderList.add("여 자");
-        genderList.add("남 자");
-        ageRangeList.add("전 체");
-        ageRangeList.add("10대 전체 (10 ~ 19)");
-        ageRangeList.add("10대 초반 (10 ~ 12)");
-        ageRangeList.add("10대 중반 (13 ~ 16)");
-        ageRangeList.add("10대 후반 (17 ~ 19)");
-        ageRangeList.add("20대 전체 (20 ~ 29)");
-        ageRangeList.add("20대 초반 (20 ~ 22)");
-        ageRangeList.add("20대 중반 (23 ~ 26)");
-        ageRangeList.add("20대 후반 (27 ~ 20)");
-        ageRangeList.add("30대 전체 (30 ~ 39)");
-        ageRangeList.add("30대 초반 (30 ~ 32)");
-        ageRangeList.add("30대 중반 (33 ~ 36)");
-        ageRangeList.add("30대 후반 (37 ~ 39)");
-        ageRangeList.add("40대 전체 (40 ~ 49)");
-        ageRangeList.add("40대 초반 (40 ~ 42)");
-        ageRangeList.add("40대 중반 (43 ~ 46)");
-        ageRangeList.add("40대 후반 (47 ~ 40)");
-        ageRangeList.add("50대 전체 (50 ~ 59)");
-        ageRangeList.add("50대 초반 (50 ~ 52)");
-        ageRangeList.add("50대 중반 (53 ~ 56)");
-        ageRangeList.add("50대 후반 (57 ~ 59)");
-        ageRangeList.add("60대 전체 (60 ~ 69)");
-        ageRangeList.add("60대 초반 (60 ~ 62)");
-        ageRangeList.add("60대 중반 (63 ~ 66)");
-        ageRangeList.add("60대 후반 (67 ~ 69)");
-        ageRangeList.add("70대 전체 (70 ~ 79)");
-        ageRangeList.add("70대 초반 (70 ~ 72)");
-        ageRangeList.add("70대 중반 (73 ~ 76)");
-        ageRangeList.add("70대 후반 (77 ~ 79)");
-        ageRangeList.add("80대 전체 (80 ~ 89)");
-        ageRangeList.add("80대 초반 (80 ~ 82)");
-        ageRangeList.add("80대 중반 (83 ~ 86)");
-        ageRangeList.add("80대 후반 (87 ~ 89)");
-        ageRangeList.add("90대 전체 (80 ~ 99)");
-        ageRangeList.add("90대 초반 (90 ~ 92)");
-        ageRangeList.add("90대 중반 (93 ~ 96)");
-        ageRangeList.add("90대 후반 (97 ~ 99)");
+        divideList.add("전 체");
+        divideList.add("여 자");
+        divideList.add("남 자");
+        divideList.add("10대 전체 (10 ~ 19)");
+        divideList.add("10대 초반 (10 ~ 12)");
+        divideList.add("10대 중반 (13 ~ 16)");
+        divideList.add("10대 후반 (17 ~ 19)");
+        divideList.add("20대 전체 (20 ~ 29)");
+        divideList.add("20대 초반 (20 ~ 22)");
+        divideList.add("20대 중반 (23 ~ 26)");
+        divideList.add("20대 후반 (27 ~ 20)");
+        divideList.add("30대 전체 (30 ~ 39)");
+        divideList.add("30대 초반 (30 ~ 32)");
+        divideList.add("30대 중반 (33 ~ 36)");
+        divideList.add("30대 후반 (37 ~ 39)");
+        divideList.add("40대 전체 (40 ~ 49)");
+        divideList.add("40대 초반 (40 ~ 42)");
+        divideList.add("40대 중반 (43 ~ 46)");
+        divideList.add("40대 후반 (47 ~ 40)");
+        divideList.add("50대 전체 (50 ~ 59)");
+        divideList.add("50대 초반 (50 ~ 52)");
+        divideList.add("50대 중반 (53 ~ 56)");
+        divideList.add("50대 후반 (57 ~ 59)");
+        divideList.add("60대 전체 (60 ~ 69)");
+        divideList.add("60대 초반 (60 ~ 62)");
+        divideList.add("60대 중반 (63 ~ 66)");
+        divideList.add("60대 후반 (67 ~ 69)");
+        divideList.add("70대 전체 (70 ~ 79)");
+        divideList.add("70대 초반 (70 ~ 72)");
+        divideList.add("70대 중반 (73 ~ 76)");
+        divideList.add("70대 후반 (77 ~ 79)");
+        divideList.add("80대 전체 (80 ~ 89)");
+        divideList.add("80대 초반 (80 ~ 82)");
+        divideList.add("80대 중반 (83 ~ 86)");
+        divideList.add("80대 후반 (87 ~ 89)");
+        divideList.add("90대 전체 (80 ~ 99)");
+        divideList.add("90대 초반 (90 ~ 92)");
+        divideList.add("90대 중반 (93 ~ 96)");
+        divideList.add("90대 후반 (97 ~ 99)");
 
-        ArrayAdapter ageRangeAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, ageRangeList);
-        ArrayAdapter genderRangeAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, genderList);
-        ageRangeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        genderRangeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        pollResultDialog_spinner_age.setAdapter(ageRangeAdapter);
-        pollResultDialog_spinner_gender.setAdapter(genderRangeAdapter);
+//        ArrayAdapter ageRangeAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, ageRangeList);
+        ArrayAdapter selectedDivideAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, divideList);
+//        ageRangeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        selectedDivideAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+//        pollResultDialog_spinner_age.setAdapter(ageRangeAdapter);
+        pollResultDialog_spinner_divide.setAdapter(selectedDivideAdapter);
 
 
-        pollResultDialog_spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        pollResultDialog_spinner_divide.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                genderRange = genderList.get(position);
-                Log.d("lkj in gd", genderRange);
-                Log.d("lkj in gd_", ageRange);
-                parsingData(genderRange, ageRange);
+                selectedDivide = divideList.get(position);
+                Log.d("lkj in gd", selectedDivide);
+//                Log.d("lkj in gd_", ageRange);
+                parsingData(selectedDivide);
             }
 
             @Override
@@ -137,21 +136,21 @@ public class PollResultDialog extends DialogFragment {
             }
         });
 
-
-        pollResultDialog_spinner_age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ageRange = ageRangeList.get(position);
-                Log.d("lkj in ag", ageRange);
-                Log.d("lkj in ag_", genderRange);
-                parsingData(genderRange, ageRange);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//
+//        pollResultDialog_spinner_age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                ageRange = ageRangeList.get(position);
+//                Log.d("lkj in ag", ageRange);
+//                Log.d("lkj in ag_", selectedDivide);
+//                parsingData(selectedDivide, ageRange);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         //차트클릭시 다이얼로그 닫기
         pollActivity_horizontalBarChart_result.setOnClickListener(new View.OnClickListener() {
@@ -428,7 +427,7 @@ public class PollResultDialog extends DialogFragment {
     }
 
 
-    private void parsingData(String gR, String aR) {
+    private void parsingData(String gR) {
         String[] stringArray = null;
         stringArray = statisticsCode.split(":");
         int[] tmpStatistics = new int[stringArray.length];
@@ -436,186 +435,179 @@ public class PollResultDialog extends DialogFragment {
             tmpStatistics[i] = Integer.parseInt(stringArray[i]);
         }
 
-        if (gR.equals("전 체") && aR.equals("전 체")) {
+        if (gR.equals("전 체")) {
             setChartFullData(imageN, contentKey, getView());
             Log.d("lkj parsingData", "초기상태"); //처음 onCreate에서 차트 만들지 말고 여기서 한번만 만들면 될듯
             //10대전체, 20대전체 만들고 선택시 초중후 합치는 로직으로?
         } else {
-            if (gR.equals("남 자")) {
-                if(aR.equals("전 체")) {
-                    int[] tmpStatistics_male = new int[10];
-                    System.arraycopy(tmpStatistics,10, tmpStatistics_male, 0, 10);
-                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_male);
-                } else {
-                    switch (aR) {
-                        case "10대 초반 (10 ~ 12)" :
-                            break;
-                        case "10대 중반 (13 ~ 16)" :
-                            break;
-                        case "10대 후반 (17 ~ 19)" :
-                            break;
-                        case "20대 초반 (20 ~ 22)" :
-                            break;
-                        case "20대 중반 (23 ~ 26)" :
-                            break;
-                        case "20대 후반 (27 ~ 20)" :
-                            break;
-                        case "30대 초반 (30 ~ 32)" :
-                            break;
-                        case "30대 중반 (33 ~ 36)" :
-                            break;
-                        case "30대 후반 (37 ~ 39)" :
-                            break;
-                        case "40대 초반 (40 ~ 42)" :
-                            break;
-                        case "40대 중반 (43 ~ 46)" :
-                            break;
-                        case "40대 후반 (47 ~ 40)" :
-                            break;
-                        case "50대 초반 (50 ~ 52)" :
-                            break;
-                        case "50대 중반 (53 ~ 56)" :
-                            break;
-                        case "50대 후반 (57 ~ 59)" :
-                            break;
-                        case "60대 초반 (60 ~ 62)" :
-                            break;
-                        case "60대 중반 (63 ~ 66)" :
-                            break;
-                        case "60대 후반 (67 ~ 69)" :
-                            break;
-                        case "70대 초반 (70 ~ 72)" :
-                            break;
-                        case "70대 중반 (73 ~ 76)" :
-                            break;
-                        case "70대 후반 (77 ~ 79)" :
-                            break;
-                        case "80대 초반 (80 ~ 82)" :
-                            break;
-                        case "80대 중반 (83 ~ 86)" :
-                            break;
-                        case "80대 후반 (87 ~ 89)" :
-                            break;
-                        case "90대 초반 (90 ~ 92)" :
-                            break;
-                        case "90대 중반 (93 ~ 96)" :
-                            break;
-                        case "90대 후반 (97 ~ 99)" :
-                            break;
-                        case "10대 전체 (10 ~ 19)" :
-                            break;
-                        case "20대 전체 (20 ~ 29)" :
-                            break;
-                        case "30대 전체 (30 ~ 39)" :
-                            break;
-                        case "40대 전체 (40 ~ 49)" :
-                            break;
-                        case "50대 전체 (50 ~ 59)" :
-                            break;
-                        case "60대 전체 (60 ~ 69)" :
-                            break;
-                        case "70대 전체 (70 ~ 79)" :
-                            break;
-                        case "80대 전체 (80 ~ 89)" :
-                            break;
-                        case "90대 전체 (80 ~ 99)" :
-                            break;
+            int[] tmpStatistics_divide = new int[10];
+            int[] temp = new int[30];
+            switch (gR) {
+                case "여 자":
+                    System.arraycopy(tmpStatistics, 0, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "남 자":
+                    System.arraycopy(tmpStatistics, 10, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "10대 전체 (10 ~ 19)":
+                    System.arraycopy(tmpStatistics, 20, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "10대 초반 (10 ~ 12)":
+                    System.arraycopy(tmpStatistics, 20, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "10대 중반 (13 ~ 16)":
+                    System.arraycopy(tmpStatistics, 30, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "10대 후반 (17 ~ 19)":
+                    System.arraycopy(tmpStatistics, 40, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "20대 전체 (20 ~ 29)":
+                    System.arraycopy(tmpStatistics, 50, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "20대 초반 (20 ~ 22)":
+                    System.arraycopy(tmpStatistics, 50, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "20대 중반 (23 ~ 26)":
+                    System.arraycopy(tmpStatistics, 60, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "20대 후반 (27 ~ 20)":
+                    System.arraycopy(tmpStatistics, 70, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "30대 전체 (30 ~ 39)":
+                    System.arraycopy(tmpStatistics, 80, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "30대 초반 (30 ~ 32)":
+                    System.arraycopy(tmpStatistics, 80, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "30대 중반 (33 ~ 36)":
+                    System.arraycopy(tmpStatistics, 90, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "30대 후반 (37 ~ 39)":
+                    System.arraycopy(tmpStatistics, 100, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "40대 전체 (40 ~ 49)":
+                    System.arraycopy(tmpStatistics, 110, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "40대 초반 (40 ~ 42)":
+                    System.arraycopy(tmpStatistics, 110, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "40대 중반 (43 ~ 46)":
+                    System.arraycopy(tmpStatistics, 120, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "40대 후반 (47 ~ 40)":
+                    System.arraycopy(tmpStatistics, 130, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "50대 전체 (50 ~ 59)":
+                    System.arraycopy(tmpStatistics, 140, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "50대 초반 (50 ~ 52)":
+                    System.arraycopy(tmpStatistics, 140, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "50대 중반 (53 ~ 56)":
+                    System.arraycopy(tmpStatistics, 150, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "50대 후반 (57 ~ 59)":
+                    System.arraycopy(tmpStatistics, 160, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "60대 전체 (60 ~ 69)":
+                    System.arraycopy(tmpStatistics, 170, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "60대 초반 (60 ~ 62)":
+                    System.arraycopy(tmpStatistics, 170, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "60대 중반 (63 ~ 66)":
+                    System.arraycopy(tmpStatistics, 180, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "60대 후반 (67 ~ 69)":
+                    System.arraycopy(tmpStatistics, 190, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "70대 전체 (70 ~ 79)":
+                    System.arraycopy(tmpStatistics, 200, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "70대 초반 (70 ~ 72)":
+                    System.arraycopy(tmpStatistics, 200, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "70대 중반 (73 ~ 76)":
+                    System.arraycopy(tmpStatistics, 210, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "70대 후반 (77 ~ 79)":
+                    System.arraycopy(tmpStatistics, 220, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "80대 전체 (80 ~ 89)":
+                    System.arraycopy(tmpStatistics, 230, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "80대 초반 (80 ~ 82)":
+                    System.arraycopy(tmpStatistics, 230, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "80대 중반 (83 ~ 86)":
+                    System.arraycopy(tmpStatistics, 240, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "80대 후반 (87 ~ 89)":
+                    System.arraycopy(tmpStatistics, 250, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "90대 전체 (80 ~ 99)":
+                    System.arraycopy(tmpStatistics, 260, tmpStatistics_divide, 0, 30);
+                    setChartPartData(imageN, contentKey, getView(), ageRangePlus(tmpStatistics_divide));
+                    break;
+                case "90대 초반 (90 ~ 92)":
+                    System.arraycopy(tmpStatistics, 260, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "90대 중반 (93 ~ 96)":
+                    System.arraycopy(tmpStatistics, 270, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
+                case "90대 후반 (97 ~ 99)":
+                    System.arraycopy(tmpStatistics, 280, tmpStatistics_divide, 0, 10);
+                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_divide);
+                    break;
 
-
-                    }
-
-                }
-
-            }
-            if (gR.equals("여 자")) {
-                if (aR.equals("전 체")) {
-                    int[] tmpStatistics_female = new int[10];
-                    System.arraycopy(tmpStatistics,0, tmpStatistics_female, 0, 10);
-                    setChartPartData(imageN, contentKey, getView(), tmpStatistics_female);
-                } else {
-                    switch (aR) {
-
-                        case "10대 초반 (10 ~ 12)" :
-                            break;
-                        case "10대 중반 (13 ~ 16)" :
-                            break;
-                        case "10대 후반 (17 ~ 19)" :
-                            break;
-                        case "20대 초반 (20 ~ 22)" :
-                            break;
-                        case "20대 중반 (23 ~ 26)" :
-                            break;
-                        case "20대 후반 (27 ~ 20)" :
-                            break;
-                        case "30대 초반 (30 ~ 32)" :
-                            break;
-                        case "30대 중반 (33 ~ 36)" :
-                            break;
-                        case "30대 후반 (37 ~ 39)" :
-                            break;
-                        case "40대 초반 (40 ~ 42)" :
-                            break;
-                        case "40대 중반 (43 ~ 46)" :
-                            break;
-                        case "40대 후반 (47 ~ 40)" :
-                            break;
-                        case "50대 초반 (50 ~ 52)" :
-                            break;
-                        case "50대 중반 (53 ~ 56)" :
-                            break;
-                        case "50대 후반 (57 ~ 59)" :
-                            break;
-                        case "60대 초반 (60 ~ 62)" :
-                            break;
-                        case "60대 중반 (63 ~ 66)" :
-                            break;
-                        case "60대 후반 (67 ~ 69)" :
-                            break;
-                        case "70대 초반 (70 ~ 72)" :
-                            break;
-                        case "70대 중반 (73 ~ 76)" :
-                            break;
-                        case "70대 후반 (77 ~ 79)" :
-                            break;
-                        case "80대 초반 (80 ~ 82)" :
-                            break;
-                        case "80대 중반 (83 ~ 86)" :
-                            break;
-                        case "80대 후반 (87 ~ 89)" :
-                            break;
-                        case "90대 초반 (90 ~ 92)" :
-                            break;
-                        case "90대 중반 (93 ~ 96)" :
-                            break;
-                        case "90대 후반 (97 ~ 99)" :
-                            break;
-                        case "10대 전체 (10 ~ 19)" :
-                            break;
-                        case "20대 전체 (20 ~ 29)" :
-                            break;
-                        case "30대 전체 (30 ~ 39)" :
-                            break;
-                        case "40대 전체 (40 ~ 49)" :
-                            break;
-                        case "50대 전체 (50 ~ 59)" :
-                            break;
-                        case "60대 전체 (60 ~ 69)" :
-                            break;
-                        case "70대 전체 (70 ~ 79)" :
-                            break;
-                        case "80대 전체 (80 ~ 89)" :
-                            break;
-                        case "90대 전체 (80 ~ 99)" :
-                            break;
-                    }
-
-                }
 
             }
 
-            Log.d("lkj parsingData gR", gR);
-            Log.d("lkj parsingData aR", aR);
         }
+    }
+
+    private int[] ageRangePlus(int[] tmpStatistics_divide) {
+        int result[] = new int[10];
+        for (int i = 0; i < 10; i++) {
+            result[i] = tmpStatistics_divide[i] + tmpStatistics_divide[i+10] + tmpStatistics_divide[i+20];
+        }
+        return result;
     }
 
 
