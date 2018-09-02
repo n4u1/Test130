@@ -187,6 +187,8 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
             @Override
             public void onClick(View view) {
                 ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
+                
+
                 contentChoiceDialog.show(getSupportFragmentManager(), "contentChoiceDialog");
             }
         });

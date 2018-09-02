@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.dialog.ContentChoiceDialog;
 import com.example.n4u1.test130.dialog.PollResultDialog;
+import com.example.n4u1.test130.dialog.RankingChoiceActivity;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
 import com.example.n4u1.test130.models.User;
@@ -100,6 +102,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
     private GestureDetector mGestureDetector;
 
+    FloatingActionButton pollActivity_fab_result;
     TextView pollActivity_textView_title, pollActivity_textView_description,
             pollActivity_textView_pollMode, pollActivity_textView_contentType, pollActivity_textView_date;
     ImageView pollActivity_imageView_userAddContent_1, pollActivity_imageView_userAddContent_2,
@@ -107,11 +110,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_userAddContent_5, pollActivity_imageView_userAddContent_6,
             pollActivity_imageView_userAddContent_7, pollActivity_imageView_userAddContent_8,
             pollActivity_imageView_userAddContent_9, pollActivity_imageView_userAddContent_10;
-    ImageView pollActivity_imageView_userAddContent_check_1, pollActivity_imageView_userAddContent_check_2,
-            pollActivity_imageView_userAddContent_check_3, pollActivity_imageView_userAddContent_check_4,
-            pollActivity_imageView_userAddContent_check_5, pollActivity_imageView_userAddContent_check_6,
-            pollActivity_imageView_userAddContent_check_7, pollActivity_imageView_userAddContent_check_8,
-            pollActivity_imageView_userAddContent_check_9, pollActivity_imageView_userAddContent_check_10;
 
     ImageView pollActivity_imageView_choice_1, pollActivity_imageView_choice_2,
             pollActivity_imageView_choice_3, pollActivity_imageView_choice_4,
@@ -124,13 +122,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_imageView_around_7, pollActivity_imageView_around_8,
             pollActivity_imageView_around_9, pollActivity_imageView_around_10;
 
-    HorizontalBarChart pollActivity_horizontalBarChart_result;
     ImageView pollActivity_imageView_reply_upButton, pollActivity_imageView_reply_downButton;
     //    Button pollActivity_button_statistic;
     ImageView pollActivity_button_replySend;
     EditText pollActivity_editText_reply;
     RecyclerView pollActivity_recyclerView_reply;
-    RelativeLayout pollActivity_relativeLayout_result, pollActivity_relativeLayout_reply;
+    RelativeLayout pollActivity_relativeLayout_reply;
     TextView pollActivity_textView_result, pollActivity_textView_reply;
 
 
@@ -183,11 +180,13 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 //        pollActivity_imageView_around_1.setClipToOutline(true);
 
 
+        pollActivity_fab_result = findViewById(R.id.pollActivity_fab_result);
         pollActivity_textView_title = findViewById(R.id.pollActivity_textView_title);
         pollActivity_textView_description = findViewById(R.id.pollActivity_textView_description);
         pollActivity_textView_contentType = findViewById(R.id.pollActivity_textView_contentType);
         pollActivity_textView_pollMode = findViewById(R.id.pollActivity_textView_pollMode);
         pollActivity_textView_date = findViewById(R.id.pollActivity_textView_date);
+        pollActivity_textView_reply = findViewById(R.id.pollActivity_textView_reply);
 
 
         pollActivity_imageView_userAddContent_1 = findViewById(R.id.pollActivity_imageView_userAddContent_1);
@@ -200,17 +199,10 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_userAddContent_8 = findViewById(R.id.pollActivity_imageView_userAddContent_8);
         pollActivity_imageView_userAddContent_9 = findViewById(R.id.pollActivity_imageView_userAddContent_9);
         pollActivity_imageView_userAddContent_10 = findViewById(R.id.pollActivity_imageView_userAddContent_10);
-        pollActivity_relativeLayout_result = findViewById(R.id.pollActivity_relativeLayout_result);
         pollActivity_relativeLayout_reply = findViewById(R.id.pollActivity_relativeLayout_reply);
-//        pollActivity_imageView_test = findViewById(R.id.pollActivity_imageView_test);
-        pollActivity_horizontalBarChart_result = findViewById(R.id.pollActivity_horizontalBarChart_result);
-//        pollActivity_imageView_result_downButton = findViewById(R.id.pollActivity_imageView_result_downButton);
-//        pollActivity_imageView_result_upButton = findViewById(R.id.pollActivity_imageView_result_upButton);
         pollActivity_imageView_reply_downButton = findViewById(R.id.pollActivity_imageView_reply_downButton);
         pollActivity_imageView_reply_upButton = findViewById(R.id.pollActivity_imageView_reply_upButton);
         pollActivity_recyclerView_reply = findViewById(R.id.pollActivity_recyclerView_reply);
-        pollActivity_textView_result = findViewById(R.id.pollActivity_textView_result);
-        pollActivity_textView_reply = findViewById(R.id.pollActivity_textView_reply);
         pollActivity_editText_reply = findViewById(R.id.pollActivity_editText_reply);
         pollActivity_button_replySend = findViewById(R.id.pollActivity_button_replySend);
 
@@ -286,15 +278,15 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-
-        //투표하고 결과보기 클릭
-        pollActivity_relativeLayout_result.setOnClickListener(new View.OnClickListener() {
+        //투표하고 결과보기
+        pollActivity_fab_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
-
             }
         });
+
+
 
 
         //댓글 펼치기
@@ -729,6 +721,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     pollActivity_recyclerView_reply.setVisibility(View.VISIBLE);
                     pollActivity_editText_reply.setVisibility(View.VISIBLE);
                     pollActivity_button_replySend.setVisibility(View.VISIBLE);
+                    pollActivity_fab_result.setVisibility(View.GONE);
                     ACTIVITY_REPLY_FLAG = true;
                 } else {
                     pollActivity_imageView_reply_downButton.setVisibility(View.VISIBLE);
@@ -737,6 +730,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     pollActivity_recyclerView_reply.setVisibility(View.GONE);
                     pollActivity_editText_reply.setVisibility(View.GONE);
                     pollActivity_button_replySend.setVisibility(View.GONE);
+                    pollActivity_fab_result.setVisibility(View.VISIBLE);
                     ACTIVITY_REPLY_FLAG = false;
                 }
             }
@@ -768,29 +762,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-
-    //투표하고 결과보기
-    private void openResult(int contentN) {
-        if (!ACTIVITY_RESULT_FLAG) {
-//            pollActivity_imageView_result_downButton.setVisibility(View.GONE);
-//            pollActivity_imageView_result_upButton.setVisibility(View.VISIBLE);
-            pollActivity_textView_result.setText("접기");
-            pollActivity_horizontalBarChart_result.setVisibility(View.VISIBLE);
-//            setChartData(contentN, 100); //bar개수 : contentN개, 가로 최대길이 range
-            int cp = currentPick();
-            Log.d("pickCandidate", String.valueOf(cp));
-            ACTIVITY_RESULT_FLAG = true;
-        } else {
-//            pollActivity_imageView_result_downButton.setVisibility(View.VISIBLE);
-//            pollActivity_imageView_result_upButton.setVisibility(View.GONE);
-            pollActivity_textView_result.setText("결과보기");
-            pollActivity_horizontalBarChart_result.setVisibility(View.GONE);
-            ACTIVITY_RESULT_FLAG = false;
-        }
-    }
-
-
-    //
+    //댓글수 추가 (replyCount)
     private void onReplyClicked(final DatabaseReference postRef) {
         final String date = getDate();
         postRef.runTransaction(new Transaction.Handler() {
@@ -1304,6 +1276,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.pollActivity_textView_check_1:
+
+
                 if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
                     checking_img_1_rt();
                 } else if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xfff2f2f2) {

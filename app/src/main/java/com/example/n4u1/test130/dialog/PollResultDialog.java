@@ -440,8 +440,7 @@ public class PollResultDialog extends DialogFragment {
             Log.d("lkj parsingData", "초기상태"); //처음 onCreate에서 차트 만들지 말고 여기서 한번만 만들면 될듯
             //10대전체, 20대전체 만들고 선택시 초중후 합치는 로직으로?
         } else {
-            int[] tmpStatistics_divide = new int[10];
-            int[] temp = new int[30];
+            int[] tmpStatistics_divide = new int[30];
             switch (gR) {
                 case "여 자":
                     System.arraycopy(tmpStatistics, 0, tmpStatistics_divide, 0, 10);

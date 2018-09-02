@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:theme="@style/TextLabel"
     tools:context=".views.PollSingleActivity">
 
     <include layout="@layout/mytoolbar" />
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pollActivity_fab_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        android:src="@drawable/q"
+        app:backgroundTint="#ffffff" />
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <LinearLayout
+            android:layout_marginTop="54dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -561,67 +577,41 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
-            <!--결과 펼치기 -->
-            <RelativeLayout
-                android:id="@+id/pollActivity_relativeLayout_result"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:paddingTop="4dp"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="18dp"
-                    android:text="투표하고 결과보기"
-                    android:textSize="18sp"
-                    android:id="@+id/pollActivity_textView_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <!--<android.support.v7.widget.AppCompatImageView-->
-                    <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp"-->
-                    <!--android:id="@+id/pollActivity_imageView_result_downButton"-->
-                    <!--android:layout_below="@id/pollActivity_textView_result"-->
+            <!---->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/pollActivity_relativeLayout_result"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+                <!--<TextView-->
+                    <!--android:paddingTop="4dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:layout_marginBottom="18dp"-->
+                    <!--android:text="투표하고 결과보기"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:id="@+id/pollActivity_textView_result"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content" />-->
-                <!--<android.support.v7.widget.AppCompatImageView-->
-                    <!--android:visibility="gone"-->
-                    <!--android:src="@drawable/ic_keyboard_arrow_up_black_24dp"-->
-                    <!--android:id="@+id/pollActivity_imageView_result_upButton"-->
-                    <!--android:layout_below="@id/pollActivity_textView_result"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content" />-->
-            </RelativeLayout>
+                <!--&lt;!&ndash;<android.support.v7.widget.AppCompatImageView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@drawable/ic_keyboard_arrow_down_black_24dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/pollActivity_imageView_result_downButton"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_below="@id/pollActivity_textView_result"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+                <!--&lt;!&ndash;<android.support.v7.widget.AppCompatImageView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:visibility="gone"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:src="@drawable/ic_keyboard_arrow_up_black_24dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/pollActivity_imageView_result_upButton"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_below="@id/pollActivity_textView_result"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+            <!--</RelativeLayout>-->
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
-            <!--결과 차트-->
-            <RelativeLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.github.mikephil.charting.charts.HorizontalBarChart
-
-                    android:visibility="gone"
-                    android:id="@+id/pollActivity_horizontalBarChart_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"/>
-                <!---->
-                <!--<android.support.v7.widget.AppCompatImageView-->
-                    <!--android:background="#9e6767"-->
-                    <!--android:id="@+id/pollActivity_imageView_test"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="500dp"-->
-                    <!--android:visibility="gone"/>-->
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#efefef" />
 
 
             <!--댓글 펼치기 -->
@@ -657,7 +647,7 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
-            <!--댓글-->
+            <!--댓글 리스트-->
             <android.support.v7.widget.RecyclerView
                 android:visibility="gone"
                 android:id="@+id/pollActivity_recyclerView_reply"
@@ -670,7 +660,9 @@
                 android:layout_height="1dp"
                 android:background="#efefef" />
 
+            <!--댓글 달기-->
             <LinearLayout
+                android:paddingBottom="60dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -698,4 +690,4 @@
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
