@@ -279,16 +279,28 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         pollActivity_fab_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rankingChecking() == 0) {
-                    Toast.makeText(getApplicationContext(), "순위투표를 먼저 해주세요~!", Toast.LENGTH_SHORT).show();
-                }
-                if (rankingChecking() == 10) {
-                    onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
-                }
-                if (rankingChecking() == 1 || rankingChecking() == 2 || rankingChecking() == 3 ||
-                        rankingChecking() == 4 || rankingChecking() == 5 || rankingChecking() == 6 ||
-                        rankingChecking() == 7 || rankingChecking() == 8 || rankingChecking() == 9) {
-                    Toast.makeText(getApplicationContext(), "순위투표입니다. 순위를 모두 정해주세요!", Toast.LENGTH_SHORT).show();
+//
+//                if (rankingChecking() == getIntent().getIntExtra("itemViewType", 100)) {
+//                    onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
+//                } else {
+//                    if (rankingChecking() == 0) {
+//                        Toast.makeText(getApplicationContext(), "순위투표를 먼저 해주세요~!", Toast.LENGTH_SHORT).show();
+//                    }
+//                    if (rankingChecking() == 10) {
+//                        onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
+//                    }
+//                    if (rankingChecking() == 1 || rankingChecking() == 2 || rankingChecking() == 3 ||
+//                            rankingChecking() == 4 || rankingChecking() == 5 || rankingChecking() == 6 ||
+//                            rankingChecking() == 7 || rankingChecking() == 8 || rankingChecking() == 9) {
+//                        Toast.makeText(getApplicationContext(), "순위투표입니다. 순위를 모두 정해주세요!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+
+                int contentsCount = getIntent().getIntExtra("itemViewType", 100);
+                for (int i = 0; i < contentsCount; i++) {
+                    while (rankingChecking() == i) {
+
+                    }
                 }
 
             }
@@ -1417,38 +1429,47 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case 100 : pollActivity_textView_check_1.setText(data.getStringExtra("result"));
+                case 100:
+                    pollActivity_textView_check_1.setText(data.getStringExtra("result"));
                     checking_img_1();
                     break;
-                case 200: pollActivity_textView_check_2.setText(data.getStringExtra("result"));
+                case 200:
+                    pollActivity_textView_check_2.setText(data.getStringExtra("result"));
                     checking_img_2();
                     break;
-                case 300 : pollActivity_textView_check_3.setText(data.getStringExtra("result"));
+                case 300:
+                    pollActivity_textView_check_3.setText(data.getStringExtra("result"));
                     checking_img_3();
                     break;
-                case 400: pollActivity_textView_check_4.setText(data.getStringExtra("result"));
+                case 400:
+                    pollActivity_textView_check_4.setText(data.getStringExtra("result"));
                     checking_img_4();
                     break;
-                case 500 : pollActivity_textView_check_5.setText(data.getStringExtra("result"));
+                case 500:
+                    pollActivity_textView_check_5.setText(data.getStringExtra("result"));
                     checking_img_5();
                     break;
-                case 600: pollActivity_textView_check_6.setText(data.getStringExtra("result"));
+                case 600:
+                    pollActivity_textView_check_6.setText(data.getStringExtra("result"));
                     checking_img_6();
                     break;
-                case 700 : pollActivity_textView_check_7.setText(data.getStringExtra("result"));
+                case 700:
+                    pollActivity_textView_check_7.setText(data.getStringExtra("result"));
                     checking_img_7();
                     break;
-                case 800: pollActivity_textView_check_8.setText(data.getStringExtra("result"));
+                case 800:
+                    pollActivity_textView_check_8.setText(data.getStringExtra("result"));
                     checking_img_8();
                     break;
-                case 900 : pollActivity_textView_check_9.setText(data.getStringExtra("result"));
+                case 900:
+                    pollActivity_textView_check_9.setText(data.getStringExtra("result"));
                     checking_img_9();
                     break;
-                case 1000: pollActivity_textView_check_10.setText(data.getStringExtra("result"));
+                case 1000:
+                    pollActivity_textView_check_10.setText(data.getStringExtra("result"));
                     checking_img_10();
                     break;
             }
-
 
 
         }

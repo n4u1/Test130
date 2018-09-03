@@ -76,7 +76,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
 
 
         //현재 선택되어있는 순위 빼고 남기기
-
         if (stringArrayList.contains("10 위")) {
             rankingArrayLists.remove(9);
             textView_10.setVisibility(View.GONE);
@@ -128,6 +127,63 @@ public class RankingChoiceActivity extends AppCompatActivity {
         }
 
 
+        //후보갯수만큼 순위 리스트 보여주기
+        switch (contentsCount) {
+            case 2 :
+                textView_3.setVisibility(View.GONE);
+                textView_4.setVisibility(View.GONE);
+                textView_5.setVisibility(View.GONE);
+                textView_6.setVisibility(View.GONE);
+                textView_7.setVisibility(View.GONE);
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 3 :
+                textView_4.setVisibility(View.GONE);
+                textView_5.setVisibility(View.GONE);
+                textView_6.setVisibility(View.GONE);
+                textView_7.setVisibility(View.GONE);
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 4 :
+                textView_5.setVisibility(View.GONE);
+                textView_6.setVisibility(View.GONE);
+                textView_7.setVisibility(View.GONE);
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 5 :
+                textView_6.setVisibility(View.GONE);
+                textView_7.setVisibility(View.GONE);
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 6 :
+                textView_7.setVisibility(View.GONE);
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 7 :
+                textView_8.setVisibility(View.GONE);
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 8 :
+                textView_9.setVisibility(View.GONE);
+                textView_10.setVisibility(View.GONE);
+                break;
+            case 9 :
+                textView_10.setVisibility(View.GONE);
+                break;
+        }
+
+
         textView_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +191,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "1 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -146,7 +201,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "2 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -157,7 +211,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "3 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -168,7 +221,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "4 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -179,7 +231,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "5 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -190,7 +241,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "6 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -201,7 +251,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "7 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -223,7 +272,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "9 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
@@ -234,7 +282,6 @@ public class RankingChoiceActivity extends AppCompatActivity {
                 resultIntent.putExtra("result", "10 위");
                 setResult(RESULT_OK, resultIntent);
                 finish();
-
             }
         });
 
