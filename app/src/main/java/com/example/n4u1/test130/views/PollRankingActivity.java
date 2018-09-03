@@ -86,8 +86,10 @@ import java.util.TimeZone;
 public class PollRankingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private boolean ACTIVITY_REPLY_FLAG;
+    private int RANKING_CHOICE_CODE = 10000;
     private boolean ACTIVITY_RESULT_FLAG;
     private int pickCandidate = 0;
+    int contentAmount;
     private String isImageFitToScreen;
 
     private FirebaseAuth auth;
@@ -99,6 +101,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
     final ArrayList<ReplyDTO> replyDTOS = new ArrayList<>();
     final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTOS);
     int contentHit;
+
 
     private GestureDetector mGestureDetector;
 
@@ -136,12 +139,6 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
             pollActivity_textView_check_5, pollActivity_textView_check_6,
             pollActivity_textView_check_7, pollActivity_textView_check_8,
             pollActivity_textView_check_9, pollActivity_textView_check_10;
-
-
-    final ArrayList<String> pickerAge = new ArrayList<>();
-    final ArrayList<String> pickerJob = new ArrayList<>();
-    final ArrayList<String> pickerJob_ = new ArrayList<>();
-    final ArrayList<String> pickerGender = new ArrayList<>();
 
 
     @Override
@@ -290,14 +287,12 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                 }
                 if (rankingChecking() == 1 || rankingChecking() == 2 || rankingChecking() == 3 ||
                         rankingChecking() == 4 || rankingChecking() == 5 || rankingChecking() == 6 ||
-                        rankingChecking() == 7 || rankingChecking() == 8 || rankingChecking() == 9 ) {
+                        rankingChecking() == 7 || rankingChecking() == 8 || rankingChecking() == 9) {
                     Toast.makeText(getApplicationContext(), "순위투표입니다. 순위를 모두 정해주세요!", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
-
 
 
         //댓글 펼치기
@@ -689,6 +684,8 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
+
+
     }
 
     /**
@@ -755,7 +752,6 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-
     //댓글수 추가 (replyCount)
     private void onReplyClicked(final DatabaseReference postRef) {
         final String date = getDate();
@@ -795,7 +791,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
 
     private void onResultClicked(final DatabaseReference postRef, int candidate) {
-        final int contentAmount = getIntent().getIntExtra("itemViewType", 0);
+        contentAmount = getIntent().getIntExtra("itemViewType", 0);
         Log.d("lkj contentAmount", String.valueOf(contentAmount));
         postRef.runTransaction(new Transaction.Handler() {
             @Override
@@ -913,6 +909,43 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         df.setTimeZone(timeZone);
         String currentDate = df.format(date);
         return currentDate;
+    }
+
+    private ArrayList<String> rankingTextChecking() {
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_1.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_2.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_3.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_4.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_5.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_6.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_7.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_8.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_9.getText().toString());
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
+            stringArrayList.add(pollActivity_textView_check_10.getText().toString());
+        }
+        return stringArrayList;
+
+
     }
 
 
@@ -1143,6 +1176,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
     //N선택 선택시 파란색으로 바뀌면서 체크
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(PollRankingActivity.this, RankingChoiceActivity.class);
         switch (v.getId()) {
             case R.id.pollActivity_imageView_userAddContent_1:
                 mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1326,113 +1360,102 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.pollActivity_textView_check_1:
-
-                Intent intent = new Intent(PollRankingActivity.this, RankingChoiceActivity.class);
-                startActivity(intent);
-//                ContentChoiceDialog contentChoiceDialog = new ContentChoiceDialog();
-//                contentChoiceDialog.show(getSupportFragmentManager(), "contentChoiceDialog");
-                if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_1.setText("1 선택");
-                    checking_img_1_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_1.setText(rankingChecking() + 1 + " 위");
-                    checking_img_1();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 100);
                 break;
-
             case R.id.pollActivity_textView_check_2:
-                if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_2.setText("2 선택");
-                    checking_img_2_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_2.setText(rankingChecking() + 1 + " 위");
-                    checking_img_2();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 200);
                 break;
-
             case R.id.pollActivity_textView_check_3:
-                if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_3.setText("3 선택");
-                    checking_img_3_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_3.setText(rankingChecking() + 1 + " 위");
-                    checking_img_3();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 300);
                 break;
-
             case R.id.pollActivity_textView_check_4:
-                if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_4.setText("4 선택");
-                    checking_img_4_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_4.setText(rankingChecking() + 1 + " 위");
-                    checking_img_4();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 400);
                 break;
-
             case R.id.pollActivity_textView_check_5:
-                if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_5.setText("5 선택");
-                    checking_img_5_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_5.setText(rankingChecking() + 1 + " 위");
-                    checking_img_5();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 500);
                 break;
-
             case R.id.pollActivity_textView_check_6:
-                if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_6.setText("6 선택");
-                    checking_img_6_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_6.setText(rankingChecking() + 1 + " 위");
-                    checking_img_6();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 600);
                 break;
-
             case R.id.pollActivity_textView_check_7:
-                if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_7.setText("7 선택");
-                    checking_img_7_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_7.setText(rankingChecking() + 1 + " 위");
-                    checking_img_7();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 700);
                 break;
-
             case R.id.pollActivity_textView_check_8:
-                if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_1.setText("8 선택");
-                    checking_img_8_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_8.setText(rankingChecking() + 1 + " 위");
-                    checking_img_8();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 800);
                 break;
-
             case R.id.pollActivity_textView_check_9:
-                if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_1.setText("9 선택");
-                    checking_img_9_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_9.setText(rankingChecking() + 1 + " 위");
-                    checking_img_9();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 900);
                 break;
-
             case R.id.pollActivity_textView_check_10:
-                if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
-                    pollActivity_textView_check_10.setText("10 선택");
-                    checking_img_10_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xfff2f2f2) {
-                    pollActivity_textView_check_10.setText(rankingChecking() + 1 + " 위");
-                    checking_img_10();
-                }
+                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                startActivityForResult(intent, 1000);
                 break;
-
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 100 : pollActivity_textView_check_1.setText(data.getStringExtra("result"));
+                    checking_img_1();
+                    break;
+                case 200: pollActivity_textView_check_2.setText(data.getStringExtra("result"));
+                    checking_img_2();
+                    break;
+                case 300 : pollActivity_textView_check_3.setText(data.getStringExtra("result"));
+                    checking_img_3();
+                    break;
+                case 400: pollActivity_textView_check_4.setText(data.getStringExtra("result"));
+                    checking_img_4();
+                    break;
+                case 500 : pollActivity_textView_check_5.setText(data.getStringExtra("result"));
+                    checking_img_5();
+                    break;
+                case 600: pollActivity_textView_check_6.setText(data.getStringExtra("result"));
+                    checking_img_6();
+                    break;
+                case 700 : pollActivity_textView_check_7.setText(data.getStringExtra("result"));
+                    checking_img_7();
+                    break;
+                case 800: pollActivity_textView_check_8.setText(data.getStringExtra("result"));
+                    checking_img_8();
+                    break;
+                case 900 : pollActivity_textView_check_9.setText(data.getStringExtra("result"));
+                    checking_img_9();
+                    break;
+                case 1000: pollActivity_textView_check_10.setText(data.getStringExtra("result"));
+                    checking_img_10();
+                    break;
+            }
+
+
+
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     public class ResultValueFormatter implements IValueFormatter {
         private DecimalFormat mFormat;
@@ -1547,7 +1570,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==10 || age==11 || age==12) {
+        if (age == 10 || age == 11 || age == 12) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[20]++;
@@ -1581,7 +1604,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==13 || age==14 || age==15 || age==16) {
+        if (age == 13 || age == 14 || age == 15 || age == 16) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[30]++;
@@ -1615,7 +1638,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==17 || age==18 || age==19) {
+        if (age == 17 || age == 18 || age == 19) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[40]++;
@@ -1649,7 +1672,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==20 || age==21 || age==22) {
+        if (age == 20 || age == 21 || age == 22) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[50]++;
@@ -1683,7 +1706,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==23 || age==24 || age==25 || age==26) {
+        if (age == 23 || age == 24 || age == 25 || age == 26) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[60]++;
@@ -1717,7 +1740,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==27 || age==28 || age==29) {
+        if (age == 27 || age == 28 || age == 29) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[70]++;
@@ -1751,7 +1774,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==30 || age==31 || age==32) {
+        if (age == 30 || age == 31 || age == 32) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[80]++;
@@ -1785,7 +1808,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==33 || age==34 || age==35 || age==36) {
+        if (age == 33 || age == 34 || age == 35 || age == 36) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[90]++;
@@ -1819,7 +1842,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==37 || age==38 || age==39) {
+        if (age == 37 || age == 38 || age == 39) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[100]++;
@@ -1853,7 +1876,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==40 || age==41 || age==42) {
+        if (age == 40 || age == 41 || age == 42) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[110]++;
@@ -1887,7 +1910,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==43 || age==44 || age==45 || age==46) {
+        if (age == 43 || age == 44 || age == 45 || age == 46) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[120]++;
@@ -1921,7 +1944,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==47 || age==48 || age==49) {
+        if (age == 47 || age == 48 || age == 49) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[130]++;
@@ -1955,7 +1978,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==50 || age==51 || age==52) {
+        if (age == 50 || age == 51 || age == 52) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[140]++;
@@ -1989,7 +2012,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==53 || age==54 || age==55 || age==56) {
+        if (age == 53 || age == 54 || age == 55 || age == 56) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[150]++;
@@ -2023,7 +2046,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==57 || age==58 || age==59) {
+        if (age == 57 || age == 58 || age == 59) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[160]++;
@@ -2057,7 +2080,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==60 || age==61 || age==62) {
+        if (age == 60 || age == 61 || age == 62) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[170]++;
@@ -2091,7 +2114,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==63 || age==64 || age==65 || age==66) {
+        if (age == 63 || age == 64 || age == 65 || age == 66) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[180]++;
@@ -2125,7 +2148,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==67 || age==68 || age==69) {
+        if (age == 67 || age == 68 || age == 69) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[190]++;
@@ -2159,7 +2182,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==70 || age==71 || age==72) {
+        if (age == 70 || age == 71 || age == 72) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[200]++;
@@ -2193,7 +2216,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==73 || age==74 || age==75 || age==76) {
+        if (age == 73 || age == 74 || age == 75 || age == 76) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[210]++;
@@ -2227,7 +2250,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==77 || age==78 || age==79) {
+        if (age == 77 || age == 78 || age == 79) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[220]++;
@@ -2261,7 +2284,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==80 || age==81 || age==82) {
+        if (age == 80 || age == 81 || age == 82) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[230]++;
@@ -2295,7 +2318,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==83 || age==84 || age==85 || age==86) {
+        if (age == 83 || age == 84 || age == 85 || age == 86) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[240]++;
@@ -2329,7 +2352,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     break;
             }
         }
-        if (age==87 || age==88 || age==89) {
+        if (age == 87 || age == 88 || age == 89) {
             switch (currentPick) {
                 case 0:
                     tmpStatistics[250]++;
@@ -2365,9 +2388,9 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         }
 
         String callbackStatistics = java.util.Arrays.toString(tmpStatistics);
-        callbackStatistics = callbackStatistics.replace(", ",":");
-        callbackStatistics = callbackStatistics.replace("[","");
-        callbackStatistics = callbackStatistics.replace("]","");
+        callbackStatistics = callbackStatistics.replace(", ", ":");
+        callbackStatistics = callbackStatistics.replace("[", "");
+        callbackStatistics = callbackStatistics.replace("]", "");
 
         return callbackStatistics;
     }
