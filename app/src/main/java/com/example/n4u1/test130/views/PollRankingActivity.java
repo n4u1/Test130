@@ -862,8 +862,9 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                                 Object object = user.get("age");
                                 int currentAge = Integer.parseInt(object.toString());
                                 String currentGender = user.get("sex").toString();
-                                String statisticsCodeTmp = addStatistics(contentDTO.statistics_code, currentPick(), currentGender, currentAge);
-                                mDatabaseReference.child("statistics_code").setValue(statisticsCodeTmp);
+                                mDatabaseReference.child("statistics_code").setValue(
+                                        addStatistics(contentDTO.statistics_code, currentPick(), currentGender, currentAge)
+                                );
 
                             }
 
@@ -872,6 +873,8 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                             }
                         });
+
+                        //몇변에 투표했는지 users/pickContent:100
                         contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
                         String key = getIntent().getStringExtra("contentKey");
                         firebaseDatabase.getReference()
@@ -879,7 +882,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                                 .child(auth.getCurrentUser().getUid())
                                 .child("pickContent")
                                 .child(key)
-                                .setValue(currentPick());
+                                .setValue("Ranking");
 
                         PollResultDialog pollResultDialog = new PollResultDialog();
                         Bundle bundle = new Bundle();

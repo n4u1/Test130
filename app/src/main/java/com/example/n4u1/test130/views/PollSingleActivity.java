@@ -870,6 +870,8 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                             }
                         });
+
+                        //몇변에 투표했는지 users/pickContent:N
                         contentDTO.contentPicker.put(auth.getCurrentUser().getUid(), currentPick());
                         String key = getIntent().getStringExtra("contentKey");
                         firebaseDatabase.getReference()
@@ -879,6 +881,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                                 .child(key)
                                 .setValue(currentPick());
 
+                        //투표 완료후 결과 차트 열기
                         PollResultDialog pollResultDialog = new PollResultDialog();
                         Bundle bundle = new Bundle();
                         bundle.putInt("imagePick", currentPick());
