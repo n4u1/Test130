@@ -279,30 +279,8 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         pollActivity_fab_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
-//                if (rankingChecking() == getIntent().getIntExtra("itemViewType", 100)) {
-//                    onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
-//                } else {
-//                    if (rankingChecking() == 0) {
-//                        Toast.makeText(getApplicationContext(), "순위투표를 먼저 해주세요~!", Toast.LENGTH_SHORT).show();
-//                    }
-//                    if (rankingChecking() == 10) {
-//                        onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
-//                    }
-//                    if (rankingChecking() == 1 || rankingChecking() == 2 || rankingChecking() == 3 ||
-//                            rankingChecking() == 4 || rankingChecking() == 5 || rankingChecking() == 6 ||
-//                            rankingChecking() == 7 || rankingChecking() == 8 || rankingChecking() == 9) {
-//                        Toast.makeText(getApplicationContext(), "순위투표입니다. 순위를 모두 정해주세요!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
-                int contentsCount = getIntent().getIntExtra("itemViewType", 100);
-                for (int i = 0; i < contentsCount; i++) {
-                    while (rankingChecking() == i) {
-
-                    }
-                }
-
+                int i = currentPick();
+                onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), i);
             }
         });
 
@@ -828,30 +806,84 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                     //투표가 안되어있으면 투표하고 PollResultDialog
                 } else {
-                    //투표 선택 되있으면 true, 안되있으면 false
-                    if (pollChecking()) {
+                    //선택한 후보의 순위를 각 후보에 더해줌
+                    if (pollChecking() == contentAmount) {
                         //true면 투표수 추가하고 PollResultDialog
                         contentDTO.contentHit = contentDTO.contentHit + 1;
-                        if (currentPick() == 0)
-                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + 1;
-                        if (currentPick() == 1)
-                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + 1;
-                        if (currentPick() == 2)
-                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + 1;
-                        if (currentPick() == 3)
-                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + 1;
-                        if (currentPick() == 4)
-                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + 1;
-                        if (currentPick() == 5)
-                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + 1;
-                        if (currentPick() == 6)
-                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + 1;
-                        if (currentPick() == 7)
-                            contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + 1;
-                        if (currentPick() == 8)
-                            contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + 1;
-                        if (currentPick() == 9)
-                            contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + 1;
+                        if (currentRankingPick().size() == 2) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                        }
+                        if (currentRankingPick().size() == 3) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                        }
+                        if (currentRankingPick().size() == 4) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                        }
+                        if (currentRankingPick().size() == 5) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                        }
+                        if (currentRankingPick().size() == 6) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + currentRankingPick().get(5);
+                        }
+                        if (currentRankingPick().size() == 7) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + currentRankingPick().get(5);
+                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + currentRankingPick().get(6);
+                        }
+                        if (currentRankingPick().size() == 8) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + currentRankingPick().get(5);
+                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + currentRankingPick().get(6);
+                            contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + currentRankingPick().get(7);
+                        }
+                        if (currentRankingPick().size() == 9) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + currentRankingPick().get(5);
+                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + currentRankingPick().get(6);
+                            contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + currentRankingPick().get(7);
+                            contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + currentRankingPick().get(8);
+                        }
+                        if (currentRankingPick().size() == 10) {
+                            contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
+                            contentDTO.candidateScore_1 = contentDTO.candidateScore_1 + currentRankingPick().get(1);
+                            contentDTO.candidateScore_2 = contentDTO.candidateScore_2 + currentRankingPick().get(2);
+                            contentDTO.candidateScore_3 = contentDTO.candidateScore_3 + currentRankingPick().get(3);
+                            contentDTO.candidateScore_4 = contentDTO.candidateScore_4 + currentRankingPick().get(4);
+                            contentDTO.candidateScore_5 = contentDTO.candidateScore_5 + currentRankingPick().get(5);
+                            contentDTO.candidateScore_6 = contentDTO.candidateScore_6 + currentRankingPick().get(6);
+                            contentDTO.candidateScore_7 = contentDTO.candidateScore_7 + currentRankingPick().get(7);
+                            contentDTO.candidateScore_8 = contentDTO.candidateScore_8 + currentRankingPick().get(8);
+                            contentDTO.candidateScore_9 = contentDTO.candidateScore_9 + currentRankingPick().get(9);
+                        }
+
+
 
 
 //                        tmp.add(Integer.parseInt(object0.toString()));
@@ -893,11 +925,19 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                         pollResultDialog.setArguments(bundle);
                         pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
 
-                    } else { //투표 선택 안되있으면
+                        //투표 선택 안되있으면
+                    } else if (pollChecking() == 0) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(getApplicationContext(), "투표를 먼저 해주세요~!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "순위 투표입니다. 순위를 모두 정해주세요~!", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -1002,47 +1042,88 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
 
     //현재 Activity 에서의 투표 체크 유무
-    private boolean pollChecking() {
-        if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9
-                || ((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
-            return true;
-        } else {
-            return false;
-        }
+    private int pollChecking() {
+
+        int pickCount = 0;
+        if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) pickCount++;
+        if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) pickCount++;
+
+        return pickCount;
+
+
+//        if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9
+//                || ((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+    }
+
+    //1위선택한것 찾기
+    private int currentPick() {
+        if (pollActivity_textView_check_1.getText().toString().equals("1 위")) return 0;
+        if (pollActivity_textView_check_2.getText().toString().equals("1 위")) return 1;
+        if (pollActivity_textView_check_3.getText().toString().equals("1 위")) return 2;
+        if (pollActivity_textView_check_4.getText().toString().equals("1 위")) return 3;
+        if (pollActivity_textView_check_5.getText().toString().equals("1 위")) return 4;
+        if (pollActivity_textView_check_6.getText().toString().equals("1 위")) return 5;
+        if (pollActivity_textView_check_7.getText().toString().equals("1 위")) return 6;
+        if (pollActivity_textView_check_8.getText().toString().equals("1 위")) return 7;
+        if (pollActivity_textView_check_9.getText().toString().equals("1 위")) return 8;
+        if (pollActivity_textView_check_10.getText().toString().equals("1 위")) return 9;
+        else return 100;
     }
 
 
-    private int currentPick() {
+    private ArrayList<Integer> currentRankingPick() {
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
         if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
-            return 0;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
-            return 1;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
-            return 2;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
-            return 3;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
-            return 4;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
-            return 5;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
-            return 6;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
-            return 7;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
-            return 8;
-        } else if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
-            return 9;
-        } else return 100;
-
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_1.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_2.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_3.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_4.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_5.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_6.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_7.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_8.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_9.getText().toString().replace(" 위", "")));
+        }
+        if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
+            integerArrayList.add(contentAmount - Integer.parseInt(pollActivity_textView_check_10.getText().toString().replace(" 위", "")));
+        }
+        return integerArrayList;
 
     }
 
@@ -1433,44 +1514,114 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 100:
-                    pollActivity_textView_check_1.setText(data.getStringExtra("result"));
-                    checking_img_1();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_1.setText(data.getStringExtra("result"));
+                        checking_img_1();
+                    }
                     break;
                 case 200:
-                    pollActivity_textView_check_2.setText(data.getStringExtra("result"));
-                    checking_img_2();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_2.setText(data.getStringExtra("result"));
+                        checking_img_2();
+                    }
                     break;
                 case 300:
-                    pollActivity_textView_check_3.setText(data.getStringExtra("result"));
-                    checking_img_3();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_3.setText(data.getStringExtra("result"));
+                        checking_img_3();
+                    }
                     break;
                 case 400:
-                    pollActivity_textView_check_4.setText(data.getStringExtra("result"));
-                    checking_img_4();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_4.setText(data.getStringExtra("result"));
+                        checking_img_4();
+                    }
                     break;
                 case 500:
-                    pollActivity_textView_check_5.setText(data.getStringExtra("result"));
-                    checking_img_5();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_5.setText(data.getStringExtra("result"));
+                        checking_img_5();
+                    }
                     break;
                 case 600:
-                    pollActivity_textView_check_6.setText(data.getStringExtra("result"));
-                    checking_img_6();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_6.setText(data.getStringExtra("result"));
+                        checking_img_6();
+                    }
                     break;
                 case 700:
-                    pollActivity_textView_check_7.setText(data.getStringExtra("result"));
-                    checking_img_7();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_7.setText(data.getStringExtra("result"));
+                        checking_img_7();
+                    }
                     break;
                 case 800:
-                    pollActivity_textView_check_8.setText(data.getStringExtra("result"));
-                    checking_img_8();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_8.setText(data.getStringExtra("result"));
+                        checking_img_8();
+                    }
                     break;
                 case 900:
-                    pollActivity_textView_check_9.setText(data.getStringExtra("result"));
-                    checking_img_9();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_9.setText(data.getStringExtra("result"));
+                        checking_img_9();
+                    }
                     break;
                 case 1000:
-                    pollActivity_textView_check_10.setText(data.getStringExtra("result"));
-                    checking_img_10();
+                    if (data.getStringExtra("result").equals("refresh")) {
+                        finish();
+                        overridePendingTransition(0, 0);
+                        startActivity(getIntent());
+                        overridePendingTransition(0, 0);
+                    } else {
+                        pollActivity_textView_check_10.setText(data.getStringExtra("result"));
+                        checking_img_10();
+                    }
                     break;
             }
 
@@ -2417,6 +2568,12 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         callbackStatistics = callbackStatistics.replace("]", "");
 
         return callbackStatistics;
+    }
+
+    //새로고침용
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
 
