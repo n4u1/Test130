@@ -16,10 +16,7 @@
         android:layout_height="match_parent"
         tools:context=".views.HomeActivity">
 
-
         <include layout="@layout/mytoolbar" />
-
-
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_addContent"
@@ -32,23 +29,10 @@
             android:src="@drawable/ic_create_black_24dp"
             app:backgroundTint="#ffffff" />
 
-
-        <!--&lt;!&ndash;테스트용 엑티비티&ndash;&gt;-->
-        <!--<Button-->
-            <!--android:id="@+id/button_test"-->
-            <!--android:layout_below="@+id/my_toolbar"-->
-            <!--android:text="go_test"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

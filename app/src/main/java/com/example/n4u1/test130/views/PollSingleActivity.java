@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -261,6 +263,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_textView_check_8.setOnClickListener(this);
         pollActivity_textView_check_9.setOnClickListener(this);
         pollActivity_textView_check_10.setOnClickListener(this);
+
+
+
+        //이미투표했는지 여부 확인해서 floating action button 색 넣기
+        fabCheck(firebaseDatabase.getReference().child("user_contents").child(contentKey));
+
 
 
         //처음 댓글펼치기 버튼의 setText (리플 갯수 넣기위함)
@@ -925,6 +933,29 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+
+    private void fabCheck(DatabaseReference postRef) {
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
+                if (contentDTO == null) {
+                    return Transaction.success(mutableData);
+                }
+                if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
+                    pollActivity_fab_result.setImageResource(R.drawable.q);
+                } else {
+                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w);
+                }
+                return Transaction.success(mutableData);
+            }
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+            }
+        });
+    }
+
+
     private int currentPick() {
         if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
             return 0;
@@ -947,10 +978,12 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         } else if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
             return 9;
         } else return 100;
-
-
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    }
 
     public void checking_img_1() {
         pickCandidate = 1;
@@ -1486,6 +1519,29 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
             return label;
         }
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.poll_single_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_refresh:
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
+                break;
+        }
+//        onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -22,6 +22,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -259,6 +261,20 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         pollActivity_textView_check_9.setOnClickListener(this);
         pollActivity_textView_check_10.setOnClickListener(this);
 
+        //이미투표했는지 여부 확인해서 floating action button 색 넣기
+        fabCheck(firebaseDatabase.getReference().child("user_contents").child(contentKey));
+
+
+
+        //투표하고 결과보기
+        pollActivity_fab_result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), currentPick());
+            }
+        });
+
 
         //처음 댓글펼치기 버튼의 setText (리플 갯수 넣기위함)
         firebaseDatabase.getReference().child("user_contents").child(contentKey).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -272,15 +288,6 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-        //투표하고 결과보기
-        pollActivity_fab_result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int i = currentPick();
-                onResultClicked(firebaseDatabase.getReference().child("user_contents").child(contentKey), i);
             }
         });
 
@@ -1510,7 +1517,6 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 100:
@@ -1667,6 +1673,47 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void fabCheck(DatabaseReference postRef) {
+        postRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
+                if (contentDTO == null) {
+                    return Transaction.success(mutableData);
+                }
+                if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
+                    pollActivity_fab_result.setImageResource(R.drawable.q);
+                } else {
+                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w);
+                }
+                return Transaction.success(mutableData);
+            }
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.poll_ranking_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int curId = item.getItemId();
+        switch (curId) {
+            case R.id.menu_refresh:
+                finish();
+                overridePendingTransition(0, 0);
+                startActivity(getIntent());
+                overridePendingTransition(0, 0);
+                break;
+        }
+//        onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
 
     //picker의 현재픽,성별,나이 가져와서 통계항목에 +1
     private String addStatistics(String statistics_code, int currentPick, String gender, int age) {
