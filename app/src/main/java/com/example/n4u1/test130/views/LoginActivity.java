@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(" ");
         }
 //        getSupportActionBar().setIcon(R.drawable.q);
-        getSupportActionBar().setLogo(R.drawable.q);
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

@@ -37,8 +37,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class PollResultDialog extends DialogFragment {
-    public PollResultDialog() {
+public class PollResultRankingDialog extends DialogFragment {
+    public PollResultRankingDialog() {
     }
 
     private DatabaseReference mDatabaseReference;
@@ -614,7 +614,7 @@ public class PollResultDialog extends DialogFragment {
 
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return mFormat.format(value) + "표";
+            return mFormat.format(value) + "점";
         }
     }
 

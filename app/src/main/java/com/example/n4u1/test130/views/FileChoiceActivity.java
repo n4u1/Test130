@@ -80,7 +80,7 @@ public class FileChoiceActivity extends AppCompatActivity
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.q);
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);

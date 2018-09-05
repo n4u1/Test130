@@ -41,7 +41,7 @@ public class PollActivity extends AppCompatActivity {
 //        if (getSupportActionBar() != null){
 //            getSupportActionBar().setTitle("  AQA");
 //        }
-        getSupportActionBar().setIcon(R.drawable.q);
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

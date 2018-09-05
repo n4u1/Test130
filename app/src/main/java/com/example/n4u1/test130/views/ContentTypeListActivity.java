@@ -20,10 +20,10 @@ public class ContentTypeListActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar().setTitle("  AQA");
-//        }
-        getSupportActionBar().setIcon(R.drawable.q);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(" ");
+        }
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 

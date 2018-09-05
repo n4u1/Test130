@@ -3,36 +3,22 @@ package com.example.n4u1.test130.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,29 +26,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
-import com.example.n4u1.test130.dialog.ContentChoiceDialog;
-import com.example.n4u1.test130.dialog.PollResultDialog;
+import com.example.n4u1.test130.dialog.PollResultRankingDialog;
 import com.example.n4u1.test130.dialog.RankingChoiceActivity;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
-import com.example.n4u1.test130.models.User;
-import com.example.n4u1.test130.recyclerview.PostViewHolder2;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
 import com.example.n4u1.test130.util.GlideApp;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -73,35 +46,29 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
-import java.net.URI;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 
 public class PollRankingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private boolean ACTIVITY_REPLY_FLAG;
-    private int RANKING_CHOICE_CODE = 10000;
-    private boolean ACTIVITY_RESULT_FLAG;
     private int pickCandidate = 0;
     int contentAmount;
-    private String isImageFitToScreen;
 
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mDatabaseReferencePicker;
     private FirebaseDatabase firebaseDatabase;
-    private FirebaseDatabase mFirebaseDatabase;
+
 
     final ArrayList<ReplyDTO> replyDTOS = new ArrayList<>();
     final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTOS);
+    boolean checkUserHitContent = false;
     int contentHit;
 
 
@@ -154,7 +121,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.q);
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
@@ -166,7 +133,6 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         mDatabaseReferencePicker = FirebaseDatabase.getInstance().getReference("users");
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
 
         pollActivity_imageView_around_1 = findViewById(R.id.pollActivity_imageView_around_1);
@@ -260,6 +226,9 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         pollActivity_textView_check_8.setOnClickListener(this);
         pollActivity_textView_check_9.setOnClickListener(this);
         pollActivity_textView_check_10.setOnClickListener(this);
+
+
+
 
         //이미투표했는지 여부 확인해서 floating action button 색 넣기
         fabCheck(firebaseDatabase.getReference().child("user_contents").child(contentKey));
@@ -798,8 +767,8 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     return Transaction.success(mutableData);
                 }
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-                    //투표가 되어있으면 PollResultDialog
-                    PollResultDialog pollResultDialog = new PollResultDialog();
+                    //투표가 되어있으면 PollResultRankingDialog
+                    PollResultRankingDialog pollResultRankingDialog= new PollResultRankingDialog();
                     Bundle bundle = new Bundle();
 
                     bundle.putInt("imagePick", currentPick());
@@ -808,14 +777,14 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
                     bundle.putString("statisticsCode", contentDTO.statistics_code);
 
-                    pollResultDialog.setArguments(bundle);
-                    pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
+                    pollResultRankingDialog.setArguments(bundle);
+                    pollResultRankingDialog.show(getSupportFragmentManager(), "PollResultRankingDialog");
 
-                    //투표가 안되어있으면 투표하고 PollResultDialog
+                    //투표가 안되어있으면 투표하고 PollResultRankingDialog
                 } else {
                     //선택한 후보의 순위를 각 후보에 더해줌
                     if (pollChecking() == contentAmount) {
-                        //true면 투표수 추가하고 PollResultDialog
+                        //true면 투표수 추가하고 PollResultRankingDialog
                         contentDTO.contentHit = contentDTO.contentHit + 1;
                         if (currentRankingPick().size() == 2) {
                             contentDTO.candidateScore_0 = contentDTO.candidateScore_0 + currentRankingPick().get(0);
@@ -923,14 +892,14 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                                 .child(key)
                                 .setValue("Ranking");
 
-                        PollResultDialog pollResultDialog = new PollResultDialog();
+                        PollResultRankingDialog pollResultRankingDialog = new PollResultRankingDialog();
                         Bundle bundle = new Bundle();
                         bundle.putInt("imagePick", currentPick());
                         bundle.putInt("imageN", getIntent().getIntExtra("itemViewType", 100));
                         bundle.putString("currentContent", getIntent().getStringExtra("contentKey"));
                         bundle.putString("statisticsCode", contentDTO.statistics_code);
-                        pollResultDialog.setArguments(bundle);
-                        pollResultDialog.show(getSupportFragmentManager(), "pollResultDialog");
+                        pollResultRankingDialog.setArguments(bundle);
+                        pollResultRankingDialog.show(getSupportFragmentManager(), "pollResultDialog");
 
                         //투표 선택 안되있으면
                     } else if (pollChecking() == 0) {
@@ -1462,55 +1431,96 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                 });
                 break;
 
+
             case R.id.pollActivity_textView_check_1:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 100);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 100);
+                }
                 break;
             case R.id.pollActivity_textView_check_2:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 200);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 200);
+                }
                 break;
             case R.id.pollActivity_textView_check_3:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 300);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 300);
+                }
                 break;
             case R.id.pollActivity_textView_check_4:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 400);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 400);
+                }
                 break;
             case R.id.pollActivity_textView_check_5:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 500);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 500);
+                }
                 break;
             case R.id.pollActivity_textView_check_6:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 600);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 600);
+                }
                 break;
             case R.id.pollActivity_textView_check_7:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 700);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 700);
+                }
                 break;
             case R.id.pollActivity_textView_check_8:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 800);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 800);
+                }
                 break;
             case R.id.pollActivity_textView_check_9:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 900);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 900);
+                }
                 break;
             case R.id.pollActivity_textView_check_10:
-                intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
-                intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
-                startActivityForResult(intent, 1000);
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("contentsCount", getIntent().getIntExtra("itemViewType", 100));
+                    intent.putStringArrayListExtra("rankingTextCheck", rankingTextChecking());
+                    startActivityForResult(intent, 1000);
+                }
                 break;
         }
     }
@@ -1682,9 +1692,11 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
                     return Transaction.success(mutableData);
                 }
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-                    pollActivity_fab_result.setImageResource(R.drawable.q);
+                    pollActivity_fab_result.setImageResource(R.drawable.q);//fab 파란색
+                    checkUserHitContent = true;//투표여부
                 } else {
-                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w);
+                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w);//fab 흰색
+                    checkUserHitContent = false;//투표여부
                 }
                 return Transaction.success(mutableData);
             }

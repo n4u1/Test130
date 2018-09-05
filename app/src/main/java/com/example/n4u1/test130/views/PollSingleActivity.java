@@ -3,36 +3,23 @@ package com.example.n4u1.test130.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,29 +27,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.n4u1.test130.R;
-import com.example.n4u1.test130.dialog.ContentChoiceDialog;
 import com.example.n4u1.test130.dialog.PollResultDialog;
-import com.example.n4u1.test130.dialog.RankingChoiceActivity;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.ReplyDTO;
-import com.example.n4u1.test130.models.User;
-import com.example.n4u1.test130.recyclerview.PostViewHolder2;
 import com.example.n4u1.test130.recyclerview.ReplyAdapter;
 import com.example.n4u1.test130.util.GlideApp;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -73,36 +46,27 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
-import java.net.URI;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.TimeZone;
 
 public class PollSingleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private boolean ACTIVITY_REPLY_FLAG;
-    private boolean ACTIVITY_RESULT_FLAG;
     private int pickCandidate = 0;
-    private String isImageFitToScreen;
-
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseReference;
     private DatabaseReference mDatabaseReferencePicker;
     private FirebaseDatabase firebaseDatabase;
-    private FirebaseDatabase mFirebaseDatabase;
 
     final ArrayList<ReplyDTO> replyDTOS = new ArrayList<>();
     final ReplyAdapter replyAdapter = new ReplyAdapter(this, replyDTOS);
     int contentHit;
-
-    private GestureDetector mGestureDetector;
+    boolean checkUserHitContent = false;
 
     FloatingActionButton pollActivity_fab_result;
     TextView pollActivity_textView_title, pollActivity_textView_description,
@@ -140,12 +104,6 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             pollActivity_textView_check_9, pollActivity_textView_check_10;
 
 
-    final ArrayList<String> pickerAge = new ArrayList<>();
-    final ArrayList<String> pickerJob = new ArrayList<>();
-    final ArrayList<String> pickerJob_ = new ArrayList<>();
-    final ArrayList<String> pickerGender = new ArrayList<>();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +115,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.drawable.q);
+        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
@@ -169,17 +127,9 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         mDatabaseReferencePicker = FirebaseDatabase.getInstance().getReference("users");
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
 
         pollActivity_imageView_around_1 = findViewById(R.id.pollActivity_imageView_around_1);
-
-//        이미지뷰 라운드 처리는...
-//        GradientDrawable gradientDrawable = getApplicationContext().getDrawable(R.drawable.background_rounding);
-//        pollActivity_imageView_choice_1.setBackground(gradientDrawable);
-//        pollActivity_imageView_choice_1.setClipToOutline(true);
-//        pollActivity_imageView_around_1.setBackground(gradientDrawable);
-//        pollActivity_imageView_around_1.setClipToOutline(true);
 
 
         pollActivity_fab_result = findViewById(R.id.pollActivity_fab_result);
@@ -943,9 +893,11 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     return Transaction.success(mutableData);
                 }
                 if (contentDTO.contentPicker.containsKey(auth.getCurrentUser().getUid())) {
-                    pollActivity_fab_result.setImageResource(R.drawable.q);
+                    pollActivity_fab_result.setImageResource(R.drawable.q); //fab 파란색
+                    checkUserHitContent = true;//투표여부
                 } else {
-                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w);
+                    pollActivity_fab_result.setImageResource(R.drawable.q_bg_w); //fab 흰색
+                    checkUserHitContent = false;//투표여부
                 }
                 return Transaction.success(mutableData);
             }
@@ -1312,175 +1264,215 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.pollActivity_textView_check_1:
-
-
-                if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_1_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_1();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_1_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_1.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_1();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_2:
-                if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_2_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_2();
-                    checking_img_1_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_2_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_2.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_2();
+                        checking_img_1_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_3:
-                if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_3_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_3();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_3_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_3.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_3();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_4:
-                if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_4_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_4();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_4_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_4.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_4();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_5:
-                if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_5_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_5();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_5_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_5.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_5();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_6:
-                if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_6_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_6();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_6_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_6.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_6();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_7:
-                if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_7_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_7();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_7_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_7.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_7();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_8:
-                if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_8_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_8();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_9_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_8_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_8.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_8();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_9_rt();
+                        checking_img_10_rt();
+                    }
                 }
                 break;
 
             case R.id.pollActivity_textView_check_9:
-                if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_9_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_9();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_10_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_9_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_9.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_9();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_10_rt();
+                    }
                 }
+
                 break;
 
             case R.id.pollActivity_textView_check_10:
-                if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
-                    checking_img_10_rt();
-                } else if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xfff2f2f2) {
-                    checking_img_10();
-                    checking_img_1_rt();
-                    checking_img_2_rt();
-                    checking_img_3_rt();
-                    checking_img_4_rt();
-                    checking_img_5_rt();
-                    checking_img_6_rt();
-                    checking_img_7_rt();
-                    checking_img_8_rt();
-                    checking_img_9_rt();
+                if (checkUserHitContent) {
+                    Toast.makeText(getApplicationContext(), "이미 투표 하셨습니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xff4485c9) {
+                        checking_img_10_rt();
+                    } else if (((ColorDrawable) pollActivity_imageView_choice_10.getBackground()).getColor() == 0xfff2f2f2) {
+                        checking_img_10();
+                        checking_img_1_rt();
+                        checking_img_2_rt();
+                        checking_img_3_rt();
+                        checking_img_4_rt();
+                        checking_img_5_rt();
+                        checking_img_6_rt();
+                        checking_img_7_rt();
+                        checking_img_8_rt();
+                        checking_img_9_rt();
+                    }
                 }
+
                 break;
         }
     }
