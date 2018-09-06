@@ -166,12 +166,15 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.menu_list:
-                Intent intent = new Intent(getApplicationContext(), ContentTypeListActivity.class);
+            case R.id.menu_search:
+                Intent intent = new Intent(HomeActivity.this, SearchHomeActivity.class);
+                overridePendingTransition(0, 0);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
                 break;
             case R.id.menu_mine: break;
             case R.id.menu_setting: break;
+
         }
 //        onBackPressed();
         return super.onOptionsItemSelected(item);

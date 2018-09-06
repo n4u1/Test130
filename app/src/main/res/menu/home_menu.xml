@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
 
+
     <item
-        android:title="Setting"
-        android:id="@+id/menu_setting"
-        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="Search"
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"/>
 
 
@@ -19,9 +21,11 @@
 
 
     <item
-        android:title="List"
-        android:id="@+id/menu_list"
-        android:icon="@drawable/ic_grain_black_24dp"
+        android:title="Setting"
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_settings_black_24dp"
         app:showAsAction="always"/>
+
+
 
 </menu>

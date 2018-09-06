@@ -33,8 +33,10 @@
         <activity android:name=".views.PollRankingActivity" />
         <activity android:name=".views.PollSingleActivity" />
         <activity android:name=".views.CreateUserActivity" />
-        <activity android:name=".dialog.RankingChoiceActivity"
-            android:theme="@style/Theme.RankingChoiceDialog"/>
+        <activity
+            android:name=".dialog.RankingChoiceActivity"
+            android:theme="@style/Theme.RankingChoiceDialog" />
+        <activity android:name=".views.SearchHomeActivity"></activity>
     </application>
 
 </manifest>
