@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dedede"
+        android:background="#f1f1f1"
         android:gravity="center"
         android:text="카테고리"
         android:textSize="18dp" />
@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dedede"
+        android:background="#f1f1f1"
         android:gravity="center"
         android:text="제목"
         android:textSize="18dp" />

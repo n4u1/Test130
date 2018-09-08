@@ -876,7 +876,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         TimeZone timeZone;
         timeZone = TimeZone.getTimeZone("Asia/Seoul");
         Date date = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyMMdd-HHmm", Locale.KOREAN);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss:SSSS", Locale.KOREAN);
         df.setTimeZone(timeZone);
         String currentDate = df.format(date);
         return currentDate;

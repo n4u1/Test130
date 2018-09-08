@@ -14,6 +14,13 @@
 
 
     <item
+        android:title="Home"
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_outline_home_24px"
+        app:showAsAction="always"/>
+
+
+    <item
         android:title="Mine"
         android:id="@+id/menu_mine"
         android:icon="@drawable/ic_perm_identity_black_24dp"

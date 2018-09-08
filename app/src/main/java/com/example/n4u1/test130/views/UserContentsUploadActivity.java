@@ -106,78 +106,6 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
         editText_title = findViewById(R.id.editText_title);
         editText_description = findViewById(R.id.editText_description);
 
-//
-//        imageView_userAddContent_1.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_1);
-//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    }
-//                });
-//                popup.show();
-//                return false;
-//            }
-//        });
-//
-//        imageView_userAddContent_2.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//
-//                //Creating the instance of PopupMenu
-//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_2);
-//                //Inflating the Popup using xml file
-//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-//
-//                //registering popup with OnMenuItemClickListener
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    }
-//                });
-//                popup.show();//showing popup menu
-//                return false;
-//            }
-//        });
-//
-//        imageView_userAddContent_3.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                //Creating the instance of PopupMenu
-//                PopupMenu popup = new PopupMenu(UserContentsUploadActivity.this, imageView_userAddContent_3);
-//                //Inflating the Popup using xml file
-//                popup.getMenuInflater().inflate(R.menu.imagelongclick_menu, popup.getMenu());
-//
-//                //registering popup with OnMenuItemClickListener
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        Toast.makeText(UserContentsUploadActivity.this, "You Selected : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    }
-//                });
-//                popup.show();//showing popup menu
-//                return false;
-//            }
-//        });
-
-        //싱글튜표 or 순위투표 선택
-//        radioGroup_rs.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                switch (i) {
-//                    case R.id.radioButton_ranking:
-//                        userContentType = "ranking";
-//                        break;
-//                    case R.id.radioButton_single:
-//                        userContentType = "single";
-//                        break;
-//                }
-//            }
-//        });
 
         //카테고리 선택
         editText_addCategory = findViewById(R.id.editText_addCategory);
@@ -319,6 +247,12 @@ public class UserContentsUploadActivity extends AppCompatActivity implements Con
                     intent.putStringArrayListExtra("userInputContents", userInputContents);
                     startActivity(intent);
                 }
+                break;
+            case R.id.menu_home:
+
+                Intent intent = new Intent(UserContentsUploadActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
         }
 

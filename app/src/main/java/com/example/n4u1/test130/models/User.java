@@ -11,12 +11,13 @@ public class User {
     private String deviceName, sex, job, uid, email;
     private String pickContent;
     private int age;
+    private String search_flag_category, search_flag_title;
 
     public Map<String, Boolean> likeContent = new HashMap<>();
 
     public User () {    }
 
-    public User(String tmpImgUrl_0, String tmpImgUrl_1, String tmpImgUrl_2, String tmpImgUrl_3, String tmpImgUrl_4, String tmpImgUrl_5, String tmpImgUrl_6, String tmpImgUrl_7, String tmpImgUrl_8, String tmpImgUrl_9, String deviceName, String sex, String job, String uid, String email, String pickContent, int age, Map<String, Boolean> likeContent) {
+    public User(String tmpImgUrl_0, String tmpImgUrl_1, String tmpImgUrl_2, String tmpImgUrl_3, String tmpImgUrl_4, String tmpImgUrl_5, String tmpImgUrl_6, String tmpImgUrl_7, String tmpImgUrl_8, String tmpImgUrl_9, String deviceName, String sex, String job, String uid, String email, String pickContent, int age, String search_flag_category, String search_flag_title, Map<String, Boolean> likeContent) {
         this.tmpImgUrl_0 = tmpImgUrl_0;
         this.tmpImgUrl_1 = tmpImgUrl_1;
         this.tmpImgUrl_2 = tmpImgUrl_2;
@@ -34,9 +35,10 @@ public class User {
         this.email = email;
         this.pickContent = pickContent;
         this.age = age;
+        this.search_flag_category = search_flag_category;
+        this.search_flag_title = search_flag_title;
         this.likeContent = likeContent;
     }
-
 
     @Exclude
     public Map<String, Object> toMap() {
@@ -46,8 +48,26 @@ public class User {
         result.put("sex", sex);
         result.put("age", age);
         result.put("job", job);
+        result.put("search_flag_category", search_flag_category);
+        result.put("search_flag_title", search_flag_title);
 
         return result;
+    }
+
+    public String getSearch_flag_category() {
+        return search_flag_category;
+    }
+
+    public void setSearch_flag_category(String search_flag_category) {
+        this.search_flag_category = search_flag_category;
+    }
+
+    public String getSearch_flag_title() {
+        return search_flag_title;
+    }
+
+    public void setSearch_flag_title(String search_flag_title) {
+        this.search_flag_title = search_flag_title;
     }
 
     public Map<String, Boolean> getLikeContent() {

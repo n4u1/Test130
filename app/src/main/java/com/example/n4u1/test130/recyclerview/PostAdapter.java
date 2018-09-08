@@ -158,22 +158,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         });
 
         switch (holder.getItemViewType()) {
-
-
-
             case ITEM_VIEW_TYPE_0 :
                 //이미지 클릭시 컨텐트 디테일(PollActivity) 로 넘어감
                 ((PostViewHolder)holder).imageView_postImg_0.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         movePoll(position);
-//                        String string = contentDTOS.get(position).contentKey;
-//                        if (contentDTOS.get(position).getPollMode().equals("순위 투표")) {
-//                            movePoll(position);
-//
-//                        } if (contentDTOS.get(position).getPollMode().equals("단일 투표")) {
-//                            movePoll(position);
-//                        }
                     }
                 });
                 //아이템 바인딩
@@ -183,7 +173,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                 ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
                 ((PostViewHolder)holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
 
-
                 GlideApp
                         .with(holder.itemView.getContext())
                         .load(contentDTOS.get(position).imageUrl_0)
@@ -191,16 +180,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                         .thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon))
                         .into(((PostViewHolder)holder).imageView_postImg_0);
 
-
-
-
                 ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
                         resetHomeActivity();
-
-
                     }
                 });
                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
