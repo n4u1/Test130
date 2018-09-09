@@ -71,7 +71,6 @@ public class PollActivity extends AppCompatActivity {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 ContentDTO contentDTO = dataSnapshot.getValue(ContentDTO.class);
                 contentDTO.getDescription();
                 int itemViewCount = contentDTO.getItemViewType();

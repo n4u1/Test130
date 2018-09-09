@@ -277,9 +277,9 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_search:
-                Intent intent = new Intent(HomeActivity.this, SearchHomeActivity.class);
+                Intent intentSearch = new Intent(HomeActivity.this, SearchHomeActivity.class);
                 overridePendingTransition(0, 0);
-                startActivity(intent);
+                startActivity(intentSearch);
                 overridePendingTransition(0, 0);
                 break;
             case R.id.menu_home:
@@ -289,6 +289,8 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 overridePendingTransition(0, 0);
                 break;
             case R.id.menu_mine:
+                Intent intentMine = new Intent(HomeActivity.this, MineActivity.class);
+                startActivity(intentMine);
                 break;
             case R.id.menu_setting:
                 break;
