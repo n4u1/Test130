@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.n4u1.test130.R;
-import com.example.n4u1.test130.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,6 +47,7 @@ public class MineActivity extends AppCompatActivity {
         TextView mineActivity_textView_account = findViewById(R.id.mineActivity_textView_account);
         final TextView mineActivity_textView_gender = findViewById(R.id.mineActivity_textView_gender);
         final TextView mineActivity_textView_age = findViewById(R.id.mineActivity_textView_age);
+        TextView mineActivity_textView_like = findViewById(R.id.mineActivity_textView_like);
 
         //이메일 가져오기
         mineActivity_textView_account.setText(mFireBaseUser.getEmail());
@@ -65,6 +66,15 @@ public class MineActivity extends AppCompatActivity {
             }
         });
 
+
+        //좋아요 누른 게시물 이동클릭
+        mineActivity_textView_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyLikeContentsActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

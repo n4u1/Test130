@@ -19,25 +19,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"
             android:orientation="vertical"
-            android:padding="16dp">
-
-
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="4dp"
-                android:background="#efefef" />
+            android:padding="10dp">
 
 
             <LinearLayout
                 android:id="@+id/mineActivity_linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/view1"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -74,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view3"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -111,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view4"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -147,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view4"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -189,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view5"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -226,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view6"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -262,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view7"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <TextView
                     android:layout_width="0dp"
@@ -273,7 +263,7 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/mineActivity_textView_move3"
+                    android:id="@+id/mineActivity_textView_like"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -288,6 +278,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/mineActivity_linearLayout6"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:background="#efefef" />
+
+
+            <LinearLayout
+                android:id="@+id/mineActivity_linearLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view7"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:text="댓글 남긴 게시물"
+                    android:textColor="#383838"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/mineActivity_textView_move4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="모아보기   >"
+                    android:textColor="#808080"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/view9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/mineActivity_linearLayout7"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
                 android:background="#efefef" />
