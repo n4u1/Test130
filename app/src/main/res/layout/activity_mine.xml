@@ -159,9 +159,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="변경하기   >"
+                    android:text="변경하기"
                     android:textColor="#808080"
-                    android:textSize="13dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
 
@@ -194,9 +194,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="모아보기   >"
+                    android:text="모아보기"
                     android:textColor="#808080"
-                    android:textSize="13dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
 
@@ -231,9 +231,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="모아보기   >"
+                    android:text="모아보기"
                     android:textColor="#808080"
-                    android:textSize="13dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
 
@@ -267,9 +267,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="모아보기   >"
-                    android:textColor="#808080"
-                    android:textSize="13dp" />
+                    android:text="모아보기"
+                    android:textColor="#808080"                    
+                    android:textSize="18dp" />
             </LinearLayout>
 
 
@@ -304,9 +304,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:text="모아보기   >"
+                    android:text="모아보기"
                     android:textColor="#808080"
-                    android:textSize="13dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
 

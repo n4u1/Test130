@@ -112,7 +112,7 @@ public class PostAdapterMine extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((PostViewHolderMine) holder).textView_title.setText(contentDTOS.get(position).title);
         ((PostViewHolderMine) holder).textView_userName.setText(contentDTOS.get(position).userID);
         ((PostViewHolderMine) holder).textView_contentType.setText(contentDTOS.get(position).contentType);
-        ((PostViewHolderMine) holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+
         ((PostViewHolderMine) holder).textView_hitCount.setText(String.valueOf(contentDTOS.get(position).contentHit));
 
 
@@ -124,21 +124,6 @@ public class PostAdapterMine extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         });
 
-        //좋아요 클릭시 버튼색 변경
-        ((PostViewHolderMine) holder).imageView_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
-
-            }
-        });
-
-
-        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
-            ((PostViewHolderMine) holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
-        } else {
-            ((PostViewHolderMine) holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-        }
 
 
     }
@@ -176,61 +161,4 @@ public class PostAdapterMine extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-
-    private void onLikeClicked(final DatabaseReference postRef) {
-
-        postRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                ContentDTO contentDTO = mutableData.getValue(ContentDTO.class);
-                if (contentDTO == null) {
-                    return Transaction.success(mutableData);
-                }
-
-                if (contentDTO.likes.containsKey(auth.getCurrentUser().getUid())) {
-                    // Unstar the post and remove self from stars
-                    // 좋아요카운트 -1 하고 리스트에서 삭제
-                    contentDTO.likeCount = contentDTO.likeCount - 1;
-                    contentDTO.likes.remove(auth.getCurrentUser().getUid());
-                    // users/내uid/컨텐트key/false      : 좋아요 누른 컨텐츠 리스트 false
-                    firebaseDatabase.getReference()
-                            .child("users")
-                            .child(auth.getCurrentUser().getUid())
-                            .child("likeContent")
-                            .child(contentDTO.getContentKey())
-                            .setValue("false");
-
-                } else {
-                    // Star the post and add self to stars
-                    contentDTO.likeCount = contentDTO.likeCount + 1;
-                    contentDTO.likes.put(auth.getCurrentUser().getUid(), true);
-                    // users/내uid/컨텐트key/true       : 좋아요 누른 컨텐츠 리스트 true
-                    firebaseDatabase.getReference()
-                            .child("users")
-                            .child(auth.getCurrentUser().getUid())
-                            .child("likeContent")
-                            .child(contentDTO.getContentKey())
-                            .setValue("true");
-//                    User user = new User();
-//                    Map<String, Object> userValues = user.toMap();
-//                    Map<String, Object> childUpdates = new HashMap<>();
-//                    childUpdates.put("/users/", userValues);
-//                    databaseReference.updateChildren(childUpdates);
-
-                }
-
-                // Set value and report transaction success
-                mutableData.setValue(contentDTO);
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                // Transaction completed
-                Log.d("lkjlkj", "postTransaction:onComplete:" + databaseError);
-
-
-            }
-        });
-    }
 }

@@ -2,13 +2,11 @@ package com.example.n4u1.test130.views;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +20,10 @@ import com.example.n4u1.test130.util.ListViewSearchCategoryAdapter;
 import com.example.n4u1.test130.util.ListViewSearchTitleAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -115,7 +111,8 @@ public class SearchHomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchHomeActivity.this, (String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                 mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_category").setValue(parent.getItemAtPosition(position));
-                finish();
+                Intent intent = new Intent(SearchHomeActivity.this, SearchResultActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -125,7 +122,8 @@ public class SearchHomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchHomeActivity.this, (String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
                 mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_title").setValue(parent.getItemAtPosition(position));
-                finish();
+                Intent intent = new Intent(SearchHomeActivity.this, SearchResultActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -221,7 +219,7 @@ public class SearchHomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         SearchView searchView;
-        getMenuInflater().inflate(R.menu.home_search_menu, menu);
+        getMenuInflater().inflate(R.menu.search_home_menu, menu);
         MenuItem myActionMenuItem = menu.findItem(R.id.menu_search);
         searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setFocusable(true);  //자동포커스

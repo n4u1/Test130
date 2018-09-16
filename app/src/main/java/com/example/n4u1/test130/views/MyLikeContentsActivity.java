@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -70,6 +71,8 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         //onCreate시 액티비티 좋아요누른 게시글 추려서 최초1회 바인딩
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<String> key = new ArrayList<>();
+            ArrayList<String> key_ = new ArrayList<>();
+            Map<String, Object> likeContent_ = new HashMap<>();
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
@@ -77,7 +80,8 @@ public class MyLikeContentsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshots) {
                         Map<String, Object> likeContent = (Map<String, Object>) dataSnapshots.getValue();
-                        Log.d("lkj likecontent", String.valueOf(likeContent));
+                        int tempCount = 0;
+
 
                         Set set = likeContent.keySet();
                         Iterator iterator = set.iterator();
@@ -85,11 +89,18 @@ public class MyLikeContentsActivity extends AppCompatActivity {
                             key.add((String)iterator.next());
                         }
 
+                        for (int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
+                            if (likeContent.get(key.get(i)).toString().equals("true")) {
+                                key_.add(key.get(i));
+                                tempCount++;
+                            }
+                        }
+
                         contentDTOS.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            for(int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
-                                if (contentDTO.getContentKey().contains(key.get(i))) {
+                            for(int i = 0; i < tempCount; i++) {
+                                if (contentDTO.getContentKey().contains(key_.get(i))) {
                                     contentDTOS.add(contentDTO);
                                 }
                             }

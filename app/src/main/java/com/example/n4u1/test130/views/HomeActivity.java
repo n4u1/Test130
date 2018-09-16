@@ -80,15 +80,15 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         mSortingDatabase = FirebaseDatabase.getInstance();
         mFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
+        final RecyclerView recyclerView_home = findViewById(R.id.recyclerView_home);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//20180730 전날꺼 보기 getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.isSmoothScrollbarEnabled();
         mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setReverseLayout(true);
-        recyclerViewList.setLayoutManager(mLayoutManager);
+        recyclerView_home.setLayoutManager(mLayoutManager);
 //        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
-        recyclerViewList.setAdapter(postAdapter);
+        recyclerView_home.setAdapter(postAdapter);
         postAdapter.notifyDataSetChanged();
 
 
@@ -113,88 +113,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-
-        //검색 플래그 (DB/"users"/currentUid/search_flag_category)
-        //"전체" 일경우 기본
-        //"카테고리명" 일경우 검색결과를 보여줌
-        mSearchingDatabase.getReference().child("users").child(mFireBaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Map<String, Object> user = (Map<String, Object>) dataSnapshot.getValue();
-                final String search_flag_category = user.get("search_flag_category").toString();
-                final String search_flag_title = user.get("search_flag_title").toString();
-                Log.d("lkj searchflag", user.get("search_flag_category").toString());
-
-                //search_flag가 전체면 기본 HomeActivity, search_flag가 전체가 아니라면 해당 string 로 검색
-                //카테고리 검색
-                if (!user.get("search_flag_category").toString().equals("전체")) {
-
-                    final PostAdapter postAdapter_search_category = new PostAdapter(getApplicationContext(), contentDTOS_category);
-                    contentDTOS_category.clear();
-                    contentDTOS_title.clear();
-                    Log.d("lkj searchflag_category", "전체가 아닐경우");
-                    mSortingDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Iterator<DataSnapshot> contentDTOIterator = dataSnapshot.getChildren().iterator();
-
-                            while (contentDTOIterator.hasNext()) {
-                                final ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
-                                if (contentDTO.contentType.contains(search_flag_category)) {
-                                    contentDTOS_category.add(contentDTO);
-                                }
-                            }
-                            recyclerViewList.setAdapter(postAdapter_search_category);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    postAdapter_search_category.notifyDataSetChanged();
-                }
-                //제목 검색
-                if (!user.get("search_flag_title").toString().equals("전체")) {
-                    final PostAdapter postAdapter_search_title = new PostAdapter(getApplicationContext(), contentDTOS_title);
-                    contentDTOS_category.clear();
-                    contentDTOS_title.clear();
-                    Log.d("lkj searchflag_title", "전체가 아닐경우");
-                    mSortingDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Iterator<DataSnapshot> contentDTOIterator = dataSnapshot.getChildren().iterator();
-
-                            while (contentDTOIterator.hasNext()) {
-                                final ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
-                                if (contentDTO.title.contains(search_flag_title)) {
-                                    contentDTOS_title.add(contentDTO);
-                                }
-                            }
-
-                            recyclerViewList.setAdapter(postAdapter_search_title);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    postAdapter_search_title.notifyDataSetChanged();
-                }
-                else {
-                    recyclerViewList.setAdapter(postAdapter);
-                    postAdapter.notifyDataSetChanged();
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
 
@@ -255,6 +173,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -263,13 +182,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-
-
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 
     @Override
@@ -283,10 +199,12 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 overridePendingTransition(0, 0);
                 break;
             case R.id.menu_home:
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+                Log.d("lkj menuhome", "??????");
+                resetActivity();
+//                finish();
+//                overridePendingTransition(0, 0);
+//                startActivity(getIntent());
+//                overridePendingTransition(0, 0);
                 break;
             case R.id.menu_mine:
                 Intent intentMine = new Intent(HomeActivity.this, MineActivity.class);

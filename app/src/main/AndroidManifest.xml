@@ -38,7 +38,8 @@
             android:theme="@style/Theme.RankingChoiceDialog" />
         <activity android:name=".views.SearchHomeActivity" />
         <activity android:name=".views.MineActivity" />
-        <activity android:name=".views.MyLikeContentsActivity"></activity>
+        <activity android:name=".views.MyLikeContentsActivity" />
+        <activity android:name=".views.SearchResultActivity"></activity>
     </application>
 
 </manifest>
