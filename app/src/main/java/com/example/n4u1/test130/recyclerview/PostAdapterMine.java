@@ -5,25 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
+
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
-import com.example.n4u1.test130.util.GlideApp;
-import com.example.n4u1.test130.views.HomeActivity;
 import com.example.n4u1.test130.views.PollRankingActivity;
 import com.example.n4u1.test130.views.PollSingleActivity;
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -36,7 +32,6 @@ public class PostAdapterMine extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int ITEM_VIEW_TYPE_2 = 2;
     private static final int ITEM_VIEW_TYPE_3 = 3;
     private static final int ITEM_VIEW_TYPE_0 = 0;
-    private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
 
 
@@ -49,7 +44,6 @@ public class PostAdapterMine extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        auth = FirebaseAuth.getInstance();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_my_like, parent, false);
         return new PostViewHolderMine(view);
     }

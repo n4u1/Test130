@@ -48,6 +48,7 @@ public class MineActivity extends AppCompatActivity {
         final TextView mineActivity_textView_gender = findViewById(R.id.mineActivity_textView_gender);
         final TextView mineActivity_textView_age = findViewById(R.id.mineActivity_textView_age);
         TextView mineActivity_textView_like = findViewById(R.id.mineActivity_textView_like);
+        TextView mineActivity_textView_pickContent = findViewById(R.id.mineActivity_textView_pickContent);
 
         //이메일 가져오기
         mineActivity_textView_account.setText(mFireBaseUser.getEmail());
@@ -76,6 +77,13 @@ public class MineActivity extends AppCompatActivity {
             }
         });
 
+        mineActivity_textView_pickContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyPollActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

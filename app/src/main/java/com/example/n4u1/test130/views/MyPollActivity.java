@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,7 +26,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class MyLikeContentsActivity extends AppCompatActivity {
+public class MyPollActivity extends AppCompatActivity {
+
 
 
     private FirebaseDatabase mDatabase;
@@ -41,7 +41,8 @@ public class MyLikeContentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_like_contents);
+        setContentView(R.layout.activity_my_poll);
+
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -67,43 +68,40 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         postAdapterMine.notifyDataSetChanged();
 
 
-
-        //onCreate시 좋아요 누른 게시글 추려서 최초1회 바인딩
+        //onCreate시 참여한 게시물 추려서 최초1회 바인딩
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<String> key = new ArrayList<>();
-            ArrayList<String> key_ = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
-                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("likeContent").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("pickContent").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshots) {
-                        Map<String, Object> likeContent = (Map<String, Object>) dataSnapshots.getValue();
+                        Map<String, Object> pickContent = (Map<String, Object>) dataSnapshots.getValue();
                         int tempCount = 0;
 
-
-                        Set set = likeContent.keySet();
+                        Set set = pickContent.keySet();
                         Iterator iterator = set.iterator();
                         while(iterator.hasNext()){
                             key.add((String)iterator.next());
+                            tempCount++;
                         }
-
-                        for (int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
-                            if (likeContent.get(key.get(i)).toString().equals("true")) {
-                                key_.add(key.get(i));
-                                tempCount++;
-                            }
-                        }
+//
+//                        for (int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
+//                            if (pickContent.get(key.get(i)).toString().equals("true")) {
+//                                key_.add(key.get(i));
+//                                tempCount++;
+//                            }
+//                        }
 
                         contentDTOS.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
                             for(int i = 0; i < tempCount; i++) {
-                                if (contentDTO.getContentKey().contains(key_.get(i))) {
+                                if (contentDTO.getContentKey().contains(key.get(i))) {
                                     contentDTOS.add(contentDTO);
                                 }
                             }
-
                         }
                         postAdapterMine.notifyDataSetChanged();
                     }
@@ -121,15 +119,12 @@ public class MyLikeContentsActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
-
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mylike_menu, menu);
+        getMenuInflater().inflate(R.menu.mypoll_menu, menu);
         return true;
     }
 
@@ -140,7 +135,7 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_home:
-                Intent intentHome = new Intent(MyLikeContentsActivity.this, HomeActivity.class);
+                Intent intentHome = new Intent(MyPollActivity.this, HomeActivity.class);
                 startActivity(intentHome);
                 break;
             case R.id.menu_back:

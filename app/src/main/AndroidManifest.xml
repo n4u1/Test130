@@ -39,7 +39,8 @@
         <activity android:name=".views.SearchHomeActivity" />
         <activity android:name=".views.MineActivity" />
         <activity android:name=".views.MyLikeContentsActivity" />
-        <activity android:name=".views.SearchResultActivity"></activity>
+        <activity android:name=".views.SearchResultActivity" />
+        <activity android:name=".views.MyPollActivity"></activity>
     </application>
 
 </manifest>

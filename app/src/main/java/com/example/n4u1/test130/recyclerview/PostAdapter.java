@@ -67,20 +67,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
 
 
-    //아이템 클릭시 실행 함수
-    private ItemClick itemClick;
-
-
-
-    public interface ItemClick {
-        public void onClick(View view,int position);
-    }
-
-
-    //아이템 클릭시 실행 함수 등록 함수
-    public void setItemClick(ItemClick itemClick) {
-        this.itemClick = itemClick;
-    }
 
 
 
@@ -180,38 +166,69 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                         .thumbnail(Glide.with(holder.itemView.getContext()).load(R.drawable.loadingicon))
                         .into(((PostViewHolder)holder).imageView_postImg_0);
 
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                } else {
+                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                }
+
                 ((PostViewHolder)holder).imageView_like.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                contentDTOS.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                    contentDTOS.add(contentDTO);
+                                }
+                                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                    ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                } else {
+                                    ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                    ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
 
                     }
                 });
 
                 //좋아요 클릭시 바로 하트모양 변경
-                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        contentDTOS.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            contentDTOS.add(contentDTO);
-                        }
-
-                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
-                            ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
-                            ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        } else {
-                            ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                            ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+//                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                        contentDTOS.clear();
+////                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+////                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+////                            contentDTOS.add(contentDTO);
+////                        }
+//
+//                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+//                            ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                            ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        } else {
+//                            ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+//                            ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
 
 
 
@@ -235,35 +252,64 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                contentDTOS.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                    contentDTOS.add(contentDTO);
+                                }
+                                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                    ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                } else {
+                                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                    ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
                     }
                 });
 
 
-                //좋아요 클릭시 바로 하트모양 변경
-                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        contentDTOS.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            contentDTOS.add(contentDTO);
-                        }
-
-                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
-                            ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
-                            ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        } else {
-                            ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                            ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+//                //좋아요 클릭시 바로 하트모양 변경
+//                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                        contentDTOS.clear();
+////                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+////                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+////                            contentDTOS.add(contentDTO);
+////                        }
+//
+//                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+//                            ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                            ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        } else {
+//                            ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+//                            ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                } else {
+                    ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                }
 
                 ((PostViewHolder1)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder1)holder).textView_userName.setText(contentDTOS.get(position).userID);
@@ -301,33 +347,62 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                contentDTOS.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                    contentDTOS.add(contentDTO);
+                                }
+                                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                    ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                } else {
+                                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                    ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 });
 
 
                 //좋아요 클릭시 바로 하트모양 변경
-                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        contentDTOS.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            contentDTOS.add(contentDTO);
-                        }
-                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
-                            ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
-                            ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        } else {
-                            ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                            ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+//                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                        contentDTOS.clear();
+////                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+////                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+////                            contentDTOS.add(contentDTO);
+////                        }
+//                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+//                            ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                            ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        } else {
+//                            ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+//                            ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                } else {
+                    ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                }
 
                 ((PostViewHolder2)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder2)holder).textView_userName.setText(contentDTOS.get(position).userID);
@@ -368,6 +443,28 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                     @Override
                     public void onClick(View v) {
                         onLikeClicked(firebaseDatabase.getReference().child("user_contents").child(uidLists.get(position)));
+                        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                contentDTOS.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                    contentDTOS.add(contentDTO);
+                                }
+                                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                    ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                } else {
+                                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                    ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
 
                     }
@@ -375,28 +472,35 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
 
                 //좋아요 클릭시 바로 하트모양 변경
-                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        contentDTOS.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            contentDTOS.add(contentDTO);
-                        }
-                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
-                            ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
-                            ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        } else {
-                            ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                            ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+//                mDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+////                        contentDTOS.clear();
+////                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+////                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+////                            contentDTOS.add(contentDTO);
+////                        }
+//                        if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+//                            ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                            ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        } else {
+//                            ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+//                            ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+                if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
+                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                } else {
+                    ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
+                }
 
                 ((PostViewHolder3)holder).textView_title.setText(contentDTOS.get(position).title);
                 ((PostViewHolder3)holder).textView_userName.setText(contentDTOS.get(position).userID);

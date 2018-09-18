@@ -110,8 +110,9 @@ public class SearchHomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchHomeActivity.this, (String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_category").setValue(parent.getItemAtPosition(position));
+//                mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_category").setValue(parent.getItemAtPosition(position));
                 Intent intent = new Intent(SearchHomeActivity.this, SearchResultActivity.class);
+                intent.putExtra("searchCategory", (String)parent.getItemAtPosition(position));
                 startActivity(intent);
             }
         });
@@ -121,8 +122,9 @@ public class SearchHomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(SearchHomeActivity.this, (String)parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-                mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_title").setValue(parent.getItemAtPosition(position));
+//                mFirebaseDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_title").setValue(parent.getItemAtPosition(position));
                 Intent intent = new Intent(SearchHomeActivity.this, SearchResultActivity.class);
+                intent.putExtra("searchTitle", (String)parent.getItemAtPosition(position));
                 startActivity(intent);
             }
         });
