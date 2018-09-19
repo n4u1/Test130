@@ -235,9 +235,9 @@ public class FileChoiceActivity extends AppCompatActivity
             contentDTO.pollMode = userInputContents.get(2);
             contentDTO.description = userInputContents.get(3);
             contentDTO.uid = auth.getCurrentUser().getUid();
-
             contentDTO.userID = auth.getCurrentUser().getEmail();
             mdatabaseRef.child("user_contents").child(key).setValue(contentDTO);
+            mdatabaseRef.child("users").child(auth.getCurrentUser().getUid()).child("uploadContent").child(key).setValue("true");
 //
             if (uri[0].length() != 0) {
                 Uri file_0 = Uri.fromFile(new File(uri[0]));
@@ -501,6 +501,8 @@ public class FileChoiceActivity extends AppCompatActivity
             contentDTO.uid = auth.getCurrentUser().getUid();
             contentDTO.userID = auth.getCurrentUser().getEmail();
             mdatabaseRef.child("user_contents").child(key).setValue(contentDTO);
+            mdatabaseRef.child("users").child(auth.getCurrentUser().getUid()).child("uploadContent").child(key).setValue("true");
+
 //
             if (uri[0].length() != 0) {
                 Uri file_0 = Uri.fromFile(new File(uri[0]));

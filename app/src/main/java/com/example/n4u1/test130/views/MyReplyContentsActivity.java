@@ -1,9 +1,9 @@
 package com.example.n4u1.test130.views;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,10 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
-public class MyLikeContentsActivity extends AppCompatActivity {
+public class MyReplyContentsActivity extends AppCompatActivity {
 
     private FirebaseDatabase mDatabase;
     private FirebaseDatabase mDatabaseUser;
@@ -38,7 +36,7 @@ public class MyLikeContentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_like_contents);
+        setContentView(R.layout.activity_my_reply_contents);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -64,42 +62,30 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         postAdapterMine.notifyDataSetChanged();
 
 
-        //onCreate시 좋아요 누른 게시글 추려서 리스트업
+
+        //onCreate시 리플단 게시글 추려서 리스트업
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-            ArrayList<String> key = new ArrayList<>();
-            ArrayList<String> key_ = new ArrayList<>();
+            int tempCount = 0;
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-
-                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("likeContent").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("reply").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshots) {
-                        Map<String, Object> likeContent = (Map<String, Object>) dataSnapshots.getValue();
-                        int tempCount = 0;
-
-
-                        Set set = likeContent.keySet();
-                        Iterator iterator = set.iterator();
-                        while(iterator.hasNext()){
-                            key.add((String)iterator.next());
-                        }
-
-                        for (int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
-                            if (likeContent.get(key.get(i)).toString().equals("true")) {
-                                key_.add(key.get(i));
-                                tempCount++;
-                            }
+                        ArrayList<String> replyKey = new ArrayList<>();
+                        Iterator<DataSnapshot> replyKeyIterator = dataSnapshots.getChildren().iterator();
+                        while (replyKeyIterator.hasNext()) {
+                            replyKey.add(replyKeyIterator.next().getKey());
+                            tempCount++;
                         }
 
                         contentDTOS.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
                             for(int i = 0; i < tempCount; i++) {
-                                if (contentDTO.getContentKey().contains(key_.get(i))) {
+                                if (contentDTO.getContentKey().contains(replyKey.get(i))) {
                                     contentDTOS.add(contentDTO);
                                 }
                             }
-
                         }
                         postAdapterMine.notifyDataSetChanged();
                     }
@@ -136,7 +122,7 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_home:
-                Intent intentHome = new Intent(MyLikeContentsActivity.this, HomeActivity.class);
+                Intent intentHome = new Intent(MyReplyContentsActivity.this, HomeActivity.class);
                 startActivity(intentHome);
                 break;
             case R.id.menu_back:

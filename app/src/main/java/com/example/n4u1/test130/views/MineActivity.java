@@ -49,6 +49,8 @@ public class MineActivity extends AppCompatActivity {
         final TextView mineActivity_textView_age = findViewById(R.id.mineActivity_textView_age);
         TextView mineActivity_textView_like = findViewById(R.id.mineActivity_textView_like);
         TextView mineActivity_textView_pickContent = findViewById(R.id.mineActivity_textView_pickContent);
+        TextView mineActivity_textView_reply = findViewById(R.id.mineActivity_textView_reply);
+        TextView mineActivity_textView_upload = findViewById(R.id.mineActivity_textView_upload);
 
         //이메일 가져오기
         mineActivity_textView_account.setText(mFireBaseUser.getEmail());
@@ -68,7 +70,7 @@ public class MineActivity extends AppCompatActivity {
         });
 
 
-        //좋아요 누른 게시물 이동클릭
+        //좋아요 누른 게시물 모아보기
         mineActivity_textView_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +79,7 @@ public class MineActivity extends AppCompatActivity {
             }
         });
 
+        //참여한 게시물 모아보기
         mineActivity_textView_pickContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +88,23 @@ public class MineActivity extends AppCompatActivity {
             }
         });
 
+        //댓글 남긴 게시물 모아보기
+        mineActivity_textView_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyReplyContentsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //내가 올린 게시물 모아보기
+        mineActivity_textView_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyUploadActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

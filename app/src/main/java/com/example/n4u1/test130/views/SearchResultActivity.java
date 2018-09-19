@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
-import com.example.n4u1.test130.recyclerview.PostAdapterMyLike;
+import com.example.n4u1.test130.recyclerview.PostAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,12 +23,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SearchResultActivity extends AppCompatActivity {
-    private FirebaseDatabase mSortingDatabase;
+
     private String searchCategory = "";
     private String searchTitle = "";
 
-    final ArrayList<ContentDTO> contentDTOSS = new ArrayList<>();
-    final PostAdapterMyLike postAdapterMyLike = new PostAdapterMyLike(this, contentDTOSS);
+    final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+//    final PostAdapterMyLike postAdapterMyLike = new PostAdapterMyLike(this, contentDTOSS);
+//    final PostAdapterMine postAdapterMine = new PostAdapterMine(this, contentDTOSS);
+    final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
 
 
     @Override
@@ -46,7 +48,7 @@ public class SearchResultActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mSortingDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mSortingDatabase = FirebaseDatabase.getInstance();
         searchTitle = getIntent().getStringExtra("searchTitle");
         searchCategory = getIntent().getStringExtra("searchCategory");
         final RecyclerView recyclerView_result = findViewById(R.id.recyclerView_result);
@@ -57,24 +59,23 @@ public class SearchResultActivity extends AppCompatActivity {
         mLayoutManager.setReverseLayout(true);
         recyclerView_result.setLayoutManager(mLayoutManager);
 
-        recyclerView_result.setAdapter(postAdapterMyLike);
-        postAdapterMyLike.notifyDataSetChanged();
-
+        recyclerView_result.setAdapter(postAdapter);
+        postAdapter.notifyDataSetChanged();
 
         if (searchTitle == null) {
             mSortingDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    contentDTOSS.clear();
+                    contentDTOS.clear();
                     Log.d("lkj why not??", "why not??");
                     Iterator<DataSnapshot> contentDTOIterator = dataSnapshot.getChildren().iterator();
                     while (contentDTOIterator.hasNext()) {
                         ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
                         if (contentDTO.contentType.contains(searchCategory)) {
-                            contentDTOSS.add(contentDTO);
+                            contentDTOS.add(contentDTO);
                         }
                     }
-                    postAdapterMyLike.notifyDataSetChanged();
+                    postAdapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -86,16 +87,15 @@ public class SearchResultActivity extends AppCompatActivity {
             mSortingDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    contentDTOSS.clear();
+                    contentDTOS.clear();
                     Iterator<DataSnapshot> contentDTOIterator = dataSnapshot.getChildren().iterator();
                     while (contentDTOIterator.hasNext()) {
                         ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
                         if (contentDTO.title.contains(searchTitle)) {
-                            contentDTOSS.add(contentDTO);
+                            contentDTOS.add(contentDTO);
                         }
                     }
-                    postAdapterMyLike.notifyDataSetChanged();
+                    postAdapter.notifyDataSetChanged();
                 }
 
                 @Override

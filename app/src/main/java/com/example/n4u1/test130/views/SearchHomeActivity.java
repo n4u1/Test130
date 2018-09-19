@@ -31,9 +31,6 @@ import java.util.Iterator;
 
 public class SearchHomeActivity extends AppCompatActivity {
 
-
-
-
     private ListView listViewCategory;
     private ListView listViewTitle;
     private ArrayList<String> stringArrayCategoryList;
@@ -72,7 +69,7 @@ public class SearchHomeActivity extends AppCompatActivity {
         //https://stackoverflow.com/questions/31966453/firebase-where-to-call-addchildeventlistener-so-that-i-can-save-bandwidth
         //위의 주소에서처럼 많은량의 user_contents가 누적되었을경우 SharedPreferences(?) 를 이용해서 이어서 검색하게함
         //Query newItems = mDatabaseReference.orderByKey().startAt(lastChildKey);
-        //검색 대상인 title을 arraylist로 뽑아서 세팅
+        //검색 대상인 title을 arraylist로 뽑아서 리스트업
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("user_contents");
         mDatabaseReference.orderByChild("title").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

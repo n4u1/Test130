@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class MyLikeContentsActivity extends AppCompatActivity {
+public class MyUploadActivity extends AppCompatActivity {
 
     private FirebaseDatabase mDatabase;
     private FirebaseDatabase mDatabaseUser;
@@ -34,11 +34,10 @@ public class MyLikeContentsActivity extends AppCompatActivity {
     final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
     final PostAdapterMine postAdapterMine = new PostAdapterMine(this, contentDTOS);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_like_contents);
+        setContentView(R.layout.activity_my_upload);
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -64,42 +63,33 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         postAdapterMine.notifyDataSetChanged();
 
 
-        //onCreate시 좋아요 누른 게시글 추려서 리스트업
+        //onCreate시 업로드한 게시물 추려서 리스트업
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<String> key = new ArrayList<>();
-            ArrayList<String> key_ = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
-                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("likeContent").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabaseUser.getReference().child("users").child(mFireBaseUser.getUid()).child("uploadContent").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshots) {
-                        Map<String, Object> likeContent = (Map<String, Object>) dataSnapshots.getValue();
+                        Map<String, Object> uploadContent = (Map<String, Object>) dataSnapshots.getValue();
                         int tempCount = 0;
 
-
-                        Set set = likeContent.keySet();
+                        Set set = uploadContent.keySet();
                         Iterator iterator = set.iterator();
                         while(iterator.hasNext()){
                             key.add((String)iterator.next());
-                        }
-
-                        for (int i = 0; i < dataSnapshots.getChildrenCount(); i++) {
-                            if (likeContent.get(key.get(i)).toString().equals("true")) {
-                                key_.add(key.get(i));
-                                tempCount++;
-                            }
+                            tempCount++;
                         }
 
                         contentDTOS.clear();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
                             for(int i = 0; i < tempCount; i++) {
-                                if (contentDTO.getContentKey().contains(key_.get(i))) {
+                                if (contentDTO.getContentKey().contains(key.get(i))) {
                                     contentDTOS.add(contentDTO);
                                 }
                             }
-
                         }
                         postAdapterMine.notifyDataSetChanged();
                     }
@@ -117,15 +107,12 @@ public class MyLikeContentsActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
-
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mylike_menu, menu);
+        getMenuInflater().inflate(R.menu.mypoll_menu, menu);
         return true;
     }
 
@@ -136,7 +123,7 @@ public class MyLikeContentsActivity extends AppCompatActivity {
         int curId = item.getItemId();
         switch (curId) {
             case R.id.menu_home:
-                Intent intentHome = new Intent(MyLikeContentsActivity.this, HomeActivity.class);
+                Intent intentHome = new Intent(MyUploadActivity.this, HomeActivity.class);
                 startActivity(intentHome);
                 break;
             case R.id.menu_back:
