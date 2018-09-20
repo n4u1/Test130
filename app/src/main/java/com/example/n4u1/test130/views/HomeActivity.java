@@ -76,7 +76,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);
         mDatabase = FirebaseDatabase.getInstance();
-        FirebaseDatabase mSearchingDatabase = FirebaseDatabase.getInstance();
         mSortingDatabase = FirebaseDatabase.getInstance();
         mFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -97,8 +96,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_category").setValue("전체");
-                mDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_title").setValue("전체");
                 contentDTOS.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
@@ -120,8 +117,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_category").setValue("전체");
-                mDatabase.getReference().child("users").child(mFireBaseUser.getUid()).child("search_flag_title").setValue("전체");
                 mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

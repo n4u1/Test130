@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
@@ -51,21 +55,23 @@ public class MyUploadActivity extends AppCompatActivity {
         mDatabaseUser = FirebaseDatabase.getInstance();
         mFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final RecyclerView recyclerViewList = findViewById(R.id.recyclerView_home);
+        final RecyclerView recyclerView_myUpload = findViewById(R.id.recyclerView_myUpload);
+        final TextView textView_myUpload = findViewById(R.id.textView_myUpload);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.isSmoothScrollbarEnabled();
         mLayoutManager.setStackFromEnd(true);
         mLayoutManager.setReverseLayout(true);
-        recyclerViewList.setLayoutManager(mLayoutManager);
+        recyclerView_myUpload.setLayoutManager(mLayoutManager);
 
-        recyclerViewList.setAdapter(postAdapterMine);
+        recyclerView_myUpload.setAdapter(postAdapterMine);
         postAdapterMine.notifyDataSetChanged();
 
 
         //onCreate시 업로드한 게시물 추려서 리스트업
         mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
             ArrayList<String> key = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
@@ -75,23 +81,35 @@ public class MyUploadActivity extends AppCompatActivity {
                         Map<String, Object> uploadContent = (Map<String, Object>) dataSnapshots.getValue();
                         int tempCount = 0;
 
-                        Set set = uploadContent.keySet();
-                        Iterator iterator = set.iterator();
-                        while(iterator.hasNext()){
-                            key.add((String)iterator.next());
-                            tempCount++;
-                        }
+                        if (uploadContent == null) {
+                            textView_myUpload.setVisibility(View.VISIBLE);
+                            recyclerView_myUpload.setVisibility(View.GONE);
+//                            Toast toast = Toast.makeText(getApplicationContext(), "진행하신 투표가 아직 없습니다!", Toast.LENGTH_LONG);
+//                            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//                            toast.show();
+                        } else {
+                            textView_myUpload.setVisibility(View.GONE);
+                            recyclerView_myUpload.setVisibility(View.VISIBLE);
+                            Set set = uploadContent.keySet();
+                            Iterator iterator = set.iterator();
+                            while (iterator.hasNext()) {
+                                key.add((String) iterator.next());
+                                tempCount++;
+                            }
 
-                        contentDTOS.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            for(int i = 0; i < tempCount; i++) {
-                                if (contentDTO.getContentKey().contains(key.get(i))) {
-                                    contentDTOS.add(contentDTO);
+                            contentDTOS.clear();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                for (int i = 0; i < tempCount; i++) {
+                                    if (contentDTO.getContentKey().contains(key.get(i))) {
+                                        contentDTOS.add(contentDTO);
+                                    }
                                 }
                             }
+                            postAdapterMine.notifyDataSetChanged();
                         }
-                        postAdapterMine.notifyDataSetChanged();
+
+
                     }
 
                     @Override
@@ -115,7 +133,6 @@ public class MyUploadActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.mypoll_menu, menu);
         return true;
     }
-
 
 
     @Override
