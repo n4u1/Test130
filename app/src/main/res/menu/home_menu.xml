@@ -27,11 +27,6 @@
         app:showAsAction="always"/>
 
 
-    <item
-        android:title="Setting"
-        android:id="@+id/menu_setting"
-        android:icon="@drawable/ic_settings_black_24dp"
-        app:showAsAction="always"/>
 
 
 

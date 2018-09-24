@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     private LinearLayoutManager mLayoutManager;
     private RecyclerView recyclerView_home;
     private PostAdapter postAdapter;
-
+    final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);
-        final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+
         recyclerView_home = findViewById(R.id.recyclerView_home);
 
         mDatabase = FirebaseDatabase.getInstance();
@@ -188,7 +188,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         contentDTOS.clear();
                         ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
-                        int temp = (int) dataSnapshot.getChildrenCount();
 
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
@@ -229,25 +228,34 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     //좋아요 클릭후 HomeActivity 새로고침
-//    public void resetActivity() {
-//        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                contentDTOS.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-//                    contentDTOS.add(contentDTO);
-//                }
-//                postAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//
-//            }
-//        });
-//    }
+    public void resetActivity() {
+        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                contentDTOS.clear();
+                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                    contentDTOSTemp.add(contentDTO);
+                }
+
+                Collections.reverse(contentDTOSTemp);
+
+                for (int i = 0; i < 10; i++) {
+                    contentDTOS.add(contentDTOSTemp.get(i));
+                }
+
+                postAdapter.notifyDataSetChanged();
+                recyclerView_home.scrollToPosition(0);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        });
+    }
 
 
     @Override
@@ -275,19 +283,13 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 overridePendingTransition(0, 0);
                 break;
             case R.id.menu_home:
-                Log.d("lkj menuhome", "??????");
-//                resetActivity();
-//                finish();
-//                overridePendingTransition(0, 0);
-//                startActivity(getIntent());
-//                overridePendingTransition(0, 0);
+                resetActivity();
                 break;
             case R.id.menu_mine:
                 Intent intentMine = new Intent(HomeActivity.this, MineActivity.class);
                 startActivity(intentMine);
                 break;
-            case R.id.menu_setting:
-                break;
+
 
         }
 //        onBackPressed();

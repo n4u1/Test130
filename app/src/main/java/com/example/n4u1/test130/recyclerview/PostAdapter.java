@@ -41,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,6 +175,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                     String uidKey = snapshot.getKey();
                     uidLists.add(uidKey);
                 }
+                Collections.reverse(uidLists);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -219,10 +221,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 contentDTOS.clear();
+                                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                                    contentDTOS.add(contentDTO);
+                                    contentDTOSTemp.add(contentDTO);
                                 }
+
+                                Collections.reverse(contentDTOSTemp);
+                                contentDTOS.addAll(contentDTOSTemp);
+
                                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
                                     ((PostViewHolder)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
                                     ((PostViewHolder)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
@@ -290,10 +298,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 contentDTOS.clear();
+                                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                                    contentDTOS.add(contentDTO);
+                                    contentDTOSTemp.add(contentDTO);
                                 }
+
+                                Collections.reverse(contentDTOSTemp);
+                                contentDTOS.addAll(contentDTOSTemp);
+
                                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
                                     ((PostViewHolder1)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
                                     ((PostViewHolder1)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
@@ -385,10 +399,16 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 contentDTOS.clear();
+                                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                                    contentDTOS.add(contentDTO);
+                                    contentDTOSTemp.add(contentDTO);
                                 }
+
+                                Collections.reverse(contentDTOSTemp);
+                                contentDTOS.addAll(contentDTOSTemp);
+
                                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
                                     ((PostViewHolder2)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
                                     ((PostViewHolder2)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
@@ -481,10 +501,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 contentDTOS.clear();
+                                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                                    contentDTOS.add(contentDTO);
+                                    contentDTOSTemp.add(contentDTO);
                                 }
+
+                                Collections.reverse(contentDTOSTemp);
+                                contentDTOS.addAll(contentDTOSTemp);
+
+
                                 if (contentDTOS.get(position).likes.containsKey(auth.getCurrentUser().getUid())) {
                                     ((PostViewHolder3)holder).imageView_like.setImageResource(R.drawable.ic_favorite_black_24dp);
                                     ((PostViewHolder3)holder).textView_likeCount.setText(String.valueOf(contentDTOS.get(position).likeCount));
