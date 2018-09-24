@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class SearchResultActivity extends AppCompatActivity {
@@ -27,10 +28,6 @@ public class SearchResultActivity extends AppCompatActivity {
     private String searchCategory = "";
     private String searchTitle = "";
 
-    final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
-//    final PostAdapterMyLike postAdapterMyLike = new PostAdapterMyLike(this, contentDTOSS);
-//    final PostAdapterMine postAdapterMine = new PostAdapterMine(this, contentDTOSS);
-    final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
 
 
     @Override
@@ -48,10 +45,16 @@ public class SearchResultActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
         FirebaseDatabase mSortingDatabase = FirebaseDatabase.getInstance();
         searchTitle = getIntent().getStringExtra("searchTitle");
         searchCategory = getIntent().getStringExtra("searchCategory");
+
         final RecyclerView recyclerView_result = findViewById(R.id.recyclerView_result);
+        final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+//    final PostAdapterMyLike postAdapterMyLike = new PostAdapterMyLike(this, contentDTOSS);
+//    final PostAdapterMine postAdapterMine = new PostAdapterMine(this, contentDTOSS);
+        final PostAdapter postAdapter = new PostAdapter(this, contentDTOS, recyclerView_result);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.isSmoothScrollbarEnabled();
@@ -67,7 +70,6 @@ public class SearchResultActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     contentDTOS.clear();
-                    Log.d("lkj why not??", "why not??");
                     Iterator<DataSnapshot> contentDTOIterator = dataSnapshot.getChildren().iterator();
                     while (contentDTOIterator.hasNext()) {
                         ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
@@ -75,6 +77,7 @@ public class SearchResultActivity extends AppCompatActivity {
                             contentDTOS.add(contentDTO);
                         }
                     }
+                    Collections.reverse(contentDTOS);
                     postAdapter.notifyDataSetChanged();
                 }
 

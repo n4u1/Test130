@@ -2,6 +2,7 @@ package com.example.n4u1.test130.views;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +22,7 @@ import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.recyclerview.PostAdapter;
+import com.example.n4u1.test130.util.OnLoadMoreListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,58 +41,47 @@ import java.util.Map;
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private FirebaseDatabase mDatabase;
-    private FirebaseDatabase mSortingDatabase;
-    private FirebaseUser mFireBaseUser;
-
-    final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
-    final ArrayList<ContentDTO> contentDTOS_title = new ArrayList<>();
-    final ArrayList<ContentDTO> contentDTOS_category = new ArrayList<>();
-    final PostAdapter postAdapter = new PostAdapter(this, contentDTOS);
-
-
+    protected Handler handler;
+    private LinearLayoutManager mLayoutManager;
+    private RecyclerView recyclerView_home;
+    private PostAdapter postAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SetActionBarTitle(getSupportActionBar(), "AQA");
         setContentView(R.layout.activity_home);
 
-//        //테스트용 액티비티
-//        Button button = findViewById(R.id.button_test);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(HomeActivity.this, TestActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(" ");
         }
-        getSupportActionBar().setIcon(R.mipmap.ic_q_custom);
+        getSupportActionBar().setIcon(R.mipmap.ic_aqa_custom);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
         final SwipeRefreshLayout mSwipeRefreshLayout = findViewById(R.id.swipeRFL);
-        mDatabase = FirebaseDatabase.getInstance();
-        mSortingDatabase = FirebaseDatabase.getInstance();
-        mFireBaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final ArrayList<ContentDTO> contentDTOS = new ArrayList<>();
+        recyclerView_home = findViewById(R.id.recyclerView_home);
 
-        final RecyclerView recyclerView_home = findViewById(R.id.recyclerView_home);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//20180730 전날꺼 보기 getApplicationContext()전에 this,?? 였음
+        mDatabase = FirebaseDatabase.getInstance();
+        handler = new Handler();
+        FloatingActionButton fab_addContent = findViewById(R.id.fab_addContent);
+
+
+        recyclerView_home.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);//20180730 전날꺼 보기 getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mLayoutManager.isSmoothScrollbarEnabled();
         mLayoutManager.setStackFromEnd(true);
-        mLayoutManager.setReverseLayout(true);
+//        mLayoutManager.setReverseLayout(true);
         recyclerView_home.setLayoutManager(mLayoutManager);
+        postAdapter = new PostAdapter(this, contentDTOS, recyclerView_home);
 //        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
+
         recyclerView_home.setAdapter(postAdapter);
         postAdapter.notifyDataSetChanged();
-
 
 
         //onCreate시 액티비티 최초1회 바인딩
@@ -97,11 +89,28 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 contentDTOS.clear();
+                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+                int temp = (int) dataSnapshot.getChildrenCount();
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                    contentDTOS.add(contentDTO);
+                    contentDTOSTemp.add(contentDTO);
                 }
+
+//                Collections.reverse(contentDTOSTemp);
+
+                Collections.reverse(contentDTOSTemp);
+
+                for (int i = 0; i < 10; i++) {
+                    contentDTOS.add(contentDTOSTemp.get(i));
+                }
+
+//                Collections.reverse(contentDTOS);
+
+
+//                postAdapter.notifyItemInserted(contentDTOS.size());
                 postAdapter.notifyDataSetChanged();
+                recyclerView_home.scrollToPosition(0);
             }
 
             @Override
@@ -110,7 +119,64 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
+        //맨 밑으로 내리면 더 보여주기
+        postAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //add null , so the adapter will check view_type and show progress bar at bottom
+                contentDTOS.add(null);
+                postAdapter.notifyItemInserted(contentDTOS.size()-1);
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //   remove progress item
+                        contentDTOS.remove(contentDTOS.size()-1);
+                        postAdapter.notifyItemRemoved(contentDTOS.size());
+                        //add items one by one
+//                        final int start = contentDTOS.size();
+//                        final int end = start + 5;
+
+                            mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+                                    int start = contentDTOS.size();
+                                    int end = start + 5;
+
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                        contentDTOSTemp.add(contentDTO);
+                                    }
+
+                                    Collections.reverse(contentDTOSTemp);
+
+                                    for (int i = start; i <= end; i++) {
+                                        try {
+                                            if (contentDTOSTemp.get(i) != null) {
+                                                contentDTOS.add(contentDTOSTemp.get(i));
+                                            }
+                                        }catch (Exception e){
+                                            Log.w("lkj exception", e);
+                                        }
+                                    }
+                                    postAdapter.notifyItemInserted(contentDTOS.size());
+                                    postAdapter.setLoaded();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                        //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
+                    }
+                }, 2000);
+
+            }
+        });
 
 
         //Pull to Refresh 당겨서 새로고침
@@ -121,11 +187,26 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         contentDTOS.clear();
+                        ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+                        int temp = (int) dataSnapshot.getChildrenCount();
+
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                            contentDTOS.add(contentDTO);
+                            contentDTOSTemp.add(contentDTO);
                         }
+
+                        Collections.reverse(contentDTOSTemp);
+
+                        for (int i = 0; i < 10; i++) {
+                            contentDTOS.add(contentDTOSTemp.get(i));
+                        }
+
+
+
+//                        postAdapter.notifyItemInserted(contentDTOS.size());
+
                         postAdapter.notifyDataSetChanged();
+                        recyclerView_home.scrollToPosition(0);
                     }
 
                     @Override
@@ -148,25 +229,25 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     //좋아요 클릭후 HomeActivity 새로고침
-    public void resetActivity() {
-        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                contentDTOS.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                    contentDTOS.add(contentDTO);
-                }
-                postAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-
-            }
-        });
-    }
+//    public void resetActivity() {
+//        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                contentDTOS.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+//                    contentDTOS.add(contentDTO);
+//                }
+//                postAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//
+//            }
+//        });
+//    }
 
 
     @Override
@@ -195,7 +276,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 break;
             case R.id.menu_home:
                 Log.d("lkj menuhome", "??????");
-                resetActivity();
+//                resetActivity();
 //                finish();
 //                overridePendingTransition(0, 0);
 //                startActivity(getIntent());

@@ -7,11 +7,13 @@ import android.net.sip.SipSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,7 @@ import com.example.n4u1.test130.R;
 import com.example.n4u1.test130.models.ContentDTO;
 import com.example.n4u1.test130.models.User;
 import com.example.n4u1.test130.util.GlideApp;
+import com.example.n4u1.test130.util.OnLoadMoreListener;
 import com.example.n4u1.test130.views.HomeActivity;
 import com.example.n4u1.test130.views.PollActivity;
 import com.example.n4u1.test130.views.PollRankingActivity;
@@ -45,22 +48,50 @@ import java.util.Map;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
-    private ArrayList strings;
     private Context mContext;
     private ArrayList<ContentDTO> contentDTOS;
     private static final int ITEM_VIEW_TYPE_1 = 1;
     private static final int ITEM_VIEW_TYPE_2 = 2;
     private static final int ITEM_VIEW_TYPE_3 = 3;
     private static final int ITEM_VIEW_TYPE_0 = 0;
+    private static final int VIEW_PROG = 10;
     private FirebaseAuth auth;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseDatabase mDatabase;
+    private int lastVisibleItem, totalItemCount;
+    private boolean loading;
+    private int visibleThreshold = 1;
+    private OnLoadMoreListener onLoadMoreListener;
 
-
-
-    public PostAdapter(Context context, ArrayList<ContentDTO> listItem) {
+    public PostAdapter(Context context, ArrayList<ContentDTO> listItem, RecyclerView recyclerView) {
         this.mContext = context;
         this.contentDTOS = listItem;
+
+
+        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    Log.d("lkjRecyclerView1", String.valueOf(linearLayoutManager.getItemCount()));
+                    Log.d("lkjRecyclerView2", String.valueOf(linearLayoutManager.findLastVisibleItemPosition()));
+
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                    if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                        // End has been reached
+                        // Do something
+                        if (onLoadMoreListener != null) {
+                            onLoadMoreListener.onLoadMore();
+                        }
+                        loading = true;
+                    }
+                }
+            });
+        }
     }
 
 
@@ -85,6 +116,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         } else if (viewType == ITEM_VIEW_TYPE_3) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_home_3_img, parent, false);
             return new PostViewHolder3(view);
+        } else if (viewType == VIEW_PROG){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.progressbar_recyclerview, parent, false);
+            return new ProgressViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item_home_0_img, parent, false);
             return new PostViewHolder(view);
@@ -94,30 +128,32 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
     @Override
     public int getItemViewType(int position) {
-        if (contentDTOS.get(position).getItemViewType() == 1) {
-            return ITEM_VIEW_TYPE_0;
-        } else if (contentDTOS.get(position).getItemViewType() == 2) {
-            return ITEM_VIEW_TYPE_1;
-        } else if (contentDTOS.get(position).getItemViewType() == 3) {
-            return ITEM_VIEW_TYPE_2;
-        } else if (contentDTOS.get(position).getItemViewType() == 4) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 5) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 5) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 6) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 7) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 8) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 9) {
-            return ITEM_VIEW_TYPE_3;
-        } else if (contentDTOS.get(position).getItemViewType() == 10) {
-            return ITEM_VIEW_TYPE_3;
+        if (contentDTOS.get(position) == null) {
+            return VIEW_PROG;
         } else {
-            return ITEM_VIEW_TYPE_1;
+            if (contentDTOS.get(position).getItemViewType() == 1) {
+                return ITEM_VIEW_TYPE_0;
+            } else if (contentDTOS.get(position).getItemViewType() == 2) {
+                return ITEM_VIEW_TYPE_1;
+            } else if (contentDTOS.get(position).getItemViewType() == 3) {
+                return ITEM_VIEW_TYPE_2;
+            } else if (contentDTOS.get(position).getItemViewType() == 4) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 5) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 5) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 6) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 7) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 8) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 9) {
+                return ITEM_VIEW_TYPE_3;
+            } else if (contentDTOS.get(position).getItemViewType() == 10) {
+                return ITEM_VIEW_TYPE_3;
+            } else return ITEM_VIEW_TYPE_1;
         }
     }
 
@@ -127,6 +163,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         final List<String> uidLists = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+
 
         //좋아요 클릭을위해서 참조해서 키값 받아옴
         firebaseDatabase.getReference().child("user_contents").addValueEventListener(new ValueEventListener() {
@@ -229,9 +266,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 //
 //                    }
 //                });
-
-
-
                 break;
 
             case ITEM_VIEW_TYPE_1 :
@@ -514,9 +548,21 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
 
                 break;
-            default: break;
+            default:
+                ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
+                break;
         }
     }
+
+    public void setLoaded() {
+        loading = false;
+    }
+
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
+    }
+
 
     private void movePoll(int position) {
         String string = contentDTOS.get(position).contentKey;
@@ -549,11 +595,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
         return contentDTOS.size();
     }
 
-    private void resetHomeActivity() {
-        if (mContext instanceof HomeActivity) {
-            ((HomeActivity)mContext).resetActivity();
-        }
-    }
+//    private void resetHomeActivity() {
+//        if (mContext instanceof HomeActivity) {
+//            ((HomeActivity)mContext).resetActivity();
+//        }
+//    }
 
 
 
@@ -616,5 +662,14 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
             }
         });
+    }
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public ProgressViewHolder(View v) {
+            super(v);
+            progressBar = v.findViewById(R.id.progressBar1);
+        }
     }
 }
