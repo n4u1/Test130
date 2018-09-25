@@ -286,6 +286,15 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+
+        pollActivity_recyclerView_reply.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+
+
         //댓글 리사이클러뷰
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -295,6 +304,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
         pollActivity_recyclerView_reply.setLayoutManager(mLayoutManager);
 //        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
         pollActivity_recyclerView_reply.setAdapter(replyAdapter);
+
 
 
         //reply button click, 댓글달기버튼
@@ -1258,7 +1268,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_0").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1276,7 +1286,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_1").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1294,7 +1304,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_2").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1312,7 +1322,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_3").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1330,7 +1340,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_4").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1348,7 +1358,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_5").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1366,7 +1376,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_6").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1384,7 +1394,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_7").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1402,7 +1412,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_8").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1420,7 +1430,7 @@ public class PollRankingActivity extends AppCompatActivity implements View.OnCli
 
                         String url = contentInfo.get("imageUrl_9").toString();
 
-                        Intent intent = new Intent(PollRankingActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollRankingActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }

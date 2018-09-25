@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -125,53 +126,57 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onLoadMore() {
                 //add null , so the adapter will check view_type and show progress bar at bottom
                 contentDTOS.add(null);
-                postAdapter.notifyItemInserted(contentDTOS.size()-1);
+                postAdapter.notifyItemInserted(contentDTOS.size() - 1);
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         //   remove progress item
-                        contentDTOS.remove(contentDTOS.size()-1);
+                        contentDTOS.remove(contentDTOS.size() - 1);
                         postAdapter.notifyItemRemoved(contentDTOS.size());
                         //add items one by one
 //                        final int start = contentDTOS.size();
 //                        final int end = start + 5;
 
-                            mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
-                                    int start = contentDTOS.size();
-                                    int end = start + 5;
+                        mDatabase.getReference().child("user_contents").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                ArrayList<ContentDTO> contentDTOSTemp = new ArrayList<>();
+                                int start = contentDTOS.size();
+                                int end = start + 5;
 
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
-                                        contentDTOSTemp.add(contentDTO);
-                                    }
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ContentDTO contentDTO = snapshot.getValue(ContentDTO.class);
+                                    contentDTOSTemp.add(contentDTO);
+                                }
 
-                                    Collections.reverse(contentDTOSTemp);
+                                Collections.reverse(contentDTOSTemp);
 
-                                    for (int i = start; i <= end; i++) {
-                                        try {
-                                            if (contentDTOSTemp.get(i) != null) {
-                                                contentDTOS.add(contentDTOSTemp.get(i));
-                                            }
-                                        }catch (Exception e){
-                                            Log.w("lkj exception", e);
+                                for (int i = start; i <= end; i++) {
+                                    try {
+                                        if (contentDTOSTemp.get(i) != null) {
+                                            contentDTOS.add(contentDTOSTemp.get(i));
                                         }
+                                    } catch (Exception e) {
+                                        Log.w("lkj exception", e);
+
                                     }
-                                    postAdapter.notifyItemInserted(contentDTOS.size());
-                                    postAdapter.setLoaded();
                                 }
+//                                if (contentDTOSTemp.size() == contentDTOS.size()) {
+//                                    Toast toast = Toast.makeText(getApplicationContext(), "마지막 입니다.", Toast.LENGTH_SHORT);
+//                                    toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//                                    toast.show();
+//                                }
+                                postAdapter.notifyItemInserted(contentDTOS.size());
+                                postAdapter.setLoaded();
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
-                            });
+                            }
+                        });
 
-
-                        //or you can add all at once but do not forget to call mAdapter.notifyDataSetChanged();
                     }
                 }, 2000);
 
@@ -199,7 +204,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                         for (int i = 0; i < 10; i++) {
                             contentDTOS.add(contentDTOSTemp.get(i));
                         }
-
 
 
 //                        postAdapter.notifyItemInserted(contentDTOS.size());

@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +96,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
     RecyclerView pollActivity_recyclerView_reply;
     RelativeLayout pollActivity_relativeLayout_reply;
     TextView pollActivity_textView_result, pollActivity_textView_reply;
+    ScrollView scrollView;
 
 
     TextView pollActivity_textView_check_1, pollActivity_textView_check_2,
@@ -132,6 +134,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_imageView_around_1 = findViewById(R.id.pollActivity_imageView_around_1);
 
 
+        scrollView = findViewById(R.id.scrollView);
         pollActivity_fab_result = findViewById(R.id.pollActivity_fab_result);
         pollActivity_textView_title = findViewById(R.id.pollActivity_textView_title);
         pollActivity_textView_description = findViewById(R.id.pollActivity_textView_description);
@@ -272,6 +275,18 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+
+
+        pollActivity_recyclerView_reply.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+
+
+
+
         //댓글 리사이클러뷰
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());//getApplicationContext()전에 this,?? 였음
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -281,6 +296,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         pollActivity_recyclerView_reply.setLayoutManager(mLayoutManager);
 //        final PostAdapter postAdapter = new PostAdapter(getApplication(), contentDTOS); //20180730 전날꺼 보기 getApplication()전에 this,contentDTOS 였음
         pollActivity_recyclerView_reply.setAdapter(replyAdapter);
+
 
 
         //reply button click, 댓글달기버튼
@@ -1090,7 +1106,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_0").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1108,7 +1124,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_1").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1126,7 +1142,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_2").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1144,7 +1160,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_3").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1162,7 +1178,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_4").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1180,7 +1196,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_5").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1198,7 +1214,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_6").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1216,7 +1232,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_7").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1234,7 +1250,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_8").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }
@@ -1252,7 +1268,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
 
                         String url = contentInfo.get("imageUrl_9").toString();
 
-                        Intent intent = new Intent(PollSingleActivity.this, TestActivity.class);
+                        Intent intent = new Intent(PollSingleActivity.this, FullImageActivity.class);
                         intent.putExtra("imgUrl", url);
                         startActivity(intent);
                     }

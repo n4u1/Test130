@@ -42,7 +42,8 @@
         <activity android:name=".views.MyReplyContentsActivity" />
         <activity android:name=".views.SearchResultActivity" />
         <activity android:name=".views.MyPollActivity" />
-        <activity android:name=".views.MyUploadActivity"></activity>
+        <activity android:name=".views.MyUploadActivity" />
+        <activity android:name=".views.FullImageActivity"></activity>
     </application>
 
 </manifest>
