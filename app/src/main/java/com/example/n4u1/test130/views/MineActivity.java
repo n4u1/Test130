@@ -48,9 +48,13 @@ public class MineActivity extends AppCompatActivity {
         final TextView mineActivity_textView_gender = findViewById(R.id.mineActivity_textView_gender);
         final TextView mineActivity_textView_age = findViewById(R.id.mineActivity_textView_age);
         TextView mineActivity_textView_like = findViewById(R.id.mineActivity_textView_like);
+        TextView mineActivity_textView_like_ = findViewById(R.id.mineActivity_textView_like_);
         TextView mineActivity_textView_pickContent = findViewById(R.id.mineActivity_textView_pickContent);
+        TextView mineActivity_textView_pickContent_ = findViewById(R.id.mineActivity_textView_pickContent_);
         TextView mineActivity_textView_reply = findViewById(R.id.mineActivity_textView_reply);
+        TextView mineActivity_textView_reply_ = findViewById(R.id.mineActivity_textView_reply_);
         TextView mineActivity_textView_upload = findViewById(R.id.mineActivity_textView_upload);
+        TextView mineActivity_textView_upload_ = findViewById(R.id.mineActivity_textView_upload_);
 
         //이메일 가져오기
         mineActivity_textView_account.setText(mFireBaseUser.getEmail());
@@ -78,9 +82,23 @@ public class MineActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        mineActivity_textView_like_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyLikeContentsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //참여한 게시물 모아보기
         mineActivity_textView_pickContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyPollActivity.class);
+                startActivity(intent);
+            }
+        });
+        mineActivity_textView_pickContent_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MineActivity.this, MyPollActivity.class);
@@ -96,9 +114,23 @@ public class MineActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        mineActivity_textView_reply_.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyReplyContentsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //내가 올린 게시물 모아보기
         mineActivity_textView_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineActivity.this, MyUploadActivity.class);
+                startActivity(intent);
+            }
+        });
+        mineActivity_textView_upload_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MineActivity.this, MyUploadActivity.class);
@@ -127,9 +159,6 @@ public class MineActivity extends AppCompatActivity {
             case R.id.menu_home:
                 Intent intentHome = new Intent(MineActivity.this, HomeActivity.class);
                 startActivity(intentHome);
-                break;
-
-            case R.id.menu_setting:
                 break;
 
         }

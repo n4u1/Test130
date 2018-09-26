@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class SearchHomeActivity extends AppCompatActivity {
@@ -71,7 +72,7 @@ public class SearchHomeActivity extends AppCompatActivity {
         //Query newItems = mDatabaseReference.orderByKey().startAt(lastChildKey);
         //검색 대상인 title을 arraylist로 뽑아서 리스트업
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("user_contents");
-        mDatabaseReference.orderByChild("title").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -83,6 +84,7 @@ public class SearchHomeActivity extends AppCompatActivity {
                     final ContentDTO contentDTO = contentDTOIterator.next().getValue(ContentDTO.class);
                     tmp.add(contentDTO.title);
                 }
+                Collections.reverse(tmp);
                 setTitleData(tmp);
                 setCategoryData();
 

@@ -276,6 +276,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
         });
 
 
+        pollActivity_recyclerView_reply.setNestedScrollingEnabled(false);
 
         pollActivity_recyclerView_reply.setLayoutManager(new LinearLayoutManager(this){
             @Override
@@ -692,6 +693,7 @@ public class PollSingleActivity extends AppCompatActivity implements View.OnClic
                     pollActivity_imageView_reply_downButton.setVisibility(View.GONE);
                     pollActivity_imageView_reply_upButton.setVisibility(View.VISIBLE);
                     pollActivity_textView_reply.setText("접기");
+                    pollActivity_recyclerView_reply.setNestedScrollingEnabled(false);
                     pollActivity_recyclerView_reply.setVisibility(View.VISIBLE);
                     pollActivity_editText_reply.setVisibility(View.VISIBLE);
                     pollActivity_button_replySend.setVisibility(View.VISIBLE);
